@@ -41,3 +41,52 @@ Welches Prinzip überrascht mich am meisten?
 **(c)** Erläutern Sie, warum frühzeitiges Testen (Grundprinzip 3) wirtschaftlich sinnvoll ist. Nutzen Sie das Schlagwort „Rule of Ten". *(4 Punkte)*
 - Wirtschaftlich sinnvoll ist das frühzeitige Testen aufgrund der "Rule of Ten", die besagt, dass im Vorfeld gefundene Fehler 10 Mal günstiger sind zu beheben als später in einer Produktivumgebung.
 
+---
+**05_unit_tests**
+
+**a)** Formuliere eine überzeugende Argumentation (5–8 Sätze) für systematisches Testen.
+Nutze mindestens drei der sieben Grundprinzipien und ein reales Beispiel
+(Ariane-5, Therac-25, Y2K oder ein eigenes Beispiel aus dem Berufsalltag).
+- Testen generell zeigt die Anwesenheit von Fehlern. Vollständiges Testen ist zwar nicht möglich, aber Testen, besonders frühzeitiges Testen erspart dem Unternehmen nicht nur Kosten, sondern auch eine schlechte Reputation.
+Die Einführung von Softwaretests für unser Produkt sichert uns eine gleichbleibende Qualität und ebnet uns den Weg in Richtung Zertifizierungen. Dies würde unseren Kundenstamm maßgeblich erweitern.
+
+
+**b)** Dein Betrieb entwickelt eine neue Funktion `berechne_urlaubstage(eintrittsdatum, arbeitstage_pro_woche)`.
+- Identifiziere einen möglichen Fehler (Error), Defekt (Defect) und ein Versagen (Failure) für diese Funktion.
+  - Fehler: arbeitstage_pro_woche könnten auch negativ sein
+  - Defekt: fehlende Prüfung, ob arbeitstage_pro_woche auch negativ, wenn ja, ABBRUCH
+  - Failure: ungültiges Ergebnis der Berechnung
+- Beschreibe die Konsequenzen eines unentdeckten Defekts in einem Lohnabrechnungssystem.
+    - rechtliche Konsequenzen wegen Verstoß gegen das Arbeitnehmerschutzgesetz -> Strafzahlungen für das Unternehmen
+
+**c)** Bewerte: Ist Grundprinzip 7 ("Keine Fehler = Gutes System") für diesen Fall relevant? Begründe.
+Prinzip 7 ist immer relevant, da nie komplett alle Fehler gefunden werden können.
+
+## Tandem-Aufgabe 👥
+
+**Erkläre deinem Tandempartner:**
+
+> "Stell dir vor, du bist frisch im Betrieb und musst einem Azubi aus einem anderen Beruf erklären, was der Unterschied zwischen einem Bug und einem Fehler ist. Du hast nur 2 Minuten und ein konkretes Beispiel aus dem Alltag."
+
+- Partner A erklärt (2 Minuten)
+  - Fehler ist der falsche Grundgedanke und Bug ist die Stelle im Code, der diesen Gedanken umgesetzt hat.
+- Partner B hört zu und stellt eine Rückfrage
+  - Woher kommt der Name Bug?
+- Partner B erklärt zurück mit anderen Worten
+  - Der Begriff Bug kommt von Motten, die früher in die Elektronik geflogen sind und Kurzschlüsse verursachten. 
+- Zusammen: Welche Formulierung war klarer? Warum?
+  - Bug als Fehlerhafte Stelle im Code
+
+
+## Reflexion 🚦
+
+*Nach dem Bearbeiten: Wie schätzt du dich jetzt ein?*
+
+- [x] 🟢 Ich verstehe alle Konzepte und kann sie erklären
+- [ ] 🟡 Ich verstehe die meisten Konzepte, habe aber noch Fragen
+- [ ] 🔴 Ich brauche noch mehr Zeit oder Unterstützung
+
+
+
+
+
