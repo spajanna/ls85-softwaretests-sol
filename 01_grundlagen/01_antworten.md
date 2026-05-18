@@ -10,4 +10,9 @@
 | Unit-Tests laufen lassen |          | x         |
 | Checklisten für Codestruktur | x        |           |
 
+---
 
+**02_testarten**
+
+**Warum reichen statische Tests allein nicht aus?**
+Die Bedingungen und Module ändern können. Wird das Modul in einer anderen Umgebung eingesetzt, gibt es ggf. andere Faktoren als im Ursprungsmodul/umgebung.
