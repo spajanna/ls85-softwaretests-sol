@@ -23,7 +23,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 *Bevor du anfängst: Wie sicher fühlst du dich bei diesem Thema?*
 
 - [ ] 🟢 Ich kenne mich schon aus
-- [ ] 🟡 Ich habe eine vage Vorstellung
+- [x] 🟡 Ich habe eine vage Vorstellung
 - [ ] 🔴 Das Thema ist mir komplett neu
 
 ---
@@ -59,8 +59,14 @@ Der Code hat bewusst einen Fehler eingebaut.
 
 **a)** Lies den Code und identifiziere:
 - Wo liegt der **Fehler (Error)** – also die falsche Handlung des Entwicklers?
+
+    **Antwort:** Denkfehler in der Prozentrechnung.
 - Was ist der **Defekt (Defect/Bug)** – die Stelle im Code, die das Problem verursacht?
+
+     **Antwort:** Zeile 19, Rabatt wird falsch berechnet.
 - Was wäre das **Versagen (Failure)** – was würde der Benutzer bemerken?
+
+  **Antwort:** Preis kann ins negative gehen.
 
 Schreibe deine Antworten als Kommentare in `starter.py`.
 

@@ -7,7 +7,7 @@ Startvorlage – bearbeite diese Datei für deine Aufgaben.
 # ============================================================
 # Aufgabe 1 – Fehlerhafte Funktion
 # ============================================================
-
+# berechne_rabatt ist hier nicht ganz richtig. berechne_rabatt_preis wäre sinnvoller
 def berechne_rabatt(preis: float, prozent: float) -> float:
     """
     Berechnet den Preis nach Rabattabzug.
@@ -16,6 +16,7 @@ def berechne_rabatt(preis: float, prozent: float) -> float:
         berechne_rabatt(100.0, 20) soll 80.0 zurückgeben.
     """
     # Hier ist ein Defekt eingebaut – findest du ihn?
+    # rabatt = preis * (prozent/100)
     rabatt = preis * prozent  # <-- Zeile mit Defekt
     return preis - rabatt
 
@@ -39,7 +40,11 @@ def berechne_rabatt_korrigiert(preis: float, prozent: float) -> float:
     Korrigierte Version von berechne_rabatt().
     TODO: Implementiere die korrekte Logik.
     """
-    pass  # TODO: Ersetze 'pass' durch deine Implementierung
+
+    rabatt= float(preis) *(float(prozent)/100)
+    if rabatt < 0:
+        return 0
+    return preis-rabatt
 
 
 # Manuelle Tests (werden in Baustein 05 durch echte Unit-Tests ersetzt)
@@ -49,9 +54,11 @@ if __name__ == "__main__":
 
     print("=== Test: berechne_rabatt (fehlerhaft) ===")
     print(berechne_rabatt(100.0, 20))  # Falsche Ausgabe erwartet
-
+    print(berechne_rabatt(100.0, 20))
     print("\n=== Test: berechne_rabatt_korrigiert ===")
-    # TODO: Deine Tests hier
+    print(berechne_rabatt_korrigiert(100.0, -20.0)) # 0 als Ausgabe erwartet, weil ungültig
+    print(berechne_rabatt_korrigiert("a", "b"))   # Keine Ausgabe erwartet
+    print(berechne_rabatt(100, 200))   # 0 als Ausgabe erwartet, weil ungültig
 
 
 # ============================================================
