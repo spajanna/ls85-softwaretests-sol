@@ -22,7 +22,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 ## Selbsteinschätzung – Vorher
 
 - [ ] 🟢 Ich habe bereits Unit-Tests in Python geschrieben
-- [ ] 🟡 Ich weiß was Unit-Tests sind, habe aber noch keinen geschrieben
+- [x] 🟡 Ich weiß was Unit-Tests sind, habe aber noch keinen geschrieben
 - [ ] 🔴 Das ist Neuland für mich
 
 ---
@@ -84,15 +84,31 @@ class TestBestellsystem(unittest.TestCase):
 ```
 
 **a)** Was testet jeder dieser Tests? Beschreibe in je einem Satz.
+rabbat wird korekt abgezogen?
+Leere besellung hat null preis
+negativer rabatt wirft fehler
 
 **b)** Welche Klasse und welche Methoden werden in den Tests verwendet?
 
+        bestellung = Bestellsystem()
+        bestellung.artikel_hinzufuegen("Stift", 2.00, 5)
+        bestellung.rabatt_setzen(10)
+        self.assertAlmostEqual(bestellung.gesamtpreis(), 9.00)
+
+        bestellung = Bestellsystem()
+        self.assertEqual(bestellung.gesamtpreis(), 0.0)
+
+        bestellung = Bestellsystem()
+        with self.assertRaises(ValueError):
+            bestellung.rabatt_setzen(-5)
+
 **c)** Was bedeutet `assertAlmostEqual` und warum wird es hier statt `assertEqual` verwendet?
 
-**d)** Was passiert, wenn `test_negativer_rabatt_wirft_fehler` fehlschlägt?
-Was wäre dann das Problem in der Implementierung?
+dammit 9,9999 = 10 richtig ist ist bei so einer recchnung sinvoll
 
-Trage deine Antworten in `05_antworten.md` ein.
+**d)** Was passiert, wenn `test_negativer_rabatt_wirft_fehler` fehlschlägt?
+Was wäre dann das Problem in der Implementierung? die rechnung nimmt negative werte ohne fehler 
+
 
 ---
 
@@ -101,6 +117,8 @@ Trage deine Antworten in `05_antworten.md` ein.
 In `code/starter.py` findest du die Klasse `Kontorechner` – ein vereinfachter Kontostand-Manager.
 
 **a)** Analysiere die Klasse: Welche Methoden hat sie? Was soll jede Methode tun?
+
+einzahlen abheben kontostand überprüfen usw
 
 **b)** Schreibe in der vorbereiteten Testklasse `TestKontorechner` mindestens folgende Tests:
 
@@ -116,6 +134,8 @@ In `code/starter.py` findest du die Klasse `Kontorechner` – ein vereinfachter 
 **c)** Führe die Tests aus und interpretiere die Ausgabe.
 Was bedeuten `.`, `F` und `E` in der Ausgabe?
 
+. erfolg f felshclag e absturtz
+
 ---
 
 ## Aufgabe 2 – setUp und tearDown 🟡
@@ -130,7 +150,7 @@ Was bedeuten `.`, `F` und `E` in der Ausgabe?
 - Mindestens 5 Testmethoden enthält
 
 **c)** Warum ist `setUp()` sinnvoller als das Erstellen des Objekts in jeder einzelnen Testmethode?
-
+dammit man einen sauberen startzustand bekommt
 ---
 
 ## Aufgabe 3 – assertRaises richtig nutzen 🟡
@@ -151,6 +171,42 @@ with self.assertRaises(ValueError):
 
 **a)** Zeige anhand deiner Tests aus Aufgabe 1, dass du beide Varianten korrekt anwenden kannst.
 
+      self.konto = Kontorechner()
+
+    def test_einzahlen_positiver_betrag(self):
+        self.konto.einzahlen(100)
+        self.assertEqual(self.konto.kontostand, 100)
+
+    def test_einzahlen_mehrere_betraege(self):
+        self.konto.einzahlen(50)
+        self.konto.einzahlen(25)
+        self.assertEqual(self.konto.kontostand, 75)
+
+    def test_einzahlen_null_wirft_fehler(self):
+        with self.assertRaises(ValueError):
+            self.konto.einzahlen(0)
+
+    def test_einzahlen_negativ_wirft_fehler(self):
+        with self.assertRaises(ValueError):
+            self.konto.einzahlen(-10)
+
+    def test_abheben_guthaben_vorhanden(self):
+        self.konto.einzahlen(100)
+        self.konto.abheben(40)
+        self.assertEqual(self.konto.kontostand, 60)
+
+    def test_abheben_kein_guthaben(self):
+        with self.assertRaises(ValueError):
+            self.konto.abheben(10)
+
+    def test_abheben_exakt_kontostand(self):
+        self.konto.einzahlen(50)
+        self.konto.abheben(50)
+        self.assertEqual(self.konto.kontostand, 0)
+
+    def test_kontostand_anfangswert(self):
+        self.assertEqual(self.konto.kontostand, 0)
+
 **b)** Schreibe einen Test für die Funktion `berechne_note()` aus Baustein 04, der prüft,
 dass bei einer Punktzahl von -1 und 101 jeweils ein `ValueError` geworfen wird.
 
@@ -164,9 +220,36 @@ Ein Betrieb hat eine Funktion `berechne_mehrwertsteuer(netto: float, steuersatz:
 
 **(a)** Nennen Sie vier sinnvolle Testfälle mit konkreten Eingabe- und Erwartungswerten. *(4 Punkte)*
 
+(100, 5%) = 95
+(-1, 5%) = error
+(0, 5%) = 0
+(10, 5%) = 8
+
+
+
+
 **(b)** Schreiben Sie die vier Testfälle als Python-`unittest`-Methoden in eine Testklasse. *(8 Punkte)*
 
+import unittest
+
+class TestRabatt(unittest.TestCase):
+
+    def test_100_prozent_5_rabatt(self):
+        self.assertEqual(berechne_rabatt(100, 5), 95)
+
+    def test_0(self):
+        self.assertEqual(berechne_rabatt(0, 5), 0)
+
+    def test_10_prozent_5_rabatt(self):
+        self.assertEqual(berechne_rabatt(10, 5), 8)
+
+    def test_negativ_wirft_fehler(self):
+        with self.assertRaises(ValueError):
+            berechne_rabatt(-1, 5)
+
 **(c)** Welcher Assertion-Typ ist bei Kommazahlen problematisch? Nennen Sie die Alternative und warum diese nötig ist. *(3 Punkte)*
+
+is equal wegen ungenauigkeiten bei vielen kommastellen 
 
 ---
 
@@ -203,12 +286,12 @@ Dann: Tests zusammenführen, ausführen – was schlägt fehl? Warum?
 ## Reflexion 🚦
 
 - [ ] 🟢 Ich kann eigenständig Unit-Tests mit unittest schreiben
-- [ ] 🟡 Ich verstehe das Konzept, habe aber noch Probleme mit assertRaises
+- [x] 🟡 Ich verstehe das Konzept, habe aber noch Probleme mit assertRaises
 - [ ] 🔴 Ich brauche mehr Erklärungen oder Beispiele
 
 **Was nimmst du mit?**
 
-> _______________________________________________
+> noch tollere testungen !!!!
 
 ---
 
