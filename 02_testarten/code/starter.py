@@ -60,26 +60,32 @@ if __name__ == "__main__":
     # TODO: Test 1 – Normaler Einkauf ohne Rabatt
     # Erwartetes Ergebnis: 69.97
     print("Test 1 – Kein Rabatt:")
-    # Dein Code hier
+    ergebnis = berechne_gesamtpreis(warenkorb_normal)
+    print("Erwartet: 69.97")
+    print("Erhalten:", ergebnis)
 
     # TODO: Test 2 – Einkauf mit 10 % Rabatt
     # Erwartetes Ergebnis: 62.97
     print("\nTest 2 – 10 % Rabatt:")
-    # Dein Code hier
+    ergebnis = berechne_gesamtpreis(warenkorb_normal, rabatt_prozent=10)
+    print("Erwartet: 62.97")
+    print("Erhalten:", ergebnis)
 
     # TODO: Test 3 – Leerer Warenkorb (Sonderfall)
     # Erwartetes Ergebnis: 0.0 (keine Exception!)
     print("\nTest 3 – Leerer Warenkorb:")
-    # Dein Code hier
+    ergebnis = berechne_gesamtpreis(warenkorb_leer)
+    print("Erwartet: 0.0")
+    print("Erhalten:", ergebnis)
 
 
 # ============================================================
 # Aufgabe 1 – Tabelle Teststufen (als Kommentar)
 # ============================================================
 
-# | Beschreibung                                           | Teststufe |
-# |--------------------------------------------------------|-----------|
-# | Testet einzelne Funktionen oder Methoden isoliert      | TODO      |
-# | Prüft das Zusammenspiel mehrerer Module                | TODO      |
-# | Testet das gesamte System gegen die Anforderungen      | TODO      |
-# | Auftraggeber prüft, ob seine Anforderungen erfüllt sind| TODO      |
+# | Beschreibung                                                | Teststufe         |
+# |-------------------------------------------------------------|-------------------|
+# | Testet einzelne Funktionen oder Methoden isoliert           | Unit-Test         |
+# | Prüft das Zusammenspiel mehrerer Module                     | Integrationstest  |
+# | Testet das gesamte System gegen die Anforderungen           | Systemtest        |
+# | Der Auftraggeber prüft, ob seine Anforderungen erfüllt sind | Abnahmetest       |

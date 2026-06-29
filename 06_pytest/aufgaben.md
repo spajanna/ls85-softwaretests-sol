@@ -21,7 +21,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 
 ## Selbsteinschätzung – Vorher
 
-- [ ] 🟢 Ich kenne pytest und habe damit gearbeitet
+- [*] 🟢 Ich kenne pytest und habe damit gearbeitet
 - [ ] 🟡 Ich habe von pytest gehört
 - [ ] 🔴 Das ist Neuland für mich
 
@@ -253,22 +253,28 @@ Dann Code-Review im Tandem:
 *Unterlagen zu:*
 
 1. Wie unterscheidet sich eine pytest-Testfunktion von einer unittest-Testmethode?
+Eine pytest-Testfunktion ist einfach eine Funktion mit test_...; bei unittest schreibt man Methoden in einer Klasse, die von unittest.TestCase erbt.
 2. Wozu dient ein Fixture?
+Ein Fixture bereitet Testdaten oder Objekte vor, die mehrere Tests benutzen können.
 3. Was passiert, wenn ein Fixture mit `scope="module"` definiert ist?
+Bei scope="module" wird das Fixture nur einmal pro Testdatei erstellt und für alle Tests im Modul wiederverwendet.
 4. Wie prüfst du in pytest, dass eine bestimmte Exception geworfen wird?
+with pytest.raises(ValueError):
+    meine_funktion()
 5. Warum ist Parametrisierung besser als viele separate Testfunktionen?
+Parametrisierung vermeidet Wiederholung: Eine Testfunktion kann viele Eingabewerte prüfen.
 
 ---
 
 ## Reflexion 🚦
 
-- [ ] 🟢 Ich kann pytest eigenständig einsetzen und Fixtures + Parametrisierung nutzen
+- [*] 🟢 Ich kann pytest eigenständig einsetzen und Fixtures + Parametrisierung nutzen
 - [ ] 🟡 Ich verstehe die Konzepte, habe aber noch Probleme bei Fixtures
 - [ ] 🔴 Ich brauche mehr Erklärungen oder Übung
 
 **Was nimmst du mit?**
 
-> _______________________________________________
+> Ich nehme mit, dass pytest Tests kürzer und übersichtlicher macht: einfache test_...-Funktionen, fixtures für wiederverwendbare Vorbereitung, pytest.raises für Fehlerfälle und Parametrisierung, um viele Fälle ohne Wiederholung zu testen.
 
 ---
 

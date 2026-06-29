@@ -204,26 +204,31 @@ Am Ende: Wieviele Tests habt ihr? Ist der Code gut strukturiert?
 *Unterlagen zu:*
 
 1. Was ist die "Goldene TDD-Regel"?
+Erst einen fehlschlagenden Test schreiben, dann den Code dazu.
 2. Was bedeutet "Baby Steps" im TDD-Kontext?
+Sehr kleine Schritte: ein kleiner Test, wenig Code, erneut testen.
 3. Warum darf man beim Green-Step "hässlichen" Code schreiben?
+Weil es im Green-Step nur darum geht, den Test schnell grün zu bekommen.
 4. Was ist das Ziel der Refactor-Phase?
+Den Code verbessern, ohne das Verhalten zu ändern. Alle Tests müssen grün bleiben.
 5. Wie hilft TDD dabei, über den Code nachzudenken, bevor man ihn schreibt?
+TDD zwingt einen, vorher zu klären, was der Code können soll und welche Ergebnisse erwartet werden.
 
 ---
 
 ## Reflexion 🚦
 
-- [ ] 🟢 Ich kann TDD anwenden und habe den Zyklus verinnerlicht
+- [*] 🟢 Ich kann TDD anwenden und habe den Zyklus verinnerlicht
 - [ ] 🟡 Ich verstehe TDD, fällt mir aber noch schwer "zuerst den Test zu schreiben"
 - [ ] 🔴 Ich brauche mehr Übung oder Erklärungen
 
 **Was war für dich die größte Herausforderung bei TDD?**
 
-> _______________________________________________
+> Die größte Herausforderung bei TDD war für mich, nicht direkt die fertige Lösung zu schreiben, sondern wirklich erst mit einem kleinen Test zu starten und dann nur minimalen Code zu schreiben. Besonders schwierig ist es, geduldig in Baby Steps vorzugehen und erst später im Refactoring den Code sauberer zu machen.
 
 **Würdest du TDD im Betrieb einsetzen? Warum / Warum nicht?**
 
-> _______________________________________________
+> Ja, vor allem bei kritischen Funktionen, weil TDD die Qualität erhöht und Regressionen verhindert.
 
 ---
 

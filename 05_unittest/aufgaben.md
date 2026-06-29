@@ -21,7 +21,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 
 ## Selbsteinschätzung – Vorher
 
-- [ ] 🟢 Ich habe bereits Unit-Tests in Python geschrieben
+- [*] 🟢 Ich habe bereits Unit-Tests in Python geschrieben
 - [ ] 🟡 Ich weiß was Unit-Tests sind, habe aber noch keinen geschrieben
 - [ ] 🔴 Das ist Neuland für mich
 
@@ -193,22 +193,29 @@ Dann: Tests zusammenführen, ausführen – was schlägt fehl? Warum?
 *Unterlagen zu:*
 
 1. Wie heißt die Basisklasse, von der alle Testklassen erben müssen?
+unittest.TestCase
 2. Mit welchem Befehl führst du alle Tests in einem Verzeichnis aus?
+python -m unittest discover
 3. Was ist der Unterschied zwischen `assertEqual` und `assertAlmostEqual`?
+assertEqual prüft auf exakte Gleichheit.
+assertAlmostEqual prüft ungefähre Gleichheit, wichtig bei Kommazahlen.
 4. Wann wird `setUp()` aufgerufen – einmal pro Testklasse oder einmal pro Testmethode?
+setUp() wird vor jeder Testmethode aufgerufen.
 5. Was bedeutet ein `E` (Error) in der unittest-Ausgabe im Unterschied zu `F` (Failure)?
+F = Test läuft, aber Ergebnis ist falsch.
+E = unerwarteter Fehler/Exception im Test.
 
 ---
 
 ## Reflexion 🚦
 
-- [ ] 🟢 Ich kann eigenständig Unit-Tests mit unittest schreiben
+- [*] 🟢 Ich kann eigenständig Unit-Tests mit unittest schreiben
 - [ ] 🟡 Ich verstehe das Konzept, habe aber noch Probleme mit assertRaises
 - [ ] 🔴 Ich brauche mehr Erklärungen oder Beispiele
 
 **Was nimmst du mit?**
 
-> _______________________________________________
+> Ich nehme mit, dass unittest Tests strukturiert ausführt: Testklassen erben von unittest.TestCase, setUp() bereitet jeden Test neu vor, und Assertions prüfen das Ergebnis. Außerdem ist wichtig: F bedeutet falsches Ergebnis, E bedeutet unerwarteter Fehler im Test.
 
 ---
 

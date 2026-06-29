@@ -20,7 +20,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 
 ## Selbsteinschätzung – Vorher
 
-- [ ] 🟢 Ich weiß, was Äquivalenzklassen sind
+- [*] 🟢 Ich weiß, was Äquivalenzklassen sind
 - [ ] 🟡 Ich habe den Begriff schon gehört
 - [ ] 🔴 Das ist mir komplett neu
 
@@ -184,21 +184,25 @@ Diskutiert: Würden eure Testfälle denselben Fehler finden?
 *Unterlagen zu:*
 
 1. Was ist der Kerngedanke hinter Äquivalenzklassen?
+Man teilt mögliche Eingaben in Gruppen ein und testet pro Gruppe einen typischen Wert.
 2. Warum testet man immer auch ungültige Klassen?
+Weil das Programm auch falsche Eingaben sicher erkennen und ablehnen muss.  
 3. An welchen Stellen entstehen besonders häufig Programmfehler? (Stichwort: Grenzwerte)
+Fehler entstehen oft an Grenzen, z. B. genau bei Mindestwert, Maximalwert oder direkt daneben.
 4. Wie viele Testfälle braucht man mindestens für vollständige Äquivalenzklassenabdeckung?
+Mindestens einen Testfall pro Äquivalenzklasse.
 
 ---
 
 ## Reflexion 🚦
 
-- [ ] 🟢 Ich kann eigenständig Äquivalenzklassen und Grenzwerte ermitteln
+- [*] 🟢 Ich kann eigenständig Äquivalenzklassen und Grenzwerte ermitteln
 - [ ] 🟡 Das Konzept ist klar, aber ich brauche noch Übung
 - [ ] 🔴 Ich brauche weitere Erklärungen oder Beispiele
 
 **Was nimmst du mit?**
 
-> _______________________________________________
+> Ich nehme mit, dass man Eingaben in gültige und ungültige Gruppen einteilt und pro Gruppe typische Werte testet. Besonders wichtig sind Grenzwerte, weil Fehler oft genau an Mindest- oder Maximalwerten entstehen.
 
 ---
 

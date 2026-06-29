@@ -63,46 +63,39 @@ class TestKontorechner(unittest.TestCase):
     # --- Einzahlen ---
 
     def test_einzahlen_positiver_betrag(self):
-        """TODO: Prüfe, dass eine Einzahlung von 100 den Kontostand auf 100 setzt."""
-        # TODO: Deine Implementierung
-        pass
+        self.konto.einzahlen(100)
+        self.assertEqual(self.konto.kontostand, 100.0)
 
     def test_einzahlen_mehrere_betraege(self):
-        """TODO: Prüfe, dass mehrere Einzahlungen korrekt addiert werden."""
-        # TODO: Deine Implementierung
-        pass
+        self.konto.einzahlen(100)
+        self.konto.einzahlen(50)
+        self.assertEqual(self.konto.kontostand, 150.0)
 
     def test_einzahlen_null_wirft_fehler(self):
-        """TODO: Prüfe, dass Einzahlung von 0 einen ValueError wirft."""
-        # TODO: Nutze assertRaises (beide Varianten ausprobieren)
-        pass
+        with self.assertRaises(ValueError):
+            self.konto.einzahlen(0)
 
     def test_einzahlen_negativ_wirft_fehler(self):
-        """TODO: Prüfe, dass negativer Betrag einen ValueError wirft."""
-        # TODO: Deine Implementierung
-        pass
+        self.assertRaises(ValueError, self.konto.einzahlen, -50)
 
     # --- Abheben ---
 
     def test_abheben_guthaben_vorhanden(self):
-        """TODO: Einzahlen und dann korrekt abheben."""
-        # TODO: Deine Implementierung
-        pass
+        self.konto.einzahlen(100)
+        self.konto.abheben(40)
+        self.assertEqual(self.konto.kontostand, 60.0)
 
     def test_abheben_kein_guthaben(self):
-        """TODO: Abhebung ohne Guthaben wirft ValueError."""
-        # TODO: Deine Implementierung
-        pass
+        with self.assertRaises(ValueError):
+            self.konto.abheben(50)
 
     def test_abheben_exakt_kontostand(self):
-        """TODO: Abhebung des gesamten Kontostands (Grenzfall)."""
-        # TODO: Deine Implementierung
-        pass
+        self.konto.einzahlen(100)
+        self.konto.abheben(100)
+        self.assertEqual(self.konto.kontostand, 0.0)
 
     def test_kontostand_anfangswert(self):
-        """TODO: Neues Konto hat Kontostand 0."""
-        # TODO: Deine Implementierung
-        pass
+        self.assertEqual(self.konto.kontostand, 0.0)
 
 
 # ============================================================
@@ -110,14 +103,12 @@ class TestKontorechner(unittest.TestCase):
 # ============================================================
 
 class Einkaufsliste:
-    """TODO: Implementiere diese Klasse."""
-
     def __init__(self):
-        pass  # TODO
+        self.artikel = []
 
     def hinzufuegen(self, artikel: str) -> None:
         """Fügt einen Artikel hinzu."""
-        pass  # TODO
+        self.artikel.append(artikel)
 
     def entfernen(self, artikel: str) -> None:
         """
@@ -125,50 +116,61 @@ class Einkaufsliste:
         Raises:
             ValueError: Wenn der Artikel nicht vorhanden ist.
         """
-        pass  # TODO
+        if artikel not in self.artikel:
+            raise ValueError(f"Artikel nicht vorhanden: {artikel}")
+
+        self.artikel.remove(artikel)
 
     def anzeigen(self) -> list:
         """Gibt alle Artikel als Liste zurück."""
-        pass  # TODO
+        return self.artikel.copy()
 
     def ist_leer(self) -> bool:
         """Gibt True zurück, wenn die Liste leer ist."""
-        pass  # TODO
+        return len(self.artikel) == 0
 
     def anzahl(self) -> int:
         """Gibt die Anzahl der Artikel zurück."""
-        pass  # TODO
+        return len(self.artikel)
 
 
 class TestEinkaufsliste(unittest.TestCase):
 
     def setUp(self):
-        """TODO: Erstelle eine neue Einkaufsliste."""
-        pass  # TODO: self.liste = Einkaufsliste()
+        """Erstelle vor jedem Test eine neue Einkaufsliste."""
+        self.liste = Einkaufsliste()
 
     def tearDown(self):
         """Wird nach jeder Testmethode ausgeführt."""
-        print(f"  [tearDown] Test abgeschlossen.")
+        print("  [tearDown] Test abgeschlossen.")
 
     def test_neue_liste_ist_leer(self):
-        """TODO"""
-        pass
+        self.assertTrue(self.liste.ist_leer())
+        self.assertEqual(self.liste.anzahl(), 0)
 
     def test_artikel_hinzufuegen(self):
-        """TODO"""
-        pass
+        self.liste.hinzufuegen("Milch")
+        self.assertFalse(self.liste.ist_leer())
+        self.assertEqual(self.liste.anzeigen(), ["Milch"])
 
     def test_artikel_entfernen(self):
-        """TODO"""
-        pass
+        self.liste.hinzufuegen("Brot")
+        self.liste.entfernen("Brot")
+        self.assertTrue(self.liste.ist_leer())
 
     def test_nicht_vorhandenen_artikel_entfernen_wirft_fehler(self):
-        """TODO"""
-        pass
+        with self.assertRaises(ValueError):
+            self.liste.entfernen("Käse")
 
     def test_anzahl_nach_mehreren_operationen(self):
-        """TODO"""
-        pass
+        self.liste.hinzufuegen("Milch")
+        self.liste.hinzufuegen("Brot")
+        self.liste.hinzufuegen("Eier")
+        self.liste.entfernen("Brot")
+
+        self.assertEqual(self.liste.anzahl(), 2)
+        self.assertEqual(self.liste.anzeigen(), ["Milch", "Eier"])
+
 
 
 # ============================================================

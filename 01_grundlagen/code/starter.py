@@ -23,23 +23,20 @@ def berechne_rabatt(preis: float, prozent: float) -> float:
 # Aufgabe 1a): Beantworte folgende Fragen als Kommentar:
 
 # Error (falsche Handlung des Entwicklers):
-# TODO: Deine Antwort hier
+# rabatt sollte durch 100 geteilt werden.
 
 # Defect (fehlerhafte Stelle im Code):
-# TODO: Deine Antwort hier
+# Zeile 19
 
 # Failure (was der Benutzer bemerken würde):
-# TODO: Deine Antwort hier
+# eine ungueltige und minuse Anzahl rauskommt. 
 
 
 # Aufgabe 1b): Korrigiere die Funktion unten und füge print()-Tests hinzu.
 
 def berechne_rabatt_korrigiert(preis: float, prozent: float) -> float:
-    """
-    Korrigierte Version von berechne_rabatt().
-    TODO: Implementiere die korrekte Logik.
-    """
-    pass  # TODO: Ersetze 'pass' durch deine Implementierung
+    rabatt = preis * prozent / 100
+    return preis - rabatt
 
 
 # Manuelle Tests (werden in Baustein 05 durch echte Unit-Tests ersetzt)
@@ -51,7 +48,9 @@ if __name__ == "__main__":
     print(berechne_rabatt(100.0, 20))  # Falsche Ausgabe erwartet
 
     print("\n=== Test: berechne_rabatt_korrigiert ===")
-    # TODO: Deine Tests hier
+    print(berechne_rabatt_korrigiert(100.0, 20))
+    print(berechne_rabatt_korrigiert(100.0, 0))
+    print(berechne_rabatt_korrigiert(100.0, 100))
 
 
 # ============================================================
@@ -62,15 +61,17 @@ if __name__ == "__main__":
 #
 # | Maßnahme                            | Statisch | Dynamisch |
 # |-------------------------------------|----------|-----------|
-# | Code Review durch einen Kollegen    | TODO     | TODO      |
-# | Programm mit Testdaten ausführen    | TODO     | TODO      |
-# | Syntaxprüfung durch den Editor      | TODO     | TODO      |
-# | Walkthroughs im Team                | TODO     | TODO      |
-# | Unit-Tests laufen lassen            | TODO     | TODO      |
-# | Checklisten für Codestruktur        | TODO     | TODO      |
+# | Code Review durch einen Kollegen    | *        |           |
+# | Programm mit Testdaten ausführen    |          | *         |
+# | Syntaxprüfung durch den Editor      | *        |           |
+# | Walkthroughs im Team                | *        |           |
+# | Unit-Tests laufen lassen            |          | *         |
+# | Checklisten für Codestruktur        | *        |           |
 #
 # Warum reicht statisches Testen allein nicht aus?
-# TODO: Deine Erklärung hier (2 Sätze)
+# manualle Code Lesen und Testen koennte auch fehlahaft sein. Ausserdem 
+# nach jeder Aenderung im Code muss man alle betroffene Code noch mal Ueberpruefen. 
+# Ob man eine standarade Massnahme behalten kann, ist eine Frage. 
 
 
 # ============================================================
@@ -78,12 +79,23 @@ if __name__ == "__main__":
 # ============================================================
 
 # Prinzip 2 – Vollständiges Testen ist unmöglich:
+# Man kann in der Praxis nicht jede mögliche Eingabe, 
+# jeden Klickweg und jede Situation testen, weil es zu viele Kombinationen gibt.
 # Beispiel aus dem Berufsalltag:
-# TODO: Deine Antwort hier
+# Bei einer Webanwendung mit einem Login-Formular könnte man theoretisch unendlich viele Kombinationen testen: richtige E-Mail, falsche E-Mail, leeres Passwort, Sonderzeichen, sehr lange Eingaben, verschiedene Browser, verschiedene Geräte usw.
+# Deshalb testet man gezielt wichtige und riskante Fälle, zum Beispiel gültiger Login, falsches Passwort, gesperrter Benutzer und leere Pflichtfelder.
 
-# Prinzip 4 – Defect Clustering:
+# Prinzip 4: Fehler häufen sich / Defect Clustering
+# Fehler treten oft nicht gleichmäßig im ganzen System auf, sondern sammeln sich in bestimmten Bereichen oder Modulen.
 # Beispiel aus dem Berufsalltag:
-# TODO: Deine Antwort hier
+# In einem Projekt gibt es ein Modul für Rechnungen. 
+# Dort wurden schon mehrere Bugs gefunden, zum Beispiel falsche Mehrwertsteuer, falsche Rundung und Probleme beim PDF-Export. 
+# Dann ist die Wahrscheinlichkeit hoch, dass in diesem Modul noch weitere Fehler stecken. 
+# Deshalb sollte man diesen Bereich besonders gründlich testen.
 
 # Welches Prinzip überrascht dich? Warum?
-# TODO: Deine Antwort hier
+# Mich überrascht am meisten Prinzip 1: Testen zeigt die Anwesenheit von Fehlern, nicht deren Abwesenheit.
+# Der Grund ist: Man denkt oft, wenn alle Tests erfolgreich sind, dann ist die Software fehlerfrei. 
+# Eigentlich bedeutet es aber nur, dass die durchgeführten Tests keine Fehler gefunden haben. 
+# Es können trotzdem noch Fehler vorhanden sein, die durch andere Eingaben oder Situationen auftreten.
+

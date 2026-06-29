@@ -129,73 +129,116 @@ class TestLagerDokumentiert:
         lager.artikel_anlegen(Artikel("A002", "Maus", 24.99, 20))
         return lager
 
-    # TC-LAGER-001: Artikel anlegen – Normalfall
     def test_artikel_anlegen_normalfall(self, leeres_lager):
         """
+        TC-LAGER-001
         Vorbedingung: Leeres Lager
         Eingabe: Artikel A001
         Erwartet: artikel_anzahl == 1
         """
-        # TODO: Implementiere den Test
-        pass
+        leeres_lager.artikel_anlegen(Artikel("A001", "USB-Stick", 9.99, 50))
 
-    # TC-LAGER-002: Artikel anlegen – Duplikat
+        assert leeres_lager.artikel_anzahl() == 1
+
     def test_artikel_anlegen_duplikat_wirft_fehler(self, lager_mit_artikel):
         """
+        TC-LAGER-002
         Vorbedingung: Lager mit Artikel A001
         Eingabe: Nochmals Artikel A001 anlegen
         Erwartet: ValueError
         """
-        # TODO: Implementiere den Test
-        pass
+        with pytest.raises(ValueError):
+            lager_mit_artikel.artikel_anlegen(Artikel("A001", "USB-Stick", 9.99, 50))
 
-    # TC-LAGER-003: Bestand erhöhen – Normalfall
     def test_bestand_erhoehen_normalfall(self, lager_mit_artikel):
         """
-        TODO: Dokumentiere und implementiere
+        TC-LAGER-003
+        Vorbedingung: Lager mit Artikel A001
+        Eingabe: Bestand von A001 um 10 erhöhen
+        Erwartet: Bestand von A001 ist 60
         """
-        pass
+        lager_mit_artikel.bestand_erhoehen("A001", 10)
 
-    # TC-LAGER-004: Bestand reduzieren – Normalfall
+        artikel = lager_mit_artikel.artikel_suchen("A001")
+        assert artikel.bestand == 60
+
     def test_bestand_reduzieren_normalfall(self, lager_mit_artikel):
-        """TODO"""
-        pass
+        """
+        TC-LAGER-004
+        Vorbedingung: Lager mit Artikel A001
+        Eingabe: Bestand von A001 um 20 reduzieren
+        Erwartet: Bestand von A001 ist 30
+        """
+        lager_mit_artikel.bestand_reduzieren("A001", 20)
 
-    # TC-LAGER-005: Bestand reduzieren – Unter Null (Grenzwert)
+        artikel = lager_mit_artikel.artikel_suchen("A001")
+        assert artikel.bestand == 30
+
     def test_bestand_reduzieren_unter_null(self, lager_mit_artikel):
-        """TODO"""
-        pass
+        """
+        TC-LAGER-005
+        Vorbedingung: Lager mit Artikel A002, Bestand 20
+        Eingabe: Bestand von A002 um 25 reduzieren
+        Erwartet: ValueError
+        """
+        with pytest.raises(ValueError):
+            lager_mit_artikel.bestand_reduzieren("A002", 25)
 
-    # TC-LAGER-006: Artikel suchen – vorhanden
     def test_artikel_suchen_vorhanden(self, lager_mit_artikel):
-        """TODO"""
-        pass
+        """
+        TC-LAGER-006
+        Vorbedingung: Lager mit Artikel A001
+        Eingabe: Suche nach A001
+        Erwartet: Artikel wird gefunden
+        """
+        artikel = lager_mit_artikel.artikel_suchen("A001")
 
-    # TC-LAGER-007: Artikel suchen – nicht vorhanden
+        assert artikel is not None
+        assert artikel.id == "A001"
+        assert artikel.name == "USB-Stick"
+
     def test_artikel_suchen_nicht_vorhanden(self, lager_mit_artikel):
         """
-        Erwartet: None (kein Fehler, aber kein Ergebnis)
+        TC-LAGER-007
+        Vorbedingung: Lager ohne Artikel A999
+        Eingabe: Suche nach A999
+        Erwartet: None
         """
-        # TODO
-        pass
+        artikel = lager_mit_artikel.artikel_suchen("A999")
 
-    # TC-LAGER-008: Gesamtwert berechnen
+        assert artikel is None
+
     def test_gesamtwert(self, lager_mit_artikel):
         """
-        Erwartet: 50 * 9.99 + 20 * 24.99 = 499.50 + 499.80 = 999.30
+        TC-LAGER-008
+        Vorbedingung: Lager mit A001 und A002
+        Erwartet: 50 * 9.99 + 20 * 24.99 = 999.30
         """
-        # TODO
-        pass
+        assert lager_mit_artikel.gesamtwert() == pytest.approx(999.30)
 
-    # TC-LAGER-009: Kapazitätsüberschreitung
     def test_kapazitaet_ueberschreitung(self):
-        """TODO: Kleines Lager anlegen und Kapazität überschreiten."""
-        pass
+        """
+        TC-LAGER-009
+        Vorbedingung: Lager mit Kapazität 10
+        Eingabe: Artikel mit Bestand 11 anlegen
+        Erwartet: ValueError
+        """
+        kleines_lager = Lager(kapazitaet=10)
 
-    # TC-LAGER-010: Artikel unter Mindestbestand
+        with pytest.raises(ValueError):
+            kleines_lager.artikel_anlegen(Artikel("A003", "Tastatur", 49.99, 11))
+
     def test_artikel_unter_mindestbestand(self, lager_mit_artikel):
-        """TODO: mindestbestand=30 → nur A002 (Bestand 20) sollte zurückgegeben werden."""
-        pass
+        """
+        TC-LAGER-010
+        Vorbedingung: A001 Bestand 50, A002 Bestand 20
+        Eingabe: mindestbestand = 30
+        Erwartet: Nur A002 wird zurückgegeben
+        """
+        artikel_liste = lager_mit_artikel.artikel_unter_mindestbestand(30)
+
+        assert len(artikel_liste) == 1
+        assert artikel_liste[0].id == "A002"
 
 
 # ============================================================
@@ -203,13 +246,57 @@ class TestLagerDokumentiert:
 # ============================================================
 
 class TestLagerCoverage:
-    """
-    Aufgabe 3 – Schreibe Tests, die die Coverage auf >= 90% bringen.
-    Führe erst den Coverage-Report aus, dann entscheide, was fehlt.
-    """
 
-    # TODO: Ergänze Tests für noch nicht abgedeckte Zeilen/Zweige
-    pass
+    def test_artikel_mit_negativem_preis_wirft_fehler(self):
+        lager = Lager(kapazitaet=100)
+
+        with pytest.raises(ValueError):
+            lager.artikel_anlegen(Artikel("A003", "Defekt", -1.0, 5))
+
+    def test_artikel_mit_negativem_bestand_wirft_fehler(self):
+        lager = Lager(kapazitaet=100)
+
+        with pytest.raises(ValueError):
+            lager.artikel_anlegen(Artikel("A004", "Fehlerartikel", 10.0, -1))
+
+    def test_bestand_erhoehen_unbekannter_artikel_wirft_fehler(self):
+        lager = Lager(kapazitaet=100)
+
+        with pytest.raises(ValueError):
+            lager.bestand_erhoehen("A999", 10)
+
+    def test_bestand_erhoehen_mit_null_wirft_fehler(self):
+        lager = Lager(kapazitaet=100)
+        lager.artikel_anlegen(Artikel("A001", "USB-Stick", 9.99, 10))
+
+        with pytest.raises(ValueError):
+            lager.bestand_erhoehen("A001", 0)
+
+    def test_bestand_reduzieren_unbekannter_artikel_wirft_fehler(self):
+        lager = Lager(kapazitaet=100)
+
+        with pytest.raises(ValueError):
+            lager.bestand_reduzieren("A999", 5)
+
+    def test_bestand_reduzieren_mit_null_wirft_fehler(self):
+        lager = Lager(kapazitaet=100)
+        lager.artikel_anlegen(Artikel("A001", "USB-Stick", 9.99, 10))
+
+        with pytest.raises(ValueError):
+            lager.bestand_reduzieren("A001", 0)
+
+    def test_artikel_unter_mindestbestand_keine_treffer(self):
+        lager = Lager(kapazitaet=100)
+        lager.artikel_anlegen(Artikel("A001", "USB-Stick", 9.99, 50))
+
+        ergebnis = lager.artikel_unter_mindestbestand(10)
+
+        assert ergebnis == []
+
+    def test_gesamtwert_leeres_lager(self):
+        lager = Lager(kapazitaet=100)
+
+        assert lager.gesamtwert() == 0.0
 
 
 # ============================================================

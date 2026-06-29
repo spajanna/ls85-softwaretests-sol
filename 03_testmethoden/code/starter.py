@@ -40,15 +40,19 @@ def authentifiziere_benutzer(benutzername: str, passwort: str) -> bool:
 # Aufgabe 1b) – Führe deine Testfälle hier aus:
 if __name__ == "__main__":
     print("=== Aufgabe 1 – Black-Box-Tests: authentifiziere_benutzer ===")
-
+    testcases = [
+        ("TC01", "admin", "geheim123", True),
+        ("TC02", "admin", "falsch123", False),
+        ("TC03", "unbekannt", "geheim123", False),
+        ("TC04", "ad", "geheim123", False),
+        ("TC05", "sehrlangerbenutzername123", "geheim123", False),
+        ("TC06", "admin!", "geheim123", False),
+    ]
     # TODO: Füge deine Testfälle aus der Tabelle ein
-    # Beispiel (TC01):
-    ergebnis = authentifiziere_benutzer("admin", "geheim123")
-    print(f"TC01: admin/geheim123 → {ergebnis} (erwartet: True)")
-
-    # TC02: TODO
-    # TC03: TODO
-    # ...
+    for tc_nr, user, pw, erwartet in testcases:
+        ergebnis = authentifiziere_benutzer(user, pw)
+        status = "OK" if ergebnis == erwartet else "FEHLER"
+        print(f"{tc_nr}: {user}/{pw} → {ergebnis} (erwartet: {erwartet}) [{status}]")
 
 
 # ============================================================

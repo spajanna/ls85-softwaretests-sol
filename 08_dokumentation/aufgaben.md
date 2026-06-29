@@ -21,7 +21,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 
 ## Selbsteinschätzung – Vorher
 
-- [ ] 🟢 Ich kenne Testpläne und Testberichte
+- [*] 🟢 Ich kenne Testpläne und Testberichte
 - [ ] 🟡 Ich habe davon gehört, aber noch nie selbst erstellt
 - [ ] 🔴 Das ist mir komplett neu
 
@@ -227,26 +227,33 @@ Haltet Feedback schriftlich fest.
 *Unterlagen zu:*
 
 1. Was ist der Unterschied zwischen Testplan und Testbericht?
+Testplan: wird vor dem Testen erstellt und beschreibt, was, wie, wann und von wem getestet wird.
+Testbericht: wird nach dem Testen erstellt und fasst Ergebnisse, Fehler und Bewertung zusammen.
 2. Was sind typische Abnahmekriterien für Software?
+Typische Abnahmekriterien: alle Tests grün, keine kritischen Fehler offen, Coverage z. B. über 80 %, Anforderungen erfüllt.
 3. Was bedeutet "Testabdeckung" (Coverage) und was misst sie nicht?
+Coverage zeigt, wie viel Code durch Tests ausgeführt wurde. Sie misst aber nicht, ob die Tests sinnvoll sind oder richtige Erwartungen prüfen.
 4. Wann ist ein Testbericht "gut genug" für einen Kunden?
+Ein Testbericht ist gut genug, wenn der Kunde klar sieht: Was wurde getestet, was ist fehlgeschlagen, welche Fehler sind offen und ob das System abnahmebereit ist.
 5. Was ist der Unterschied zwischen FAILED und ERROR in pytest?
+FAILED: Test läuft, aber Ergebnis ist falsch.
+ERROR: Test bricht wegen unerwartetem Fehler ab, z. B. Exception oder Importfehler.
 
 ---
 
 ## Reflexion 🚦
 
-- [ ] 🟢 Ich kann professionelle Testdokumentation erstellen
+- [*] 🟢 Ich kann professionelle Testdokumentation erstellen
 - [ ] 🟡 Ich verstehe das Konzept, die Umsetzung braucht noch Übung
 - [ ] 🔴 Ich brauche weitere Erklärungen oder Beispiele
 
 **Was war in dieser gesamten Lernsequenz das Wichtigste für dich?**
 
-> _______________________________________________
+> Das Wichtigste für mich war, dass gutes Testen nicht nur bedeutet, Tests auszuführen, sondern systematisch vorzugehen: planen, passende Testfälle wählen, automatisieren, Ergebnisse dokumentieren und daraus eine klare Bewertung ableiten.
 
 **Was nimmst du konkret in deinen Betriebsalltag mit?**
 
-> _______________________________________________
+> Ich nehme konkret mit, im Betriebsalltag strukturierter zu testen: nicht nur kurz ausprobieren, sondern passende Testfälle planen, Grenzwerte und Fehlerfälle bewusst prüfen und wichtige Tests automatisieren.
 
 ---
 

@@ -20,7 +20,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 
 ## Selbsteinschätzung – Vorher
 
-- [ ] 🟢 Ich kenne Black-Box und White-Box-Tests
+- [*] 🟢 Ich kenne Black-Box und White-Box-Tests
 - [ ] 🟡 Ich habe von diesen Begriffen gehört, bin aber unsicher
 - [ ] 🔴 Diese Methoden sind mir unbekannt
 
@@ -94,12 +94,15 @@ arbeite nur mit der Schnittstellenbeschreibung:
 | TC-Nr | Eingabe (User/PW) | Erwartete Ausgabe | Kategorie |
 |-------|-------------------|------------------|-----------|
 | TC01 | admin / geheim123 | True | Gültiger Login |
-| TC02 | | | |
-| TC03 | | | |
-| ... | | | |
+| TC02 | admin / falsch123 | False | Falsches Passwort |
+| TC03 | unbekannt / geheim123 | False | Unbekannter Benutzer |
+| TC04 | ad / geheim123 | False | Benutzername zu kurz |
+| TC05 | sehrlangerbenutzername123 / geheim123 | False | Benutzername zu lang |
+| TC06 | admin! / geheim123 | False | Sonderzeichen im Benutzernamen |
 
 **b)** Führe deine Testfälle aus, indem du die Funktion in `starter.py` aufrufst.
 Welche Testfälle schlagen fehl? Dokumentiere die Ergebnisse.
+Alle Testfälle waren erfolgreich.
 
 ---
 
@@ -125,13 +128,13 @@ Warum sind das mehr als bei Statement Coverage?
 Fülle die Tabelle aus:
 
 | Merkmal | Black-Box | White-Box |
-|---------|-----------|-----------|
-| Codekenntnis notwendig? | | |
-| Aus wessen Perspektive? | | |
-| Was wird geprüft? | | |
-| Typische Werkzeuge | | |
-| Vorteil | | |
-| Nachteil | | |
+|---|---|---|
+| Codekenntnis notwendig? | Nein | Ja |
+| Aus wessen Perspektive? | Nutzer/Kunde/Tester | Entwickler |
+| Was wird geprüft? | Verhalten und Anforderungen | Code, Logik, Zweige |
+| Typische Werkzeuge | Testfälle nach Spezifikation, manuelle Tests | Unit-Tests, Coverage-Tools |
+| Vorteil | Testet realistisch aus Nutzersicht | Findet Fehler in der internen Logik |
+| Nachteil | Interne Codefehler können übersehen werden | Nutzeranforderungen können übersehen werden |
 
 ---
 
@@ -159,9 +162,98 @@ def versandkosten(gewicht_kg: float, express: bool) -> float:
 
 **(a)** Erstellen Sie einen Kontrollflussgraphen für diese Funktion. Benennen Sie alle Knoten und Kanten. *(4 Punkte)*
 
+## (a) Kontrollflussgraph
+
+Knoten:
+
+1 Start  
+2 if gewicht_kg <= 0  
+3 raise ValueError  
+4 if express  
+5 if gewicht_kg <= 5  (Express-Zweig)  
+6 return 8.90  
+7 return 14.90  
+8 if gewicht_kg <= 5  (Normal-Zweig)  
+9 return 3.90  
+10 return 6.90  
+11 Ende  
+
+ASCII-Graph:
+
+1 Start
+  |
+  v
+2 gewicht_kg <= 0?
+  |-- ja  --> 3 raise ValueError --> 11 Ende
+  |
+  |-- nein
+        v
+4 express?
+  |-- ja
+  |     v
+  |   5 gewicht_kg <= 5?
+  |     |-- ja  --> 6 return 8.90 --> 11 Ende
+  |     |-- nein --> 7 return 14.90 --> 11 Ende
+  |
+  |-- nein
+        v
+      8 gewicht_kg <= 5?
+        |-- ja  --> 9 return 3.90 --> 11 Ende
+        |-- nein --> 10 return 6.90 --> 11 Ende
+
+Kanten:
+
+E1: 1 -> 2  
+E2: 2 -> 3  ja  
+E3: 2 -> 4  nein  
+E4: 3 -> 11  
+E5: 4 -> 5  ja  
+E6: 4 -> 8  nein  
+E7: 5 -> 6  ja  
+E8: 5 -> 7  nein  
+E9: 6 -> 11  
+E10: 7 -> 11  
+E11: 8 -> 9  ja  
+E12: 8 -> 10 nein  
+E13: 9 -> 11  
+E14: 10 -> 11  
+
 **(b)** Wie viele Testfälle sind für eine vollständige **Zweigüberdeckung** erforderlich? Listen Sie diese auf. *(4 Punkte)*
+Für vollständige Zweigüberdeckung braucht man mindestens 5 Testfälle.
+
+TC01:
+gewicht_kg = 0, express = False
+Erwartet: ValueError
+Deckt ab: gewicht_kg <= 0 ist True
+
+TC02:
+gewicht_kg = 3, express = True
+Erwartet: 8.90
+Deckt ab: express True, gewicht_kg <= 5 True
+
+TC03:
+gewicht_kg = 6, express = True
+Erwartet: 14.90
+Deckt ab: express True, gewicht_kg <= 5 False
+
+TC04:
+gewicht_kg = 3, express = False
+Erwartet: 3.90
+Deckt ab: express False, gewicht_kg <= 5 True
+
+TC05:
+gewicht_kg = 6, express = False
+Erwartet: 6.90
+Deckt ab: express False, gewicht_kg <= 5 False
 
 **(c)** Welche Testfälle würden Sie zusätzlich aus **Black-Box-Sicht** (Grenzwertanalyse) ergänzen? *(2 Punkte)*
+Aus Black-Box-Sicht würde ich besonders die Grenzen 0 kg und 5 kg testen:
+
+- gewicht_kg = -1 → ValueError
+- gewicht_kg = 0 → ValueError
+- gewicht_kg = 0.01 → gültig
+- gewicht_kg = 5.0 → noch günstiger Tarif
+- gewicht_kg = 5.01 → teurer Tarif
 
 ---
 
@@ -186,21 +278,27 @@ Diskutiert: Was hat die Black-Box-Perspektive übersehen? Was hat die White-Box-
 *Unterlagen zu – beantworte aus dem Gedächtnis:*
 
 1. Was ist der fundamentale Unterschied zwischen Black-Box und White-Box?
+Black-Box: Test ohne Codekenntnis, nur Verhalten von außen.
+White-Box: Test mit Codekenntnis, interne Logik wird geprüft.
 2. Was bedeutet 100 % Statement Coverage? Garantiert das fehlerfreie Software?
+100 % Statement Coverage bedeutet: Jede Anweisung im Code wurde mindestens einmal ausgeführt.
+Nein, das garantiert keine fehlerfreie Software.
 3. Warum ist Branch Coverage strenger als Statement Coverage?
+Branch Coverage ist strenger, weil bei jedem if sowohl der True- als auch der False-Zweig getestet werden muss.
 4. In welcher Teststufe (aus Baustein 02) wird meistens White-Box-Testing eingesetzt?
+Meistens bei Unit-Tests / Komponententests, oft durch Entwickler.
 
 ---
 
 ## Reflexion 🚦
 
-- [ ] 🟢 Ich kann beide Methoden anwenden und den Unterschied erklären
+- [*] 🟢 Ich kann beide Methoden anwenden und den Unterschied erklären
 - [ ] 🟡 Ich verstehe die Theorie, brauche aber mehr Übung
 - [ ] 🔴 Ich brauche Unterstützung bei Coverage-Konzepten
 
 **Was nimmst du mit?**
 
-> _______________________________________________
+> Ich nehme mit, dass Black-Box-Tests das Verhalten von außen prüfen und White-Box-Tests die interne Code-Logik. Beide Methoden ergänzen sich: Black-Box findet Fehler aus Nutzersicht, White-Box findet fehlende Zweige oder ungetestete Code-Stellen.
 
 ---
 

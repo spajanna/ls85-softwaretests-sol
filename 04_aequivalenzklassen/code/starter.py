@@ -9,19 +9,16 @@ Startvorlage – bearbeite diese Datei für deine Aufgaben.
 # ============================================================
 
 def validiere_menge(menge) -> bool:
-    """
-    Prüft, ob eine Bestellmenge gültig ist.
+    if not isinstance(menge, int):
+            return False
 
-    Regeln:
-    - Typ: ganzzahlig
-    - Minimum: 1
-    - Maximum: 999
+    if menge < 1:
+        return False
 
-    Returns:
-        True wenn gültig, False wenn ungültig.
-    """
-    # TODO: Implementiere die Validierungslogik
-    pass
+    if menge > 999:
+        return False
+
+    return True
 
 
 # ============================================================
@@ -29,21 +26,22 @@ def validiere_menge(menge) -> bool:
 # ============================================================
 
 def pruefe_passwort(passwort: str) -> bool:
-    """
-    Prüft, ob ein Passwort den Anforderungen entspricht.
+    if not isinstance(passwort, str):
+        return False
 
-    Regeln:
-    - Länge: 8–64 Zeichen
-    - Mindestens ein Großbuchstabe
-    - Mindestens eine Ziffer
-    - Keine Leerzeichen
+    if len(passwort) < 8 or len(passwort) > 64:
+        return False
 
-    Returns:
-        True wenn gültig, False wenn ungültig.
-    """
-    # TODO: Implementiere die Prüflogik
-    # Hinweis: str.isupper(), str.isdigit(), ' ' in passwort
-    pass
+    if not any(zeichen.isupper() for zeichen in passwort):
+        return False
+
+    if not any(zeichen.isdigit() for zeichen in passwort):
+        return False
+
+    if " " in passwort:
+        return False
+
+    return True
 
 
 # ============================================================
@@ -51,22 +49,24 @@ def pruefe_passwort(passwort: str) -> bool:
 # ============================================================
 
 def berechne_note(punkte: int) -> int:
-    """
-    Gibt die Note (1–6) für eine Punktzahl zurück.
+    if not isinstance(punkte, int) or isinstance(punkte, bool):
+        raise ValueError("Punktzahl muss ganzzahlig sein")
 
-    Skala:
-        92–100 → 1
-        81–91  → 2
-        67–80  → 3
-        50–66  → 4
-        30–49  → 5
-        0–29   → 6
+    if punkte < 0 or punkte > 100:
+        raise ValueError("Punktzahl muss zwischen 0 und 100 liegen")
 
-    Raises:
-        ValueError: Wenn punkte außerhalb [0, 100] liegt.
-    """
-    # TODO: Implementiere die Notenberechnung
-    pass
+    if punkte >= 92:
+        return 1
+    elif punkte >= 81:
+        return 2
+    elif punkte >= 67:
+        return 3
+    elif punkte >= 50:
+        return 4
+    elif punkte >= 30:
+        return 5
+    else:
+        return 6
 
 
 # ============================================================
@@ -79,13 +79,20 @@ if __name__ == "__main__":
     print("=== Aufgabe 1: validiere_menge ===")
 
     # Äquivalenzklassen testen:
-    # TODO: Gültige Klasse (z. B. menge = 50)
-    # TODO: Ungültige Klasse Untergrenze (z. B. menge = 0)
-    # TODO: Ungültige Klasse Obergrenze (z. B. menge = 1000)
-    # TODO: Falscher Typ (z. B. menge = "viel")
+    print("AK1:", validiere_menge(10), "erwartet: True")
+    print("AK2:", validiere_menge(0), "erwartet: False")
+    print("AK3:", validiere_menge(1000), "erwartet: False")
+    print("AK4:", validiere_menge(2.5), "erwartet: False")
 
     # Grenzwerte testen:
     # TODO: Grenzwert 0, 1, 999, 1000
+    print("\n=== Grenzwerte ===")
+    print("GW1:", validiere_menge(0), "erwartet: False")
+    print("GW2:", validiere_menge(1), "erwartet: True")
+    print("GW3:", validiere_menge(998), "erwartet: True")
+    print("GW4:", validiere_menge(999), "erwartet: True")
+    print("GW5:", validiere_menge(1000), "erwartet: False")
+    
     for testfall in [0, 1, 500, 999, 1000, -1, "abc"]:
         try:
             ergebnis = validiere_menge(testfall)

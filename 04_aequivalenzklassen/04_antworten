@@ -1,0 +1,70 @@
+## Aufgabe 1
+
+### a) Äquivalenzklassen
+
+| AK-Nr | Klasse | Repräsentativer Wert | Gültig / Ungültig |
+|---|---|---|---|
+| AK1 | Ganzzahl zwischen 1 und 999 | 10 | Gültig |
+| AK2 | Menge ist 0 oder kleiner | 0 | Ungültig |
+| AK3 | Menge ist größer als 999 | 1000 | Ungültig |
+| AK4 | Wert ist nicht ganzzahlig | 2.5 oder "abc" | Ungültig |
+
+### b) Grenzwerttestfälle
+
+| GW-Nr | Grenzwert | Erwartetes Ergebnis |
+|---|---|---|
+| GW1 | 0 | Ungültig |
+| GW2 | 1 | Gültig |
+| GW3 | 998 | Gültig |
+| GW4 | 999 | Gültig |
+| GW5 | 1000 | Ungültig |
+
+## Aufgabe 2
+
+### a)
+
+| AK-Nr | Regel | Klasse | Repräsentativer Wert | Gültig/Ungültig |
+|---|---|---|---|---|
+| AK1 | Länge | 8–64 Zeichen | "Abcdefg1" | Gültig |
+| AK2 | Länge | weniger als 8 Zeichen | "Abcdef1" | Ungültig |
+| AK3 | Länge | mehr als 64 Zeichen | 65 Zeichen langes Passwort | Ungültig |
+| AK4 | Großbuchstabe | enthält mindestens einen Großbuchstaben | "Abcdefg1" | Gültig |
+| AK5 | Großbuchstabe | enthält keinen Großbuchstaben | "abcdefg1" | Ungültig |
+| AK6 | Ziffer | enthält mindestens eine Ziffer | "Abcdefg1" | Gültig |
+| AK7 | Ziffer | enthält keine Ziffer | "Abcdefgh" | Ungültig |
+| AK8 | Leerzeichen | enthält kein Leerzeichen | "Abcdefg1" | Gültig |
+| AK9 | Leerzeichen | enthält Leerzeichen | "Abc def1" | Ungültig |
+
+### b)
+- "Abcdefg1" → gültig, weil alle Regeln erfüllt sind.
+- "Abcdef1" → ungültig, weil es nur 7 Zeichen hat.
+- "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1" → gültig, genau 64 Zeichen.
+- "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1" → ungültig, mehr als 64 Zeichen.
+- "abcdefg1" → ungültig, weil kein Großbuchstabe enthalten ist.
+- "Abcdefgh" → ungültig, weil keine Ziffer enthalten ist.
+- "Abc def1" → ungültig, weil ein Leerzeichen enthalten ist.
+
+Die Werte sind gewählt, damit jeweils möglichst nur eine Regel verletzt wird.
+
+## Aufgabe 3
+
+### a) Grenzwerttabelle
+
+Annahme: Alter wird als ganze Zahl eingegeben.
+
+| Grenze | Unterer Wert | Wert genau an der Grenze | Oberer Wert | Erwartetes Ergebnis |
+|---|---:|---:|---:|---|
+| Grenze zwischen Kinder- und Jugend-Modus | 11 | 12 | 13 | 11 = Kinder, 12/13 = Jugend |
+| Grenze zwischen Jugend-Modus und Vollzugang | 17 | 18 | 19 | 17 = Jugend, 18/19 = Vollzugang |
+
+### b) Zusätzliche Testfälle erfahrener Tester
+
+Erfahrene Tester würden auch ungültige oder ungewöhnliche Werte prüfen:
+
+- `-1` → ungültig, weil Alter nicht negativ sein darf
+- `0` → prüfen, ob erlaubt oder als Sonderfall behandelt wird
+- `150` → prüfen, ob unrealistisch hohe Werte erlaubt sind
+- `12.5` → ungültig oder klare Rundungsregel nötig
+- `"abc"` → ungültig, weil kein Zahlenwert
+- leere Eingabe → ungültig
+- `None` → ungültig
