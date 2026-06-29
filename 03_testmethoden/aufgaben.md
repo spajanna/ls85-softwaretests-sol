@@ -21,7 +21,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 ## Selbsteinschätzung – Vorher
 
 - [ ] 🟢 Ich kenne Black-Box und White-Box-Tests
-- [ ] 🟡 Ich habe von diesen Begriffen gehört, bin aber unsicher
+- [x] 🟡 Ich habe von diesen Begriffen gehört, bin aber unsicher
 - [ ] 🔴 Diese Methoden sind mir unbekannt
 
 ---
@@ -55,25 +55,25 @@ ob bestimmte Codeabschnitte durchlaufen werden. Ziel ist eine möglichst hohe **
 **Wiederholen und verorten:**
 
 **a)** Erkläre in eigenen Worten (ohne Nachschauen):
-- Was ist der grundlegende Unterschied zwischen Black-Box- und White-Box-Test?
-- Welche Frage stellt der Tester beim Black-Box-Test?
-- Welche Frage stellt der Tester beim White-Box-Test?
+- Was ist der grundlegende Unterschied zwischen Black-Box- und White-Box-Test? Black box kennt strucktur intern nicht with box schon
+- Welche Frage stellt der Tester beim Black-Box-Test? Funktionirt es oberflächlich von dam was ein nichtkenner tuhen würde
+- Welche Frage stellt der Tester beim White-Box-Test? funktioirt es intern
 
-**b)** Ordne die folgenden Situationen zu (Black-Box oder White-Box):
+**b)** Ordne die folgenden Situationen zu (Black-Box (x) oder White-Box (y)):
 
 | Situation | Methode |
 |-----------|---------|
-| Ein Kunde testet, ob er sich einloggen kann | |
-| Ein Entwickler prüft, ob alle if-Zweige durchlaufen werden | |
-| Ein Tester gibt verschiedene Passwörter ein und schaut, was passiert | |
-| Ein Entwickler misst die Testabdeckung (Coverage) | |
-| Ein externes Testteam prüft das System gegen die Spezifikation | |
+| Ein Kunde testet, ob er sich einloggen kann |x |
+| Ein Entwickler prüft, ob alle if-Zweige durchlaufen werden | y|
+| Ein Tester gibt verschiedene Passwörter ein und schaut, was passiert | y|
+| Ein Entwickler misst die Testabdeckung (Coverage) | y|
+| Ein externes Testteam prüft das System gegen die Spezifikation |x |
 
 **c)** Erkläre in einem Satz, warum es sinnvoll ist, beide Methoden zu kombinieren.
 
-Trage deine Antworten in `03_antworten.md` ein.
+mit einem wissen öber einige interne vorgänge kann man die oberflächliche structur gezilter testen
 
----
+
 
 ## Aufgabe 1 – Black-Box-Test: Benutzerauthentifizierung 🟡
 
@@ -94,14 +94,14 @@ arbeite nur mit der Schnittstellenbeschreibung:
 | TC-Nr | Eingabe (User/PW) | Erwartete Ausgabe | Kategorie |
 |-------|-------------------|------------------|-----------|
 | TC01 | admin / geheim123 | True | Gültiger Login |
-| TC02 | | | |
-| TC03 | | | |
+| TC02 |1 | 1| False|
+| TC03 |2 |3 | false|
 | ... | | | |
 
 **b)** Führe deine Testfälle aus, indem du die Funktion in `starter.py` aufrufst.
 Welche Testfälle schlagen fehl? Dokumentiere die Ergebnisse.
 
----
+alle falsch
 
 ## Aufgabe 2 – White-Box-Test: Coverage 🟡
 
@@ -116,7 +116,7 @@ Erstelle diese Testfälle.
 
 **c)** **Zweigüberdeckung (Branch Coverage):**
 Wie viele Testfälle brauchst du, um jeden Zweig (jedes if/else) mindestens einmal zu durchlaufen?
-Warum sind das mehr als bei Statement Coverage?
+Warum sind das mehr als bei Statement Coverage? 
 
 ---
 
@@ -126,12 +126,12 @@ Fülle die Tabelle aus:
 
 | Merkmal | Black-Box | White-Box |
 |---------|-----------|-----------|
-| Codekenntnis notwendig? | | |
-| Aus wessen Perspektive? | | |
-| Was wird geprüft? | | |
-| Typische Werkzeuge | | |
-| Vorteil | | |
-| Nachteil | | |
+| Codekenntnis notwendig? | nein| ja|
+| Aus wessen Perspektive? | user| intern|
+| Was wird geprüft? | verhalten| Ableufe|
+| Typische Werkzeuge | das ui der app| Programmierugebung|
+| Vorteil |simmulirt user expirience |testet intern |
+| Nachteil | vehler könnten oberflächlich nicht auftauchen| fehler intern nicht sichtbar |
 
 ---
 
@@ -195,12 +195,12 @@ Diskutiert: Was hat die Black-Box-Perspektive übersehen? Was hat die White-Box-
 ## Reflexion 🚦
 
 - [ ] 🟢 Ich kann beide Methoden anwenden und den Unterschied erklären
-- [ ] 🟡 Ich verstehe die Theorie, brauche aber mehr Übung
+- [x] 🟡 Ich verstehe die Theorie, brauche aber mehr Übung
 - [ ] 🔴 Ich brauche Unterstützung bei Coverage-Konzepten
 
 **Was nimmst du mit?**
 
-> _______________________________________________
+> testen ist toll!!
 
 ---
 
