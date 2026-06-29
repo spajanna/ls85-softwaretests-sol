@@ -44,6 +44,22 @@ def finde_guenstigsten_artikel(artikel: List[Dict]) -> Dict:
     return min(artikel, key=lambda a: a["preis"])
 
 
+# Ein Team entwickelt einen einfachen Online-Webshop mit folgenden Komponenten:
+# - `preisberechnung.py` – berechnet Gesamtpreis mit Rabatt
+# - `warenkorb.py` – verwaltet Artikel im Warenkorb
+# - `bestellprozess.py` – verarbeitet eine Bestellung (Warenkorb + Zahlung + Lager)
+# - Gesamtsystem: Benutzer legt Artikel in Warenkorb und bestellt
+
+# **a)** Nenne je ein Testbeispiel für jede Teststufe in diesem Webshop.
+
+# | Teststufe | Konkretes Testbeispiel |
+# |-----------|----------------------|
+# | Unit-Test | Warenkorb mit einem Artikel |
+# | Integrationstest | Warenkorb und Preisberechnung |
+# | Systemtest | Vollständiger Bestellprozess |
+# | Abnahmetest | Benutzerinteraktion mit dem Webshop |
+
+
 # ============================================================
 # Aufgabe 2b) – Manuelle Tests mit print()
 # ============================================================
@@ -60,17 +76,17 @@ if __name__ == "__main__":
     # TODO: Test 1 – Normaler Einkauf ohne Rabatt
     # Erwartetes Ergebnis: 69.97
     print("Test 1 – Kein Rabatt:")
-    # Dein Code hier
+    print(berechne_gesamtpreis(warenkorb_normal, rabatt_prozent=0))
 
     # TODO: Test 2 – Einkauf mit 10 % Rabatt
     # Erwartetes Ergebnis: 62.97
     print("\nTest 2 – 10 % Rabatt:")
-    # Dein Code hier
+    print(berechne_gesamtpreis(warenkorb_normal, rabatt_prozent=10))
 
     # TODO: Test 3 – Leerer Warenkorb (Sonderfall)
     # Erwartetes Ergebnis: 0.0 (keine Exception!)
     print("\nTest 3 – Leerer Warenkorb:")
-    # Dein Code hier
+    print(berechne_gesamtpreis(warenkorb_leer, rabatt_prozent=0))
 
 
 # ============================================================
@@ -79,7 +95,7 @@ if __name__ == "__main__":
 
 # | Beschreibung                                           | Teststufe |
 # |--------------------------------------------------------|-----------|
-# | Testet einzelne Funktionen oder Methoden isoliert      | TODO      |
-# | Prüft das Zusammenspiel mehrerer Module                | TODO      |
-# | Testet das gesamte System gegen die Anforderungen      | TODO      |
-# | Auftraggeber prüft, ob seine Anforderungen erfüllt sind| TODO      |
+# | Testet einzelne Funktionen oder Methoden isoliert      | Unit-Test     |
+# | Prüft das Zusammenspiel mehrerer Module                | Integrationstest      |
+# | Testet das gesamte System gegen die Anforderungen      | Systemtest     |
+# | Auftraggeber prüft, ob seine Anforderungen erfüllt sind| Abnahmetest    |
