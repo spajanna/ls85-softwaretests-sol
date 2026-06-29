@@ -21,7 +21,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 ## Selbsteinschätzung – Vorher
 
 - [ ] 🟢 Ich kenne die verschiedenen Testarten bereits
-- [ ] 🟡 Ich kenne manche Begriffe, aber nicht alle
+- [x] 🟡 Ich kenne manche Begriffe, aber nicht alle
 - [ ] 🔴 Das Thema ist mir neu
 
 ---
@@ -55,12 +55,12 @@ Lies die Beschreibungen und ordne sie den Teststufen zu.
 
 | Beschreibung | Teststufe |
 |-------------|-----------|
-| Testet einzelne Funktionen oder Methoden isoliert | |
-| Prüft das Zusammenspiel mehrerer Module | |
-| Testet das gesamte System gegen die Anforderungen | |
-| Der Auftraggeber prüft, ob seine Anforderungen erfüllt sind | |
+| Testet einzelne Funktionen oder Methoden isoliert | Unit-Test|
+| Prüft das Zusammenspiel mehrerer Module |Integrationstest |
+| Testet das gesamte System gegen die Anforderungen | Systemtest|
+| Der Auftraggeber prüft, ob seine Anforderungen erfüllt sind |Abnahmetest |
 
-**Teststufen:** Unit-Test · Integrationstest · Systemtest · Abnahmetest (User Acceptance Test)
+**Teststufen:**  · Integrationstest · Systemtest · Abnahmetest (User Acceptance Test)
 
 Trage die Tabelle ausgefüllt in `starter.py` als Kommentar ein.
 
@@ -78,10 +78,10 @@ Ein Team entwickelt einen einfachen Online-Webshop mit folgenden Komponenten:
 
 | Teststufe | Konkretes Testbeispiel |
 |-----------|----------------------|
-| Unit-Test | |
-| Integrationstest | |
-| Systemtest | |
-| Abnahmetest | |
+| Unit-Test | die functionen zum berechenen der rabatte |
+| Integrationstest | die berechnung der rabatte so wie die richtige anzeige des preises im ui |
+| Systemtest |man versucht testweise waren mit rabat zu kaufen |
+| Abnahmetest |der kunde versucht waren zu kaufen |
 
 **b)** In `code/starter.py` findest du die Funktion `berechne_gesamtpreis()`.
 Schreibe einen einfachen manuellen Test (mit `print()`), der folgende Fälle prüft:
@@ -97,12 +97,12 @@ Ordne die folgenden Testszenarien zu:
 
 | Testszenario | Funktional | Nicht-funktional |
 |-------------|-----------|-----------------|
-| Login mit korrekten Zugangsdaten klappt | | |
-| Seite lädt in unter 2 Sekunden | | |
-| Bestellung wird korrekt in der Datenbank gespeichert | | |
-| System ist bei 1000 gleichzeitigen Nutzern stabil | | |
-| Passwort-Reset-Mail wird verschickt | | |
-| Alle Texte sind auf Deutsch (Lokalisierung) | | |
+| Login mit korrekten Zugangsdaten klappt |x | |
+| Seite lädt in unter 2 Sekunden | | x|
+| Bestellung wird korrekt in der Datenbank gespeichert |x | |
+| System ist bei 1000 gleichzeitigen Nutzern stabil | |x |
+| Passwort-Reset-Mail wird verschickt | x| |
+| Alle Texte sind auf Deutsch (Lokalisierung) | |x |
 
 ---
 
@@ -112,11 +112,11 @@ Ordne die folgenden Testszenarien zu:
 Dein Team hat den Rabattrechner aus Baustein 01 korrigiert.
 Jetzt soll eine neue Funktion "Mengenrabatt" (ab 10 Stück = 5 % extra Rabatt) hinzugefügt werden.
 
-**a)** Was ist ein Regressionstest? Erkläre mit eigenen Worten.
+**a)** Was ist ein Regressionstest? ein regresssionstest fängt beim endpunkt an und testet sich zurück bis zum anfangspunkt
 
-**b)** Welche bestehenden Tests müssten nach der Änderung als Regressionstests erneut ausgeführt werden? Liste mindestens 3 auf.
+**b)** Welche bestehenden Tests müssten nach der Änderung als Regressionstests erneut ausgeführt werden? unit test, itegrations test und systemtest
 
-**c)** Warum ist das automatisierte Ausführen von Regressionstests besonders wertvoll?
+**c)** Warum ist das automatisierte Ausführen von Regressionstests besonders wertvoll? kann schnell fehler finden
 
 ---
 
@@ -133,9 +133,13 @@ Das Entwicklungsteam hat folgende Testmaßnahmen geplant:
 
 **(a)** Ordnen Sie diese drei Maßnahmen den Teststufen im V-Modell zu. *(3 Punkte)*
 
+1 unit test, 2 systemtest, 3 abnametest
+
 **(b)** Nennen Sie eine weitere Teststufe, die im Plan fehlt, und beschreiben Sie, was dort getestet werden sollte. *(3 Punkte)*
+Integrationstest - das zusammenspiel von den verschidenen modulen
 
 **(c)** Das HR-Team meldet beim Abnahmetest, dass Urlaubstage falsch berechnet werden. Auf welcher Teststufe hätte dieser Fehler idealerweise gefunden werden sollen? Begründen Sie. *(4 Punkte)*
+im integrationstest da dort das berechnen der urlaubstage zusammen mit den vorhandenen urlaubstagen berechnet wird und spter dargestellt
 
 ---
 
@@ -150,18 +154,22 @@ Ein Betrieb hat folgendes Testkonzept für seine neue Zeiterfassungssoftware:
 > schauen, ob Beschwerden kommen."
 
 **a)** Analysiere kritisch: Welche Teststufen fehlen in diesem Konzept? Benenne sie mit Fachbegriff.
+systemtest und Integrationstest
 
 **b)** Beschreibe die konkreten Risiken für jeden fehlenden Test.
 Was könnte im Produktivbetrieb passieren?
+das zusammenspiel der zwischen den modulen könnte fhelerhaft sein
 
 **c)** Entwirf ein verbessertes Testkonzept nach dem V-Modell für diese Software
 mit den Modulen: `zeiterfassung.py`, `benutzerverwaltung.py`, `auswertung.py`.
 Ordne konkrete Testbeispiele jeder Teststufe zu.
 
+erst wird jede function selbstständig gestested danach wird ihr zusammenspiel getested danach wird einmal das gesammte system getesten danach wird es von HR getested
+
 **d)** Begründe: Wäre ein ausschließlicher Regressionstest nach einer Änderung ausreichend?
 Warum oder warum nicht?
 
-Schreibe deine Analyse in `02_antworten.md`.
+je mehr testts und testarten desto besser
 
 ---
 
@@ -197,12 +205,12 @@ Haltet euer Ergebnis als Tabelle in `02_antworten.md` fest.
 ## Reflexion 🚦
 
 - [ ] 🟢 Ich kann alle Teststufen erklären und anwenden
-- [ ] 🟡 Ich verstehe das Konzept, aber die Abgrenzung ist noch nicht ganz klar
+- [x] 🟡 Ich verstehe das Konzept, aber die Abgrenzung ist noch nicht ganz klar
 - [ ] 🔴 Ich brauche noch Unterstützung
 
 **Was nimmst du mit?**
 
-> _______________________________________________
+> Tests sind toll!
 
 ---
 
