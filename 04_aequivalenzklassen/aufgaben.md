@@ -21,7 +21,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 ## Selbsteinschätzung – Vorher
 
 - [ ] 🟢 Ich weiß, was Äquivalenzklassen sind
-- [ ] 🟡 Ich habe den Begriff schon gehört
+- [x] 🟡 Ich habe den Begriff schon gehört
 - [ ] 🔴 Das ist mir komplett neu
 
 ---
@@ -57,20 +57,19 @@ es reicht, einen repräsentativen Wert je Klasse zu testen.
 **Einstieg ohne Code:**
 
 **a)** Eine Ampel-Steuerung akzeptiert nur Ganzzahlen von 1 bis 5 als Prioritätsstufe.
-Benenne ohne viel Nachdenken: Was sind gültige, was ungültige Eingaben?
+Benenne ohne viel Nachdenken: Was sind gültige, was ungültige Eingaben? gültig sind werte in diesem bereich ungültik sind auserhalb (9)
 
 **b)** Erkläre in einem Satz, was eine Äquivalenzklasse ist –
-so als würdest du es einem Mitschüler ohne IT-Kenntnis erklären.
+so als würdest du es einem Mitschüler ohne IT-Kenntnis erklären. so eine klasse ist eine klasse die werte an ihren grenzwerten tested
 
 **c)** Nenne je ein Beispiel aus dem Berufsalltag für:
-- Eine gültige Äquivalenzklasse
-- Eine ungültige Äquivalenzklasse
-- Einen Grenzwert, der besonders kritisch sein könnte
+- Eine gültige Äquivalenzklasse eine klasse über productionskostengrenzen
+- Eine ungültige Äquivalenzklasse eine void klasse
+- Einen Grenzwert, der besonders kritisch sein könnte 0.0
 
 **d)** Warum reicht es aus, nur **einen** repräsentativen Wert pro Klasse zu testen?
-Erkläre die Grundannahme dahinter.
+Erkläre die Grundannahme dahinter. ´wen dieser wert durchgeht sollten auch andere durchgehen
 
-Trage deine Antworten in `04_antworten.md` ein.
 
 ---
 
@@ -86,10 +85,10 @@ Eine E-Commerce-Anwendung hat folgende Validierungsregeln für das Bestellfeld "
 
 | AK-Nr | Klasse | Repräsentativer Wert | Gültig / Ungültig |
 |-------|--------|---------------------|-------------------|
-| AK1 | | | |
-| AK2 | | | |
-| AK3 | | | |
-| AK4 | | | |
+| AK1 | 1|1 |gültig |
+| AK2 |999 |999 | gültig|
+| AK3 |1000 |1000 |ungültig |
+| AK4 | 0| 0| ungültig|
 
 **b)** Ergänze die Tabelle um Grenzwerttestfälle:
 
@@ -97,9 +96,9 @@ Eine E-Commerce-Anwendung hat folgende Validierungsregeln für das Bestellfeld "
 |-------|-----------|---------------------|
 | GW1 | 0 | Ungültig |
 | GW2 | 1 | Gültig |
-| GW3 | | |
-| GW4 | | |
-| GW5 | | |
+| GW3 | 999 | gültig
+| GW4 | 1000 | ungültig
+| GW5 | -1 |ungültig
 
 **c)** Implementiere in `code/starter.py` die Funktion `validiere_menge()` und schreibe manuelle Tests für alle Äquivalenzklassen und Grenzwerte.
 
@@ -137,7 +136,19 @@ Eine Plattform hat drei Kategorien:
 **b)** Welche Fälle würden erfahrene Tester zusätzlich einbeziehen?
 (Denke an ungültige Werte wie negative Zahlen, 0, 150, Kommazahlen)
 
----
+| Bereich | Untere Grenze | Grenzwert | Obere Grenze |
+| ------- | ------------- | --------- | ------------ |
+| <12     | 11            | 12        | 13           |
+| 12–17   | 11            | 12        | 18           |
+| ≥18     | 17            | 18        | 19           |
+
+
+-1
+0
+sehr hoch
+Kommazahl
+String
+
 
 ## Aufgabe 4 – IHK-Stil 🔴
 
@@ -155,12 +166,33 @@ Eine Prüfungssoftware berechnet das Prüfungsergebnis:
   - 0–29:   Note 6
 
 **(a)** Ermitteln Sie alle Äquivalenzklassen (gültige und ungültige). *(4 Punkte)*
+Gültig:
+
+ 0–29 - 100 = Note 1
+
+Ungültig:
+
+ < 0
+ > 100
+
 
 **(b)** Erstellen Sie eine vollständige Grenzwerttabelle für alle Notengrenzen. *(6 Punkte)*
 
+| Grenze | unten | Grenzwert | oben |
+| ------ | ----- | --------- | ---- |
+| 0      | -1    | 0         | 1    |
+| 29     | 28    | 29        | 30   |
+| 100    | 99    | 100       | 101  |
+
 **(c)** Welche Eingabewerte würden Sie als Tester wählen, um mit möglichst wenigen Testfällen alle Klassen und Grenzwerte abzudecken? Begründen Sie Ihre Wahl. *(4 Punkte)*
 
-Implementiere die Funktion `berechne_note()` und teste alle Fälle aus (a)–(c) in `starter.py`.
+* -1 - ungültig (<0)
+* 0 - untere Grenze gültig
+* 101 - ungültig (>100)
+* 12.5 - ungültiger Typ
+
+Jeder Klassenwechsel + jeder Grenzsprung einmal getested
+
 
 ---
 

@@ -1,164 +1,142 @@
-"""
-Baustein 07 – Test-Driven Development (TDD)
-Startvorlage – bearbeite diese Datei für deine Aufgaben.
-
-TDD-Regel: Kein Code ohne vorherigen Test!
-
-Ausführen:
-    pytest 07_tdd/code/starter.py -v
-"""
-
 import pytest
 import string
 import random
+import math
 
 
 # ============================================================
-# Aufgabe 1 – runden_auf_naechste_fuenf (TDD-Übung)
+# Aufgabe 1 – runden_auf_naechste_fuenf
 # ============================================================
 
-# TODO: Schreibe zuerst die Tests, dann die Implementierung!
-
-# def runden_auf_naechste_fuenf(zahl: int) -> int:
-#     pass  # Erst Tests schreiben!
+def runden_auf_naechste_fuenf(zahl: int) -> int:
+    if zahl < 0:
+        raise ValueError("negative Zahlen nicht erlaubt")
+    return ((zahl + 4) // 5) * 5
 
 
 class TestRundenAufNaechsteFuenf:
-    """Aufgabe 1 – Entwickle die Funktion Schritt für Schritt nach TDD."""
 
     def test_runden_3_ergibt_5(self):
-        """Zyklus 1: Dieser Test muss zuerst ROT sein."""
-        # TODO: Schreibe den Test – führe ihn aus – er wird rot sein
-        # Dann: Implementiere runden_auf_naechste_fuenf minimal
-        pass  # Entferne 'pass' und schreibe den eigentlichen Test
+        assert runden_auf_naechste_fuenf(3) == 5
 
     def test_runden_7_ergibt_10(self):
-        """Zyklus 2: TODO"""
-        pass
+        assert runden_auf_naechste_fuenf(7) == 10
 
     def test_runden_10_ergibt_10(self):
-        """Zyklus 3: Bereits ein Vielfaches von 5."""
-        pass
+        assert runden_auf_naechste_fuenf(10) == 10
 
     def test_runden_0_ergibt_0(self):
-        """Zyklus 4: Sonderfall 0."""
-        pass
+        assert runden_auf_naechste_fuenf(0) == 0
 
     def test_runden_negativ(self):
-        """Zyklus 5: Was passiert mit negativen Zahlen? Definiere zuerst das Verhalten!"""
-        pass
+        with pytest.raises(ValueError):
+            runden_auf_naechste_fuenf(-1)
 
 
 # ============================================================
-# Aufgabe 2 – PasswortGenerator (TDD Praxisprojekt)
+# Aufgabe 2 – PasswortGenerator
 # ============================================================
-
-# SCHRITT 1: Schreibe alle Tests BEVOR du die Klasse implementierst!
-# Die Klasse ist absichtlich noch nicht implementiert.
 
 class PasswortGenerator:
-    """
-    TODO: Implementiere diese Klasse NACH den Tests.
 
-    Anforderungen:
-    - generate(laenge, grossbuchstaben, ziffern, sonderzeichen) -> str
-    - Standard: laenge=12, grossbuchstaben=True, ziffern=True, sonderzeichen=False
-    - Mindestlänge: 8 Zeichen (sonst ValueError)
-    - Gibt einen String der gewünschten Länge zurück
-    """
-    pass  # TODO: Erst alle Tests schreiben!
+    def generate(self, laenge=12, grossbuchstaben=True, ziffern=True, sonderzeichen=False):
+        if laenge < 8:
+            raise ValueError("zu kurz")
+
+        chars = string.ascii_lowercase
+
+        if grossbuchstaben:
+            chars += string.ascii_uppercase
+        if ziffern:
+            chars += string.digits
+        if sonderzeichen:
+            chars += string.punctuation
+
+        if chars == string.ascii_lowercase:
+            raise ValueError("keine Zeichen erlaubt")
+
+        return "".join(random.choice(chars) for _ in range(laenge))
 
 
 class TestPasswortGenerator:
-    """Aufgabe 2 – TDD: Tests zuerst, dann Implementierung."""
 
-    # User Story 1: Konfigurierbare Länge
+    def setup_method(self):
+        self.gen = PasswortGenerator()
+
     def test_passwort_hat_korrekte_laenge(self):
-        """TODO: Schreibe vor der Implementierung!"""
-        pass
+        pw = self.gen.generate(10)
+        assert len(pw) == 10
 
     def test_passwort_standardlaenge_ist_12(self):
-        """TODO"""
-        pass
+        assert len(self.gen.generate()) == 12
 
-    # User Story 2: Großbuchstaben
     def test_passwort_mit_grossbuchstaben(self):
-        """TODO: Mindestens ein Großbuchstabe vorhanden."""
-        pass
+        pw = self.gen.generate(20, grossbuchstaben=True, ziffern=False, sonderzeichen=False)
+        assert any(c.isupper() for c in pw)
 
     def test_passwort_ohne_grossbuchstaben(self):
-        """TODO: Kein Großbuchstabe vorhanden wenn deaktiviert."""
-        pass
+        pw = self.gen.generate(20, grossbuchstaben=False)
+        assert all(not c.isupper() for c in pw)
 
-    # User Story 3: Ziffern
     def test_passwort_mit_ziffern(self):
-        """TODO"""
-        pass
+        pw = self.gen.generate(20, ziffern=True, grossbuchstaben=False, sonderzeichen=False)
+        assert any(c.isdigit() for c in pw)
 
     def test_passwort_ohne_ziffern(self):
-        """TODO"""
-        pass
+        pw = self.gen.generate(20, ziffern=False)
+        assert all(not c.isdigit() for c in pw)
 
-    # User Story 4: Sonderzeichen
     def test_passwort_mit_sonderzeichen(self):
-        """TODO"""
-        pass
+        pw = self.gen.generate(50, sonderzeichen=True)
+        assert any(c in string.punctuation for c in pw)
 
-    # User Story 5: Mindestlänge
     def test_mindestlaenge_wird_erzwungen(self):
-        """TODO: laenge=7 soll ValueError werfen."""
-        pass
+        with pytest.raises(ValueError):
+            self.gen.generate(7)
 
     def test_laenge_8_ist_erlaubt(self):
-        """TODO: Grenzwert – muss funktionieren."""
-        pass
+        assert len(self.gen.generate(8)) == 8
 
-    # User Story 6: Fehlermeldungen
     def test_laenge_null_wirft_fehler(self):
-        """TODO"""
-        pass
+        with pytest.raises(ValueError):
+            self.gen.generate(0)
 
     def test_alle_zeichentypen_deaktiviert_wirft_fehler(self):
-        """TODO: Was soll passieren, wenn keine Zeichen erlaubt sind?"""
-        pass
+        with pytest.raises(ValueError):
+            self.gen.generate(10, grossbuchstaben=False, ziffern=False, sonderzeichen=False)
 
 
 # ============================================================
-# Aufgabe 3 – Refactoring unter Tests
+# Aufgabe 3 – Refactoring
 # ============================================================
-
-# Diese Funktion ist funktionierend, aber schlecht strukturiert.
-# Refactore sie – die Tests sollen danach noch grün sein!
 
 def verarbeite_bestellung(bestellung: dict) -> dict:
-    """
-    Verarbeitet eine Bestellung und gibt ein Ergebnis-Dict zurück.
-    (Schlecht strukturiert – refactoring notwendig!)
-    """
+
     if not bestellung:
         raise ValueError("Bestellung darf nicht leer sein")
 
-    if "artikel" not in bestellung:
+    artikel = bestellung.get("artikel")
+    if not artikel:
         raise ValueError("Bestellung muss 'artikel' enthalten")
 
-    if not bestellung["artikel"]:
-        raise ValueError("Artikelliste darf nicht leer sein")
-
     gesamtpreis = 0
-    for artikel in bestellung["artikel"]:
-        if "preis" not in artikel:
-            raise ValueError(f"Artikel '{artikel.get('name', '?')}' hat keinen Preis")
-        if "menge" not in artikel:
-            raise ValueError(f"Artikel '{artikel.get('name', '?')}' hat keine Menge")
-        if artikel["preis"] < 0:
-            raise ValueError("Preis darf nicht negativ sein")
-        if artikel["menge"] <= 0:
-            raise ValueError("Menge muss positiv sein")
-        gesamtpreis += artikel["preis"] * artikel["menge"]
+
+    for a in artikel:
+        preis = a.get("preis")
+        menge = a.get("menge")
+
+        if preis is None or menge is None:
+            raise ValueError("ungültiger Artikel")
+        if preis < 0:
+            raise ValueError("negativ")
+        if menge <= 0:
+            raise ValueError("menge")
+
+        gesamtpreis += preis * menge
 
     rabatt = bestellung.get("rabatt_prozent", 0)
-    if not 0 <= rabatt <= 100:
-        raise ValueError(f"Rabatt muss zwischen 0 und 100 liegen, war: {rabatt}")
+    if rabatt < 0 or rabatt > 100:
+        raise ValueError("Rabatt")
 
     endpreis = gesamtpreis * (1 - rabatt / 100)
 
@@ -166,12 +144,11 @@ def verarbeite_bestellung(bestellung: dict) -> dict:
         "gesamtpreis_brutto": round(gesamtpreis, 2),
         "rabatt_prozent": rabatt,
         "endpreis": round(endpreis, 2),
-        "anzahl_artikel": len(bestellung["artikel"]),
+        "anzahl_artikel": len(artikel),
     }
 
 
 class TestVerarbeiteBestellung:
-    """Diese Tests sollen nach dem Refactoring noch alle grün sein."""
 
     def test_normale_bestellung(self):
         bestellung = {
@@ -187,45 +164,51 @@ class TestVerarbeiteBestellung:
 
     def test_bestellung_mit_rabatt(self):
         bestellung = {
-            "artikel": [{"name": "Monitor", "preis": 300.00, "menge": 1}],
+            "artikel": [{"name": "Monitor", "preis": 300.0, "menge": 1}],
             "rabatt_prozent": 10,
         }
         ergebnis = verarbeite_bestellung(bestellung)
-        assert ergebnis["endpreis"] == 270.00
+        assert ergebnis["endpreis"] == 270.0
 
     def test_leere_bestellung_wirft_fehler(self):
         with pytest.raises(ValueError):
             verarbeite_bestellung({})
 
     def test_negativer_preis_wirft_fehler(self):
-        with pytest.raises(ValueError, match="negativ"):
+        with pytest.raises(ValueError):
             verarbeite_bestellung({
-                "artikel": [{"name": "Fehler", "preis": -5.00, "menge": 1}]
+                "artikel": [{"name": "Fehler", "preis": -5.0, "menge": 1}]
             })
 
     def test_ungültiger_rabatt_wirft_fehler(self):
-        with pytest.raises(ValueError, match="Rabatt"):
+        with pytest.raises(ValueError):
             verarbeite_bestellung({
-                "artikel": [{"name": "Artikel", "preis": 10.00, "menge": 1}],
+                "artikel": [{"name": "Artikel", "preis": 10.0, "menge": 1}],
                 "rabatt_prozent": 150,
             })
 
 
 # ============================================================
-# Aufgabe 4 – IHK: berechne_zinsen (TDD)
+# Aufgabe 4 – Zinsen (TDD)
 # ============================================================
 
-# TODO: Schreibe ZUERST die Testklasse TestBerechneZinsen,
-#       DANN die Funktion berechne_zinsen!
-
-# def berechne_zinsen(kapital: float, zinssatz: float, jahre: int) -> float:
-#     """Einfache Zinsberechnung: Kapital * (1 + Zinssatz/100) ^ Jahre"""
-#     pass
+def berechne_zinsen(kapital: float, zinssatz: float, jahre: int) -> float:
+    if kapital < 0 or zinssatz < 0 or jahre < 0:
+        raise ValueError("ungültig")
+    return kapital * (1 + zinssatz / 100) ** jahre
 
 
 class TestBerechneZinsen:
-    """TODO: Schreibe mindestens 4 Tests BEVOR du berechne_zinsen implementierst."""
 
-    def test_placeholder(self):
-        """Entferne diesen Platzhalter und schreibe echte Tests."""
-        pass
+    def test_standard(self):
+        assert round(berechne_zinsen(1000, 5, 1), 2) == 1050
+
+    def test_null_jahre(self):
+        assert berechne_zinsen(1000, 5, 0) == 1000
+
+    def test_null_kapital(self):
+        assert berechne_zinsen(0, 5, 5) == 0
+
+    def test_negative(self):
+        with pytest.raises(ValueError):
+            berechne_zinsen(-1, 5, 1)

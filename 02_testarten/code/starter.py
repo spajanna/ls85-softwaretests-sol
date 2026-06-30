@@ -57,29 +57,29 @@ if __name__ == "__main__":
 
     warenkorb_leer = []
 
-    # TODO: Test 1 – Normaler Einkauf ohne Rabatt
     # Erwartetes Ergebnis: 69.97
-    print("Test 1 – Kein Rabatt:")
-    # Dein Code hier
+    print("Test 1 – Kein Rabatt:", berechne_gesamtpreis(warenkorb_normal, 0))
+    
+    berechne_gesamtpreis(warenkorb_normal, 0)
 
-    # TODO: Test 2 – Einkauf mit 10 % Rabatt
     # Erwartetes Ergebnis: 62.97
-    print("\nTest 2 – 10 % Rabatt:")
-    # Dein Code hier
+    print("\nTest 2 – 10 % Rabatt:", berechne_gesamtpreis(warenkorb_normal, 0.1))
+    
+    
 
-    # TODO: Test 3 – Leerer Warenkorb (Sonderfall)
     # Erwartetes Ergebnis: 0.0 (keine Exception!)
-    print("\nTest 3 – Leerer Warenkorb:")
-    # Dein Code hier
+    print("\nTest 3 – Leerer Warenkorb:", berechne_gesamtpreis(warenkorb_leer, 0))
+    
+    
 
 
 # ============================================================
 # Aufgabe 1 – Tabelle Teststufen (als Kommentar)
 # ============================================================
 
-# | Beschreibung                                           | Teststufe |
-# |--------------------------------------------------------|-----------|
-# | Testet einzelne Funktionen oder Methoden isoliert      | TODO      |
-# | Prüft das Zusammenspiel mehrerer Module                | TODO      |
-# | Testet das gesamte System gegen die Anforderungen      | TODO      |
-# | Auftraggeber prüft, ob seine Anforderungen erfüllt sind| TODO      |
+#| Beschreibung | Teststufe |
+#|-------------|-----------|
+#| Testet einzelne Funktionen oder Methoden isoliert | Unit-Test|
+#| Prüft das Zusammenspiel mehrerer Module |Integrationstest |
+#| Testet das gesamte System gegen die Anforderungen | Systemtest|
+#| Der Auftraggeber prüft, ob seine Anforderungen erfüllt sind |Abnahmetest |

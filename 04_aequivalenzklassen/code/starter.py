@@ -16,12 +16,14 @@ def validiere_menge(menge) -> bool:
     - Typ: ganzzahlig
     - Minimum: 1
     - Maximum: 999
-
-    Returns:
-        True wenn gültig, False wenn ungültig.
     """
-    # TODO: Implementiere die Validierungslogik
-    pass
+    if isinstance(menge, bool):
+        return False
+
+    if not isinstance(menge, int):
+        return False
+
+    return 1 <= menge <= 999
 
 
 # ============================================================
