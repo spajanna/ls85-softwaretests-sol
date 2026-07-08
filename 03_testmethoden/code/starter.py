@@ -47,8 +47,27 @@ if __name__ == "__main__":
     print(f"TC01: admin/geheim123 → {ergebnis} (erwartet: True)")
 
     # TC02: TODO
+    ergebnis = authentifiziere_benutzer("admin", "falsch")
+    print(f"TC02: admin/falsch → {ergebnis} (erwartet: False) [Falsches Passwort]")
     # TC03: TODO
-    # ...
+    ergebnis = authentifiziere_benutzer("ab", "geheim123")
+    print(f"TC03: ab/geheim123 → {ergebnis} (erwartet: False) [Username zu kurz]")
+    # TC04: Gültiger Login testuser
+    ergebnis = authentifiziere_benutzer("testuser", "passwort1")
+    print(f"TC04: testuser/passwort1 → {ergebnis} (erwartet: True) [Zweiter gültiger Benutzer]")
+    # TC05: Sonderzeichen im Username
+    ergebnis = authentifiziere_benutzer("user@name", "passwort1")
+    print(f"TC05: user@name/passwort1 → {ergebnis} (erwartet: False) [Sonderzeichen]")
+    # TC06: Leerer Username
+    ergebnis = authentifiziere_benutzer("", "geheim123")
+    print(f"TC06: leer/geheim123 → {ergebnis} (erwartet: False) [Leerer Username]")
+    # TC07: Passwort zu kurz
+    ergebnis = authentifiziere_benutzer("admin", "kurz")
+    print(f"TC07: admin/kurz → {ergebnis} (erwartet: False) [Passwort zu kurz]")
+    # TC08: Username zu lang
+    ergebnis = authentifiziere_benutzer("a" * 21, "geheim123")
+    print(f"TC08: (21 chars)/geheim123 → {ergebnis} (erwartet: False) [Username zu lang]")
+    # ...weitere Testfälle ergänzen
 
 
 # ============================================================
@@ -87,5 +106,27 @@ if __name__ == "__main__":
 
     # TODO: Ergänze Testfälle für vollständige Statement Coverage
     # TODO: Ergänze weitere Testfälle für vollständige Branch Coverage
+
+    sc_faelle = [
+        (0, False, "", "UNGUELTIG"),
+        (10, True, "", "HOCH"),
+        (500, True, "", "EXPRESS"),
+        (500, False, "", "PRIORITAET"),
+    ]
+    for betrag, neukunde, code, erwartet in sc_faelle:
+        erg = kategorisiere_bestellung(betrag, neukunde, code)
+        print(f"  Statement: ({betrag}, {neukunde}, {code!r}) -> {erg} (erwartet: {erwartet}) {'OK' if erg == erwartet else 'FEHL'}")
+
+    bc_faelle = [
+        (0, False, "", "UNGUELTIG"),
+        (10, True, "", "HOCH"),
+        (10, False, "", "NORMAL"),
+        (10, False, "VIP2024", "HOCH"),
+        (500, True, "", "EXPRESS"),
+        (500, False, "", "PRIORITAET"),
+    ]
+    for betrag, neukunde, code, erwartet in bc_faelle:
+        erg = kategorisiere_bestellung(betrag, neukunde, code)
+        print(f"  Branch: ({betrag}, {neukunde}, {code!r}) -> {erg} (erwartet: {erwartet}) {'OK' if erg == erwartet else 'FEHL'}")
 
     # Halte fest, welche Zeilen von welchem Testfall abgedeckt werden.

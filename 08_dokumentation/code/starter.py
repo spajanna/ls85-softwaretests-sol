@@ -137,7 +137,8 @@ class TestLagerDokumentiert:
         Erwartet: artikel_anzahl == 1
         """
         # TODO: Implementiere den Test
-        pass
+        leeres_lager.artikel_anlegen(Artikel("A001", "USB-Stick", 9.99))
+        assert leeres_lager.artikel_anzahl == 1
 
     # TC-LAGER-002: Artikel anlegen – Duplikat
     def test_artikel_anlegen_duplikat_wirft_fehler(self, lager_mit_artikel):
@@ -147,29 +148,37 @@ class TestLagerDokumentiert:
         Erwartet: ValueError
         """
         # TODO: Implementiere den Test
-        pass
+        with pytest.raises(ValueError, match="existiert bereits"):
+            lager_mit_artikel.artikel_anlegen(Artikel("A001", "USB-Stick", 9.99))
 
     # TC-LAGER-003: Bestand erhöhen – Normalfall
     def test_bestand_erhoehen_normalfall(self, lager_mit_artikel):
         """
         TODO: Dokumentiere und implementiere
         """
-        pass
+        lager_mit_artikel.bestand_erhoehen("A001", 10)
+        artikel = lager_mit_artikel.artikel_suchen("A001")
+        assert artikel.bestand == 60
 
     # TC-LAGER-004: Bestand reduzieren – Normalfall
     def test_bestand_reduzieren_normalfall(self, lager_mit_artikel):
         """TODO"""
-        pass
+        lager_mit_artikel.bestand_reduzieren("A001", 10)
+        artikel = lager_mit_artikel.artikel_suchen("A001")
+        assert artikel.bestand == 40
 
     # TC-LAGER-005: Bestand reduzieren – Unter Null (Grenzwert)
     def test_bestand_reduzieren_unter_null(self, lager_mit_artikel):
         """TODO"""
-        pass
+        with pytest.raises(ValueError, match="Bestand"):
+            lager_mit_artikel.bestand_reduzieren("A001", 100)
 
     # TC-LAGER-006: Artikel suchen – vorhanden
     def test_artikel_suchen_vorhanden(self, lager_mit_artikel):
         """TODO"""
-        pass
+        artikel = lager_mit_artikel.artikel_suchen("A001")
+        assert artikel is not None
+        assert artikel.name == "USB-Stick"
 
     # TC-LAGER-007: Artikel suchen – nicht vorhanden
     def test_artikel_suchen_nicht_vorhanden(self, lager_mit_artikel):
@@ -177,7 +186,7 @@ class TestLagerDokumentiert:
         Erwartet: None (kein Fehler, aber kein Ergebnis)
         """
         # TODO
-        pass
+        assert lager_mit_artikel.artikel_suchen("X999") is None
 
     # TC-LAGER-008: Gesamtwert berechnen
     def test_gesamtwert(self, lager_mit_artikel):
@@ -185,17 +194,22 @@ class TestLagerDokumentiert:
         Erwartet: 50 * 9.99 + 20 * 24.99 = 499.50 + 499.80 = 999.30
         """
         # TODO
-        pass
+        assert lager_mit_artikel.gesamtwert() == 999.30
 
     # TC-LAGER-009: Kapazitätsüberschreitung
     def test_kapazitaet_ueberschreitung(self):
         """TODO: Kleines Lager anlegen und Kapazität überschreiten."""
-        pass
+        lager = Lager(kapazitaet=10)
+        lager.artikel_anlegen(Artikel("A001", "Test", 1.0, 10))
+        with pytest.raises(ValueError):
+            lager.bestand_erhoehen("A001", 1)
 
     # TC-LAGER-010: Artikel unter Mindestbestand
     def test_artikel_unter_mindestbestand(self, lager_mit_artikel):
         """TODO: mindestbestand=30 → nur A002 (Bestand 20) sollte zurückgegeben werden."""
-        pass
+        niedrig = lager_mit_artikel.artikel_unter_mindestbestand(30)
+        assert len(niedrig) == 1
+        assert niedrig[0].artikel_id == "A002"
 
 
 # ============================================================
@@ -208,19 +222,81 @@ class TestLagerCoverage:
     Führe erst den Coverage-Report aus, dann entscheide, was fehlt.
     """
 
+    @pytest.fixture
+    def lager_mit_artikel(self):
+        lager = Lager(kapazitaet=500)
+        lager.artikel_anlegen(Artikel("A001", "USB-Stick", 9.99, 50))
+        return lager
+
     # TODO: Ergänze Tests für noch nicht abgedeckte Zeilen/Zweige
-    pass
+
+    def test_lager_init_ungueltige_kapazitaet(self):
+        with pytest.raises(ValueError, match="Kapazität"):
+            Lager(kapazitaet=0)
+
+    def test_artikel_leere_id(self):
+        with pytest.raises(ValueError, match="Artikel-ID"):
+            Artikel("", "Test", 1.0)
+
+    def test_artikel_negativer_preis(self):
+        with pytest.raises(ValueError, match="Preis"):
+            Artikel("A001", "Test", -1.0)
+
+    def test_artikel_negativer_bestand(self):
+        with pytest.raises(ValueError, match="Bestand"):
+            Artikel("A001", "Test", 1.0, -5)
+
+    def test_bestand_erhoehen_artikel_nicht_gefunden(self):
+        lager = Lager()
+        with pytest.raises(KeyError, match="nicht gefunden"):
+            lager.bestand_erhoehen("X999", 1)
+
+    def test_bestand_erhoehen_ungueltige_menge(self):
+        lager = Lager()
+        with pytest.raises(ValueError, match="positiv"):
+            lager.bestand_erhoehen("A001", 0)
+
+    def test_bestand_reduzieren_artikel_nicht_gefunden(self):
+        lager = Lager()
+        with pytest.raises(KeyError, match="nicht gefunden"):
+            lager.bestand_reduzieren("X999", 1)
+
+    def test_bestand_reduzieren_ungueltige_menge(self):
+        lager = Lager()
+        with pytest.raises(ValueError, match="positiv"):
+            lager.bestand_reduzieren("A001", 0)
+
+    def test_artikel_loeschen_normalfall(self):
+        lager = Lager()
+        lager.artikel_anlegen(Artikel("A001", "Test", 1.0))
+        lager.artikel_loeschen("A001")
+        assert lager.artikel_anzahl == 0
+
+    def test_artikel_loeschen_nicht_gefunden(self):
+        lager = Lager()
+        with pytest.raises(KeyError, match="nicht gefunden"):
+            lager.artikel_loeschen("X999")
+
+    def test_gesamtwert_leeres_lager(self):
+        lager = Lager()
+        assert lager.gesamtwert() == 0.0
+
+    def test_artikel_unter_mindestbestand_keine(self, lager_mit_artikel):
+        niedrig = lager_mit_artikel.artikel_unter_mindestbestand(10)
+        assert len(niedrig) == 0
 
 
 # ============================================================
 # Aufgabe 5 – IHK Testbericht (Antworten als Kommentare)
 # ============================================================
 
-# (a) Erfolgsquote: TODO (x von 11 Tests erfolgreich = x%)
+# (a) Erfolgsquote: 9 von 11 Tests erfolgreich = 81.8 %
 
 # (b) Unterschied FAILED vs ERROR:
-# FAILED: TODO
-# ERROR:  TODO
+# FAILED: Der Test läuft durch, aber eine Assertion schlägt fehl
+#         (z. B. assert ergebnis == 5, aber es kam 4).
+# ERROR:  Der Test selbst stürzt mit einer Exception ab
+#         (z. B. NameError, TypeError im Testcode).
 
 # (c) Testbericht-Tabelle:
 # | TC-ID | Titel                            | Status    |
@@ -229,9 +305,11 @@ class TestLagerCoverage:
 # | TC-02 | Bestand erhöhen                  | PASSED    |
 # | TC-03 | Bestand reduzieren unter Null    | FAILED    |
 # | ...   |                                  |           |
-# Abnahmebereit: TODO (Ja/Nein + Begründung)
+# Abnahmebereit: Nein – ein Test ist fehlgeschlagen (Bestand reduzieren
+# unter Null). Der Fehler muss korrigiert werden, bevor die Abnahme
+# erfolgen kann.
 
 # (d) Empfohlene Maßnahmen:
-# 1. TODO
-# 2. TODO
-# 3. TODO
+# 1. Fehler in bestand_reduzieren beheben (Bestandsprüfung vor Reduktion)
+# 2. Regressionstests für alle Bestandsänderungen ausführen
+# 3. Code-Review der Korrektur durch zweiten Entwickler

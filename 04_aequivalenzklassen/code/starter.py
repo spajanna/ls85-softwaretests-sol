@@ -21,7 +21,9 @@ def validiere_menge(menge) -> bool:
         True wenn gültig, False wenn ungültig.
     """
     # TODO: Implementiere die Validierungslogik
-    pass
+    if not isinstance(menge, int):
+        return False
+    return 1 <= menge <= 999
 
 
 # ============================================================
@@ -43,7 +45,17 @@ def pruefe_passwort(passwort: str) -> bool:
     """
     # TODO: Implementiere die Prüflogik
     # Hinweis: str.isupper(), str.isdigit(), ' ' in passwort
-    pass
+    if not isinstance(passwort, str):
+        return False
+    if len(passwort) < 8 or len(passwort) > 64:
+        return False
+    if not any(c.isupper() for c in passwort):
+        return False
+    if not any(c.isdigit() for c in passwort):
+        return False
+    if ' ' in passwort:
+        return False
+    return True
 
 
 # ============================================================
@@ -66,7 +78,20 @@ def berechne_note(punkte: int) -> int:
         ValueError: Wenn punkte außerhalb [0, 100] liegt.
     """
     # TODO: Implementiere die Notenberechnung
-    pass
+    if not isinstance(punkte, int) or punkte < 0 or punkte > 100:
+        raise ValueError(f"Punkte müssen zwischen 0 und 100 liegen, war: {punkte}")
+    if punkte >= 92:
+        return 1
+    elif punkte >= 81:
+        return 2
+    elif punkte >= 67:
+        return 3
+    elif punkte >= 50:
+        return 4
+    elif punkte >= 30:
+        return 5
+    else:
+        return 6
 
 
 # ============================================================

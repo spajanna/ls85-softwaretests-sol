@@ -19,8 +19,8 @@ import random
 
 # TODO: Schreibe zuerst die Tests, dann die Implementierung!
 
-# def runden_auf_naechste_fuenf(zahl: int) -> int:
-#     pass  # Erst Tests schreiben!
+def runden_auf_naechste_fuenf(zahl: int) -> int:
+    return ((zahl + 4) // 5) * 5
 
 
 class TestRundenAufNaechsteFuenf:
@@ -30,23 +30,24 @@ class TestRundenAufNaechsteFuenf:
         """Zyklus 1: Dieser Test muss zuerst ROT sein."""
         # TODO: Schreibe den Test – führe ihn aus – er wird rot sein
         # Dann: Implementiere runden_auf_naechste_fuenf minimal
-        pass  # Entferne 'pass' und schreibe den eigentlichen Test
+        assert runden_auf_naechste_fuenf(3) == 5
 
     def test_runden_7_ergibt_10(self):
         """Zyklus 2: TODO"""
-        pass
+        assert runden_auf_naechste_fuenf(7) == 10
 
     def test_runden_10_ergibt_10(self):
         """Zyklus 3: Bereits ein Vielfaches von 5."""
-        pass
+        assert runden_auf_naechste_fuenf(10) == 10
 
     def test_runden_0_ergibt_0(self):
         """Zyklus 4: Sonderfall 0."""
-        pass
+        assert runden_auf_naechste_fuenf(0) == 0
 
     def test_runden_negativ(self):
         """Zyklus 5: Was passiert mit negativen Zahlen? Definiere zuerst das Verhalten!"""
-        pass
+        assert runden_auf_naechste_fuenf(-3) == 0
+        assert runden_auf_naechste_fuenf(-7) == -5
 
 
 # ============================================================
@@ -66,7 +67,31 @@ class PasswortGenerator:
     - Mindestlänge: 8 Zeichen (sonst ValueError)
     - Gibt einen String der gewünschten Länge zurück
     """
-    pass  # TODO: Erst alle Tests schreiben!
+
+    def generate(self, laenge: int = 12, grossbuchstaben: bool = True,
+                 ziffern: bool = True, sonderzeichen: bool = False) -> str:
+        if laenge < 8:
+            raise ValueError(f"Mindestlänge ist 8, war: {laenge}")
+        if not any([grossbuchstaben, ziffern, sonderzeichen]):
+            raise ValueError("Mindestens ein Zeichentyp muss aktiviert sein")
+
+        pool = string.ascii_lowercase
+        mindestens = []
+
+        if grossbuchstaben:
+            pool += string.ascii_uppercase
+            mindestens.append(random.choice(string.ascii_uppercase))
+        if ziffern:
+            pool += string.digits
+            mindestens.append(random.choice(string.digits))
+        if sonderzeichen:
+            pool += "!@#$%^&*"
+            mindestens.append(random.choice("!@#$%^&*"))
+
+        rest = [random.choice(pool) for _ in range(laenge - len(mindestens))]
+        chars = mindestens + rest
+        random.shuffle(chars)
+        return ''.join(chars)
 
 
 class TestPasswortGenerator:
@@ -75,52 +100,74 @@ class TestPasswortGenerator:
     # User Story 1: Konfigurierbare Länge
     def test_passwort_hat_korrekte_laenge(self):
         """TODO: Schreibe vor der Implementierung!"""
-        pass
+        gen = PasswortGenerator()
+        pw = gen.generate(10)
+        assert len(pw) == 10
 
     def test_passwort_standardlaenge_ist_12(self):
         """TODO"""
-        pass
+        gen = PasswortGenerator()
+        pw = gen.generate()
+        assert len(pw) == 12
 
     # User Story 2: Großbuchstaben
     def test_passwort_mit_grossbuchstaben(self):
         """TODO: Mindestens ein Großbuchstabe vorhanden."""
-        pass
+        gen = PasswortGenerator()
+        pw = gen.generate(grossbuchstaben=True)
+        assert any(c.isupper() for c in pw)
 
     def test_passwort_ohne_grossbuchstaben(self):
         """TODO: Kein Großbuchstabe vorhanden wenn deaktiviert."""
-        pass
+        gen = PasswortGenerator()
+        pw = gen.generate(grossbuchstaben=False, ziffern=True)
+        assert not any(c.isupper() for c in pw)
 
     # User Story 3: Ziffern
     def test_passwort_mit_ziffern(self):
         """TODO"""
-        pass
+        gen = PasswortGenerator()
+        pw = gen.generate(ziffern=True)
+        assert any(c.isdigit() for c in pw)
 
     def test_passwort_ohne_ziffern(self):
         """TODO"""
-        pass
+        gen = PasswortGenerator()
+        pw = gen.generate(ziffern=False, sonderzeichen=True)
+        assert not any(c.isdigit() for c in pw)
 
     # User Story 4: Sonderzeichen
     def test_passwort_mit_sonderzeichen(self):
         """TODO"""
-        pass
+        gen = PasswortGenerator()
+        pw = gen.generate(sonderzeichen=True)
+        assert any(c in "!@#$%^&*" for c in pw)
 
     # User Story 5: Mindestlänge
     def test_mindestlaenge_wird_erzwungen(self):
         """TODO: laenge=7 soll ValueError werfen."""
-        pass
+        gen = PasswortGenerator()
+        with pytest.raises(ValueError):
+            gen.generate(7)
 
     def test_laenge_8_ist_erlaubt(self):
         """TODO: Grenzwert – muss funktionieren."""
-        pass
+        gen = PasswortGenerator()
+        pw = gen.generate(8)
+        assert len(pw) == 8
 
     # User Story 6: Fehlermeldungen
     def test_laenge_null_wirft_fehler(self):
         """TODO"""
-        pass
+        gen = PasswortGenerator()
+        with pytest.raises(ValueError):
+            gen.generate(0)
 
     def test_alle_zeichentypen_deaktiviert_wirft_fehler(self):
         """TODO: Was soll passieren, wenn keine Zeichen erlaubt sind?"""
-        pass
+        gen = PasswortGenerator()
+        with pytest.raises(ValueError):
+            gen.generate(grossbuchstaben=False, ziffern=False, sonderzeichen=False)
 
 
 # ============================================================
@@ -130,35 +177,48 @@ class TestPasswortGenerator:
 # Diese Funktion ist funktionierend, aber schlecht strukturiert.
 # Refactore sie – die Tests sollen danach noch grün sein!
 
+def _validiere_bestellung(bestellung: dict) -> None:
+    if not bestellung:
+        raise ValueError("Bestellung darf nicht leer sein")
+    if "artikel" not in bestellung:
+        raise ValueError("Bestellung muss 'artikel' enthalten")
+    if not bestellung["artikel"]:
+        raise ValueError("Artikelliste darf nicht leer sein")
+
+
+def _validiere_artikel(artikel: dict) -> None:
+    if "preis" not in artikel:
+        raise ValueError(f"Artikel '{artikel.get('name', '?')}' hat keinen Preis")
+    if "menge" not in artikel:
+        raise ValueError(f"Artikel '{artikel.get('name', '?')}' hat keine Menge")
+    if artikel["preis"] < 0:
+        raise ValueError("Preis darf nicht negativ sein")
+    if artikel["menge"] <= 0:
+        raise ValueError("Menge muss positiv sein")
+
+
+def _berechne_gesamtpreis(artikel: list) -> float:
+    return sum(a["preis"] * a["menge"] for a in artikel)
+
+
+def _validiere_rabatt(rabatt: float) -> None:
+    if not 0 <= rabatt <= 100:
+        raise ValueError(f"Rabatt muss zwischen 0 und 100 liegen, war: {rabatt}")
+
+
 def verarbeite_bestellung(bestellung: dict) -> dict:
     """
     Verarbeitet eine Bestellung und gibt ein Ergebnis-Dict zurück.
     (Schlecht strukturiert – refactoring notwendig!)
     """
-    if not bestellung:
-        raise ValueError("Bestellung darf nicht leer sein")
+    _validiere_bestellung(bestellung)
 
-    if "artikel" not in bestellung:
-        raise ValueError("Bestellung muss 'artikel' enthalten")
-
-    if not bestellung["artikel"]:
-        raise ValueError("Artikelliste darf nicht leer sein")
-
-    gesamtpreis = 0
     for artikel in bestellung["artikel"]:
-        if "preis" not in artikel:
-            raise ValueError(f"Artikel '{artikel.get('name', '?')}' hat keinen Preis")
-        if "menge" not in artikel:
-            raise ValueError(f"Artikel '{artikel.get('name', '?')}' hat keine Menge")
-        if artikel["preis"] < 0:
-            raise ValueError("Preis darf nicht negativ sein")
-        if artikel["menge"] <= 0:
-            raise ValueError("Menge muss positiv sein")
-        gesamtpreis += artikel["preis"] * artikel["menge"]
+        _validiere_artikel(artikel)
 
+    gesamtpreis = _berechne_gesamtpreis(bestellung["artikel"])
     rabatt = bestellung.get("rabatt_prozent", 0)
-    if not 0 <= rabatt <= 100:
-        raise ValueError(f"Rabatt muss zwischen 0 und 100 liegen, war: {rabatt}")
+    _validiere_rabatt(rabatt)
 
     endpreis = gesamtpreis * (1 - rabatt / 100)
 
@@ -218,14 +278,32 @@ class TestVerarbeiteBestellung:
 # TODO: Schreibe ZUERST die Testklasse TestBerechneZinsen,
 #       DANN die Funktion berechne_zinsen!
 
-# def berechne_zinsen(kapital: float, zinssatz: float, jahre: int) -> float:
-#     """Einfache Zinsberechnung: Kapital * (1 + Zinssatz/100) ^ Jahre"""
-#     pass
+def berechne_zinsen(kapital: float, zinssatz: float, jahre: int) -> float:
+    """Einfache Zinsberechnung: Kapital * (1 + Zinssatz/100) ^ Jahre"""
+    if kapital < 0:
+        raise ValueError("Kapital darf nicht negativ sein")
+    if zinssatz < 0:
+        raise ValueError("Zinssatz darf nicht negativ sein")
+    if jahre <= 0:
+        raise ValueError("Jahre muss positiv sein")
+    return round(kapital * (1 + zinssatz / 100) ** jahre, 2)
 
 
 class TestBerechneZinsen:
     """TODO: Schreibe mindestens 4 Tests BEVOR du berechne_zinsen implementierst."""
 
-    def test_placeholder(self):
-        """Entferne diesen Platzhalter und schreibe echte Tests."""
-        pass
+    def test_einfache_verzinsung_1_jahr(self):
+        assert berechne_zinsen(1000, 5, 1) == 1050.00
+
+    def test_mehrere_jahre(self):
+        assert berechne_zinsen(1000, 5, 3) == 1157.63
+
+    def test_null_kapital(self):
+        assert berechne_zinsen(0, 5, 5) == 0.00
+
+    def test_null_zinssatz(self):
+        assert berechne_zinsen(1000, 0, 5) == 1000.00
+
+    def test_negatives_kapital_wirft_fehler(self):
+        with pytest.raises(ValueError, match="Kapital"):
+            berechne_zinsen(-100, 5, 1)
