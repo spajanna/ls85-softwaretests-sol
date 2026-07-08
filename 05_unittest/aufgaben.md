@@ -84,13 +84,17 @@ class TestBestellsystem(unittest.TestCase):
 ```
 
 **a)** Was testet jeder dieser Tests? Beschreibe in je einem Satz.
+Der erste Test stellt sicher, dass ein gesetzter Rabatt in Prozent den Gesamtpreis der hinzugefügten Artikel mathematisch korrekt mindert. Der zweite Test überprüft, ob ein neu erstelltes, leeres Bestellsystem standardmäßig einen Gesamtpreis von exakt Null zurückgibt. Der dritte Test stellt sicher, dass das System die Eingabe eines unzulässigen, negativen Rabattwerts blockiert und dies mit einem ValueError quittiert.
 
 **b)** Welche Klasse und welche Methoden werden in den Tests verwendet?
+In den Tests wird die Testklasse TestBestellsystem verwendet, welche von unittest.TestCase erbt. Seitens der Anwendungslogik werden die Klasse Bestellsystem sowie deren Methoden artikel_hinzufuegen, rabatt_setzen und gesamtpreis aufgerufen.
 
 **c)** Was bedeutet `assertAlmostEqual` und warum wird es hier statt `assertEqual` verwendet?
+In den Tests wird die Testklasse TestBestellsystem verwendet, welche von unittest.TestCase erbt. Seitens der Anwendungslogik werden die Klasse Bestellsystem sowie deren Methoden artikel_hinzufuegen, rabatt_setzen und gesamtpreis aufgerufen.
 
 **d)** Was passiert, wenn `test_negativer_rabatt_wirft_fehler` fehlschlägt?
 Was wäre dann das Problem in der Implementierung?
+Wenn dieser Test fehlschlägt, bedeutet das, dass bei der Übergabe eines negativen Werts kein ValueError ausgelöst wurde. Das Problem in der Implementierung wäre demnach eine fehlende oder fehlerhafte Validierungslogik in der Methode rabatt_setzen, wodurch unzulässige Werte unbemerkt verarbeitet würden.
 
 Trage deine Antworten in `05_antworten.md` ein.
 
@@ -104,14 +108,14 @@ In `code/starter.py` findest du die Klasse `Kontorechner` – ein vereinfachter 
 
 **b)** Schreibe in der vorbereiteten Testklasse `TestKontorechner` mindestens folgende Tests:
 
-| Testmethode | Was wird geprüft |
-|-------------|-----------------|
-| `test_einzahlen_positiver_betrag` | Einzahlung erhöht den Kontostand korrekt |
-| `test_einzahlen_null_wirft_fehler` | Einzahlung von 0 → `ValueError` |
-| `test_einzahlen_negativ_wirft_fehler` | Negativer Betrag → `ValueError` |
-| `test_abheben_guthaben_vorhanden` | Abhebung reduziert Kontostand korrekt |
-| `test_abheben_kein_guthaben` | Abhebung ohne Guthaben → `ValueError` |
-| `test_kontostand_anfangswert` | Neues Konto hat Kontostand 0 |
+| Testmethode                           | Was wird geprüft                         |
+| ------------------------------------- | ---------------------------------------- |
+| `test_einzahlen_positiver_betrag`     | Einzahlung erhöht den Kontostand korrekt |
+| `test_einzahlen_null_wirft_fehler`    | Einzahlung von 0 → `ValueError`          |
+| `test_einzahlen_negativ_wirft_fehler` | Negativer Betrag → `ValueError`          |
+| `test_abheben_guthaben_vorhanden`     | Abhebung reduziert Kontostand korrekt    |
+| `test_abheben_kein_guthaben`          | Abhebung ohne Guthaben → `ValueError`    |
+| `test_kontostand_anfangswert`         | Neues Konto hat Kontostand 0             |
 
 **c)** Führe die Tests aus und interpretiere die Ausgabe.
 Was bedeuten `.`, `F` und `E` in der Ausgabe?
@@ -125,6 +129,7 @@ Was bedeuten `.`, `F` und `E` in der Ausgabe?
 **a)** Implementiere `Einkaufsliste` in `starter.py` (mindestens: `hinzufuegen`, `entfernen`, `anzeigen`, `ist_leer`).
 
 **b)** Schreibe eine Testklasse `TestEinkaufsliste`, die:
+
 - In `setUp()` eine neue `Einkaufsliste` anlegt
 - In `tearDown()` eine Meldung ausgibt (demonstriert die Reihenfolge)
 - Mindestens 5 Testmethoden enthält
@@ -162,11 +167,11 @@ dass bei einer Punktzahl von -1 und 101 jeweils ein `ValueError` geworfen wird.
 
 Ein Betrieb hat eine Funktion `berechne_mehrwertsteuer(netto: float, steuersatz: float) -> float` entwickelt.
 
-**(a)** Nennen Sie vier sinnvolle Testfälle mit konkreten Eingabe- und Erwartungswerten. *(4 Punkte)*
+**(a)** Nennen Sie vier sinnvolle Testfälle mit konkreten Eingabe- und Erwartungswerten. _(4 Punkte)_
 
-**(b)** Schreiben Sie die vier Testfälle als Python-`unittest`-Methoden in eine Testklasse. *(8 Punkte)*
+**(b)** Schreiben Sie die vier Testfälle als Python-`unittest`-Methoden in eine Testklasse. _(8 Punkte)_
 
-**(c)** Welcher Assertion-Typ ist bei Kommazahlen problematisch? Nennen Sie die Alternative und warum diese nötig ist. *(3 Punkte)*
+**(c)** Welcher Assertion-Typ ist bei Kommazahlen problematisch? Nennen Sie die Alternative und warum diese nötig ist. _(3 Punkte)_
 
 ---
 
@@ -175,6 +180,7 @@ Ein Betrieb hat eine Funktion `berechne_mehrwertsteuer(netto: float, steuersatz:
 **Gegenseitiges Testen:**
 
 Person A: Implementiert eine Klasse `Dateilogger` mit den Methoden:
+
 - `schreiben(nachricht: str)` → fügt Nachricht zur Log-Liste hinzu
 - `auslesen()` → gibt alle Nachrichten als Liste zurück
 - `loeschen()` → leert den Log
@@ -190,7 +196,7 @@ Dann: Tests zusammenführen, ausführen – was schlägt fehl? Warum?
 
 ## Active Recall 🧠
 
-*Unterlagen zu:*
+_Unterlagen zu:_
 
 1. Wie heißt die Basisklasse, von der alle Testklassen erben müssen?
 2. Mit welchem Befehl führst du alle Tests in einem Verzeichnis aus?
@@ -208,8 +214,8 @@ Dann: Tests zusammenführen, ausführen – was schlägt fehl? Warum?
 
 **Was nimmst du mit?**
 
-> _______________________________________________
+> ---
 
 ---
 
-*Bei Problemen → [Stuck Protocol](../stuck_protocol.md)*
+_Bei Problemen → [Stuck Protocol](../stuck_protocol.md)_

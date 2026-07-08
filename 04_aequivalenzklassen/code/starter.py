@@ -1,6 +1,6 @@
 """
 Baustein 04 – Äquivalenzklassen & Grenzwertanalyse
-Startvorlage – bearbeite diese Datei für deine Aufgaben.
+Startvorlage – bearbeitet und einsatzbereit.
 """
 
 
@@ -13,15 +13,22 @@ def validiere_menge(menge) -> bool:
     Prüft, ob eine Bestellmenge gültig ist.
 
     Regeln:
-    - Typ: ganzzahlig
+    - Typ: ganzzahlig (bool wird explizit ausgeschlossen, da isinstance(True, int) == True ist)
     - Minimum: 1
     - Maximum: 999
 
     Returns:
         True wenn gültig, False wenn ungültig.
     """
-    # TODO: Implementiere die Validierungslogik
-    pass
+    # Prüfen, ob der Typ exakt ein Integer ist
+    if type(menge) is not int:
+        return False
+        
+    # Prüfen, ob die Menge innerhalb der Grenzwerte liegt
+    if menge >= 1 and menge <= 999:
+        return True
+        
+    return False
 
 
 # ============================================================
@@ -41,9 +48,23 @@ def pruefe_passwort(passwort: str) -> bool:
     Returns:
         True wenn gültig, False wenn ungültig.
     """
-    # TODO: Implementiere die Prüflogik
-    # Hinweis: str.isupper(), str.isdigit(), ' ' in passwort
-    pass
+    # Typ-Check zur Sicherheit
+    if not isinstance(passwort, str):
+        return False
+
+    # Regel: Länge 8-64 Zeichen
+    if len(passwort) < 8 or len(passwort) > 64:
+        return False
+
+    # Regel: Keine Leerzeichen
+    if ' ' in passwort:
+        return False
+
+    # Regeln für Zeichenbestandteile prüfen
+    hat_grossbuchstabe = any(char.isupper() for char in passwort)
+    hat_ziffer = any(char.isdigit() for char in passwort)
+
+    return hat_grossbuchstabe and hat_ziffer
 
 
 # ============================================================
@@ -63,10 +84,23 @@ def berechne_note(punkte: int) -> int:
         0–29   → 6
 
     Raises:
-        ValueError: Wenn punkte außerhalb [0, 100] liegt.
+        ValueError: Wenn punkte außerhalb [0, 100] liegt oder kein Integer ist.
     """
-    # TODO: Implementiere die Notenberechnung
-    pass
+    if type(punkte) is not int or punkte < 0 or punkte > 100:
+        raise ValueError("Punktzahl muss eine Ganzzahl zwischen 0 und 100 sein.")
+
+    if punkte >= 92:
+        return 1
+    elif punkte >= 81:
+        return 2
+    elif punkte >= 67:
+        return 3
+    elif punkte >= 50:
+        return 4
+    elif punkte >= 30:
+        return 5
+    else:
+        return 6
 
 
 # ============================================================
@@ -78,14 +112,8 @@ if __name__ == "__main__":
     # --- Aufgabe 1: validiere_menge ---
     print("=== Aufgabe 1: validiere_menge ===")
 
-    # Äquivalenzklassen testen:
-    # TODO: Gültige Klasse (z. B. menge = 50)
-    # TODO: Ungültige Klasse Untergrenze (z. B. menge = 0)
-    # TODO: Ungültige Klasse Obergrenze (z. B. menge = 1000)
-    # TODO: Falscher Typ (z. B. menge = "viel")
-
-    # Grenzwerte testen:
-    # TODO: Grenzwert 0, 1, 999, 1000
+    # Die Testschleife deckt bereits alle geforderten Äquivalenzklassen 
+    # und kritischen Grenzwerte (0, 1, 999, 1000) sowie den Typfehler ab:
     for testfall in [0, 1, 500, 999, 1000, -1, "abc"]:
         try:
             ergebnis = validiere_menge(testfall)
@@ -101,7 +129,7 @@ if __name__ == "__main__":
         "ABCDEFGH",       # keine Ziffer
         "Abc 1234",       # Leerzeichen
         "Ab1",            # zu kurz
-        "A" * 64 + "1",  # zu lang
+        "A" * 64 + "1",   # zu lang
     ]
     for pw in testpasswoerter:
         print(f"  pruefe_passwort({pw!r}) → {pruefe_passwort(pw)}")

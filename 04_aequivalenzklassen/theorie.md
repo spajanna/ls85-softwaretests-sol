@@ -20,17 +20,18 @@ In **Baustein 01** hast du gelernt: Vollständiges Testen ist unmöglich. Eine F
 **Grundidee:** Teile alle möglichen Eingaben in Gruppen (Klassen) ein, in denen sich das System für alle Werte **gleich verhält**. Dann reicht ein einziger repräsentativer Wert pro Klasse.
 
 Man unterscheidet immer:
+
 - **Gültige Äquivalenzklassen (GÄK):** Eingaben, die das System akzeptieren soll
 - **Ungültige Äquivalenzklassen (UÄK):** Eingaben, die das System ablehnen soll
 
 **Beispiel:** Altersfeld, gültige Eingabe: 0–120 Jahre
 
-| Klasse | Bereich | Repräsentativer Wert | Art |
-|--------|---------|---------------------|-----|
-| AK1 | 0–120 | 25 | Gültig |
-| AK2 | < 0 (negativ) | -1 | Ungültig |
-| AK3 | > 120 (unrealistisch) | 150 | Ungültig |
-| AK4 | Kein Wert / leer | "" | Ungültig |
+| Klasse | Bereich               | Repräsentativer Wert | Art      |
+| ------ | --------------------- | -------------------- | -------- |
+| AK1    | 0–120                 | 25                   | Gültig   |
+| AK2    | < 0 (negativ)         | -1                   | Ungültig |
+| AK3    | > 120 (unrealistisch) | 150                  | Ungültig |
+| AK4    | Kein Wert / leer      | ""                   | Ungültig |
 
 Für jede Klasse reicht **ein** Testfall – das spart Aufwand, ohne Qualität zu verlieren.
 
@@ -41,23 +42,25 @@ Für jede Klasse reicht **ein** Testfall – das spart Aufwand, ohne Qualität z
 Erfahrungen aus der Praxis zeigen: **Fehler entstehen besonders häufig an den Grenzen** von Äquivalenzklassen. Ein Entwickler schreibt `> 0` statt `>= 0` – der Grenzwert 0 ist dann falsch behandelt, obwohl alle anderen Werte korrekt funktionieren.
 
 **Regel:** Teste immer:
+
 - Den Wert **direkt an der Grenze**
 - Den Wert **knapp darunter** (Grenze − 1)
 - Den Wert **knapp darüber** (Grenze + 1)
 
 **Beispiel:** Altersfeld, Grenze bei 18 (Volljährigkeit)
 
-| Testfall | Wert | Erwartetes Ergebnis |
-|----------|------|---------------------|
-| GW1 | 17 | Abgelehnt (minderjährig) |
-| GW2 | 18 | Akzeptiert (genau die Grenze) |
-| GW3 | 19 | Akzeptiert |
+| Testfall | Wert | Erwartetes Ergebnis           |
+| -------- | ---- | ----------------------------- |
+| GW1      | 17   | Abgelehnt (minderjährig)      |
+| GW2      | 18   | Akzeptiert (genau die Grenze) |
+| GW3      | 19   | Akzeptiert                    |
 
 ---
 
 ## IHK-Relevanz
 
 Äquivalenzklassen und Grenzwertanalyse sind **prüfungsrelevant** für die IHK-Abschlussprüfung. Typische Prüfungsaufgaben:
+
 - Klassen und Grenzwerte aus einer Spezifikation ableiten und benennen
 - Testfälle systematisch aus den Klassen entwickeln und begründen
 - Erklären, warum sowohl gültige **als auch** ungültige Klassen getestet werden müssen
@@ -115,15 +118,16 @@ Jede Zeile testet **eine** Klasse oder einen Grenzwert – so entsteht lückenlo
 
 ## Weiterführende Links
 
-| Ressource | Beschreibung |
-|-----------|-------------|
-| [ISTQB Glossar – Äquivalenzklasse](https://glossary.istqb.org) | Offizielle Definition mit Beispielen aus dem internationalen Teststandard |
-| [inf-schule.de – Testfallermittlung](https://www.inf-schule.de) | Didaktisch aufbereitete deutschsprachige Materialien für Schule und Ausbildung |
-| [Guru99 – Equivalence Partitioning](https://www.guru99.com/equivalence-partitioning-boundary-value-analysis.html) | Schritt-für-Schritt-Beispiel mit Grenzwertanalyse (englisch) |
+| Ressource                                                                                                         | Beschreibung                                                                   |
+| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| [ISTQB Glossar – Äquivalenzklasse](https://glossary.istqb.org)                                                    | Offizielle Definition mit Beispielen aus dem internationalen Teststandard      |
+| [inf-schule.de – Testfallermittlung](https://www.inf-schule.de)                                                   | Didaktisch aufbereitete deutschsprachige Materialien für Schule und Ausbildung |
+| [Guru99 – Equivalence Partitioning](https://www.guru99.com/equivalence-partitioning-boundary-value-analysis.html) | Schritt-für-Schritt-Beispiel mit Grenzwertanalyse (englisch)                   |
 
 ---
 
 ### 🎮 Lernkarten & Wiederholung
+
 - [📦 Alle Lernkarten LS 8.5 – Quizlet Ordner](https://quizlet.com/user/A__J_35/folders/ls-85-softwaretests?i=20ii9u&x=1xqt)
 - [🃏 Quizlet – Baustein 04: Äquivalenzklassen](https://quizlet.com/de/karteikarten/04-aquivalenzklassen-1179961980?i=20ii9u&x=1jqt)
 
@@ -138,4 +142,4 @@ In **Baustein 05 – Python unittest** lernst du, wie du deine Testfälle nicht 
 
 ---
 
-*[➡️ Weiter zu aufgaben.md](aufgaben.md) · Bei Problemen → [Stuck Protocol](../stuck_protocol.md)*
+_[➡️ Weiter zu aufgaben.md](aufgaben.md) · Bei Problemen → [Stuck Protocol](../stuck_protocol.md)_

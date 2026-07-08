@@ -1,6 +1,6 @@
 """
 Baustein 05 – Python unittest
-Startvorlage – bearbeite diese Datei für deine Aufgaben.
+Startvorlage – komplett ausgearbeitet für deine Aufgaben.
 
 Ausführen:
     python -m unittest 05_unittest/code/starter.py -v
@@ -63,46 +63,52 @@ class TestKontorechner(unittest.TestCase):
     # --- Einzahlen ---
 
     def test_einzahlen_positiver_betrag(self):
-        """TODO: Prüfe, dass eine Einzahlung von 100 den Kontostand auf 100 setzt."""
-        # TODO: Deine Implementierung
-        pass
+        """Prüfe, dass eine Einzahlung von 100 den Kontostand auf 100 setzt."""
+        self.konto.einzahlen(100.0)
+        self.assertEqual(self.konto.kontostand, 100.0)
 
     def test_einzahlen_mehrere_betraege(self):
-        """TODO: Prüfe, dass mehrere Einzahlungen korrekt addiert werden."""
-        # TODO: Deine Implementierung
-        pass
+        """Prüfe, dass mehrere Einzahlungen korrekt addiert werden."""
+        self.konto.einzahlen(50.0)
+        self.konto.einzahlen(25.50)
+        self.assertEqual(self.konto.kontostand, 75.50)
 
     def test_einzahlen_null_wirft_fehler(self):
-        """TODO: Prüfe, dass Einzahlung von 0 einen ValueError wirft."""
-        # TODO: Nutze assertRaises (beide Varianten ausprobieren)
-        pass
+        """Prüfe, dass Einzahlung von 0 einen ValueError wirft."""
+        # Variante 1: Als Callable mit Argumenten
+        self.assertRaises(ValueError, self.konto.einzahlen, 0)
+        
+        # Variante 2: Als Context Manager
+        with self.assertRaises(ValueError):
+            self.konto.einzahlen(0)
 
     def test_einzahlen_negativ_wirft_fehler(self):
-        """TODO: Prüfe, dass negativer Betrag einen ValueError wirft."""
-        # TODO: Deine Implementierung
-        pass
+        """Prüfe, dass negativer Betrag einen ValueError wirft."""
+        with self.assertRaises(ValueError):
+            self.konto.einzahlen(-10.0)
 
     # --- Abheben ---
 
     def test_abheben_guthaben_vorhanden(self):
-        """TODO: Einzahlen und dann korrekt abheben."""
-        # TODO: Deine Implementierung
-        pass
+        """Einzahlen und dann korrekt abheben."""
+        self.konto.einzahlen(100.0)
+        self.konto.abheben(40.0)
+        self.assertEqual(self.konto.kontostand, 60.0)
 
     def test_abheben_kein_guthaben(self):
-        """TODO: Abhebung ohne Guthaben wirft ValueError."""
-        # TODO: Deine Implementierung
-        pass
+        """Abhebung ohne Guthaben wirft ValueError."""
+        with self.assertRaises(ValueError):
+            self.konto.abheben(10.0)
 
     def test_abheben_exakt_kontostand(self):
-        """TODO: Abhebung des gesamten Kontostands (Grenzfall)."""
-        # TODO: Deine Implementierung
-        pass
+        """Abhebung des gesamten Kontostands (Grenzfall)."""
+        self.konto.einzahlen(50.0)
+        self.konto.abheben(50.0)
+        self.assertEqual(self.konto.kontostand, 0.0)
 
     def test_kontostand_anfangswert(self):
-        """TODO: Neues Konto hat Kontostand 0."""
-        # TODO: Deine Implementierung
-        pass
+        """Neues Konto hat Kontostand 0."""
+        self.assertEqual(self.konto.kontostand, 0.0)
 
 
 # ============================================================
@@ -110,14 +116,16 @@ class TestKontorechner(unittest.TestCase):
 # ============================================================
 
 class Einkaufsliste:
-    """TODO: Implementiere diese Klasse."""
+    """Implementierung des Einkaufslisten-Managers."""
 
     def __init__(self):
-        pass  # TODO
+        self._artikel = []
 
     def hinzufuegen(self, artikel: str) -> None:
         """Fügt einen Artikel hinzu."""
-        pass  # TODO
+        if not artikel or not isinstance(artikel, str):
+            raise ValueError("Artikelname muss ein gültiger Text sein.")
+        self._artikel.append(artikel)
 
     def entfernen(self, artikel: str) -> None:
         """
@@ -125,57 +133,68 @@ class Einkaufsliste:
         Raises:
             ValueError: Wenn der Artikel nicht vorhanden ist.
         """
-        pass  # TODO
+        if artikel not in self._artikel:
+            raise ValueError(f"Artikel '{artikel}' ist nicht auf der Liste.")
+        self._artikel.remove(artikel)
 
     def anzeigen(self) -> list:
         """Gibt alle Artikel als Liste zurück."""
-        pass  # TODO
+        return self._artikel.copy()
 
     def ist_leer(self) -> bool:
         """Gibt True zurück, wenn die Liste leer ist."""
-        pass  # TODO
+        return len(self._artikel) == 0
 
     def anzahl(self) -> int:
         """Gibt die Anzahl der Artikel zurück."""
-        pass  # TODO
+        return len(self._artikel)
 
 
 class TestEinkaufsliste(unittest.TestCase):
 
     def setUp(self):
-        """TODO: Erstelle eine neue Einkaufsliste."""
-        pass  # TODO: self.liste = Einkaufsliste()
+        """Erstelle eine neue Einkaufsliste vor jedem Test."""
+        self.liste = Einkaufsliste()
 
     def tearDown(self):
         """Wird nach jeder Testmethode ausgeführt."""
         print(f"  [tearDown] Test abgeschlossen.")
 
     def test_neue_liste_ist_leer(self):
-        """TODO"""
-        pass
+        """Eine frisch erstellte Liste muss leer sein."""
+        self.assertTrue(self.liste.ist_leer())
+        self.assertEqual(self.liste.anzahl(), 0)
 
     def test_artikel_hinzufuegen(self):
-        """TODO"""
-        pass
+        """Hinzugefügte Artikel müssen in der Liste erscheinen."""
+        self.liste.hinzufuegen("Milch")
+        self.assertIn("Milch", self.liste.anzeigen())
+        self.assertFalse(self.liste.ist_leer())
 
     def test_artikel_entfernen(self):
-        """TODO"""
-        pass
+        """Artikel müssen nach dem Entfernen aus der Liste verschwinden."""
+        self.liste.hinzufuegen("Brot")
+        self.liste.entfernen("Brot")
+        self.assertNotIn("Brot", self.liste.anzeigen())
+        self.assertTrue(self.liste.ist_leer())
 
     def test_nicht_vorhandenen_artikel_entfernen_wirft_fehler(self):
-        """TODO"""
-        pass
+        """Das Entfernen unvorhandener Artikel muss fehlschlagen."""
+        with self.assertRaises(ValueError):
+            self.liste.entfernen("Käse")
 
     def test_anzahl_nach_mehreren_operationen(self):
-        """TODO"""
-        pass
+        """Die Artikelanzahl muss nach diversen Operationen stimmen."""
+        self.liste.hinzufuegen("Äpfel")
+        self.liste.hinzufuegen("Bananen")
+        self.liste.hinzufuegen("Birnen")
+        self.liste.entfernen("Bananen")
+        self.assertEqual(self.liste.anzahl(), 2)
 
 
 # ============================================================
 # Aufgabe 3 – assertRaises Varianten
 # ============================================================
-
-# Importiere berechne_note aus Baustein 04 oder kopiere die Funktion hier:
 
 def berechne_note(punkte: int) -> int:
     """Notenberechnung aus Baustein 04 – hier für Testzwecke."""
@@ -204,19 +223,20 @@ class TestBerechneNote(unittest.TestCase):
         self.assertEqual(berechne_note(0), 6)
 
     def test_ungueltige_punkte_negativ(self):
-        """TODO: Teste mit -1 – nutze assertRaises als Context Manager."""
-        # TODO: Variante 2 (with self.assertRaises(...))
-        pass
+        """Teste mit -1 – nutze assertRaises als Context Manager."""
+        # Variante 2 (with self.assertRaises(...))
+        with self.assertRaises(ValueError):
+            berechne_note(-1)
 
     def test_ungueltige_punkte_zu_hoch(self):
-        """TODO: Teste mit 101 – nutze assertRaises als Callable."""
-        # TODO: Variante 1 (self.assertRaises(ValueError, berechne_note, 101))
-        pass
+        """Teste mit 101 – nutze assertRaises als Callable."""
+        # Variante 1 (self.assertRaises(ValueError, berechne_note, 101))
+        self.assertRaises(ValueError, berechne_note, 101)
 
     def test_grenzwert_note_2(self):
-        """TODO: Teste Grenzwert 91 (letzte Note 2) und 92 (erste Note 1)."""
-        # TODO: Deine Implementierung
-        pass
+        """Teste Grenzwert 91 (letzte Note 2) und 92 (erste Note 1)."""
+        self.assertEqual(berechne_note(91), 2)
+        self.assertEqual(berechne_note(92), 1)
 
 
 # ============================================================

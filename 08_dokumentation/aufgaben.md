@@ -22,7 +22,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 ## Selbsteinschätzung – Vorher
 
 - [ ] 🟢 Ich kenne Testpläne und Testberichte
-- [ ] 🟡 Ich habe davon gehört, aber noch nie selbst erstellt
+- [ x ] 🟡 Ich habe davon gehört, aber noch nie selbst erstellt
 - [ ] 🔴 Das ist mir komplett neu
 
 ---
@@ -45,6 +45,7 @@ Im Berufsalltag reicht es nicht, Tests zu schreiben – du musst auch nachweisen
 dass du getestet hast und was dabei herausgekommen ist.
 
 **Testdokumentation dient dazu:**
+
 - Nachvollziehbarkeit: Wer hat was wann getestet?
 - Qualitätsnachweis gegenüber Auftraggeber / Kunden
 - Grundlage für Abnahmeentscheidungen
@@ -52,6 +53,7 @@ dass du getestet hast und was dabei herausgekommen ist.
 - Wissensweitergabe im Team
 
 **Wichtige Dokumente:**
+
 - **Testplan**: Was wird wie getestet? (vor dem Testen)
 - **Testfallspezifikation**: Genaue Definition einzelner Tests
 - **Testbericht**: Was wurde gefunden? (nach dem Testen)
@@ -65,15 +67,16 @@ dass du getestet hast und was dabei herausgekommen ist.
 **a)** Ordne die folgenden Aussagen dem richtigen Dokument zu
 (Testplan / Testprotokoll / Testbericht):
 
-| Aussage | Dokument |
-|---------|----------|
-| „Wir werden alle Module mit pytest testen." | |
-| „TC-007 ist fehlgeschlagen: Bestand wurde auf -5 gesetzt." | |
-| „8 von 10 Tests bestanden, 1 Fehler offen." | |
-| „Abnahmekriterium: Coverage > 80 %." | |
-| „Empfehlung: System ist abnahmebereit." | |
+| Aussage                                                    | Dokument |
+| ---------------------------------------------------------- | -------- |
+| „Wir werden alle Module mit pytest testen."                |          |
+| „TC-007 ist fehlgeschlagen: Bestand wurde auf -5 gesetzt." |          |
+| „8 von 10 Tests bestanden, 1 Fehler offen."                |          |
+| „Abnahmekriterium: Coverage > 80 %."                       |          |
+| „Empfehlung: System ist abnahmebereit."                    |          |
 
 **b)** Wann wird jedes Dokument erstellt? Ordne zu:
+
 - Vor dem Testen
 - Während des Testens
 - Nach dem Testen
@@ -89,16 +92,16 @@ Trage deine Antworten in `08_antworten.md` ein.
 
 Ein Testfall braucht immer diese Bestandteile:
 
-| Feld | Beschreibung |
-|------|-------------|
-| TC-ID | Eindeutige Kennung (z. B. TC-AUTH-001) |
-| Titel | Kurze Beschreibung des Tests |
-| Vorbedingung | Was muss vor dem Test gelten? |
-| Testeingabe | Welche Daten werden verwendet? |
-| Testschritte | Was wird Schritt für Schritt getan? |
-| Erwartetes Ergebnis | Was soll passieren? |
+| Feld                   | Beschreibung                                    |
+| ---------------------- | ----------------------------------------------- |
+| TC-ID                  | Eindeutige Kennung (z. B. TC-AUTH-001)          |
+| Titel                  | Kurze Beschreibung des Tests                    |
+| Vorbedingung           | Was muss vor dem Test gelten?                   |
+| Testeingabe            | Welche Daten werden verwendet?                  |
+| Testschritte           | Was wird Schritt für Schritt getan?             |
+| Erwartetes Ergebnis    | Was soll passieren?                             |
 | Tatsächliches Ergebnis | Was ist tatsächlich passiert? (nach Ausführung) |
-| Status | Bestanden / Fehlgeschlagen / Blockiert |
+| Status                 | Bestanden / Fehlgeschlagen / Blockiert          |
 
 **a)** Erstelle vollständige Testfalldokumentationen für die Funktion `authentifiziere_benutzer()`
 aus Baustein 03. Mindestens 6 Testfälle.
@@ -112,6 +115,7 @@ Nutze die Vorlage in `code/starter.py` (als Python-Docstring oder Markdown-Tabel
 ## Aufgabe 2 – Testplan erstellen 🟡
 
 Ein Testplan ist das übergeordnete Dokument, das beschreibt:
+
 - Was soll getestet werden (Testumfang)?
 - Wie soll getestet werden (Methoden, Werkzeuge)?
 - Wer testet was (Verantwortlichkeiten)?
@@ -123,6 +127,7 @@ Ihr habt eine **Lagerbestandsverwaltung** in Python entwickelt (ca. 200 Zeilen C
 3 Module: `artikel.py`, `lager.py`, `bericht.py`).
 
 Erstelle einen Testplan (in `08_testplan.md`) mit:
+
 - Projektname, Datum, Autor
 - Testumfang (was wird getestet, was nicht)
 - Teststufen (welche Tests auf welcher Stufe)
@@ -139,12 +144,14 @@ In `code/starter.py` findest du ein Modul `lager.py` mit einer `Lager`-Klasse
 und eine Test-Suite dafür.
 
 **a)** Installiere pytest-cov und führe den Coverage-Bericht aus:
+
 ```bash
 pip install pytest-cov
 pytest 08_dokumentation/code/starter.py --cov=08_dokumentation/code/starter --cov-report=term-missing -v
 ```
 
 **b)** Interpretiere den Bericht:
+
 - Welche Zeilen werden nicht getestet ("missing")?
 - Welche Zweige fehlen?
 - Wie hoch ist die aktuelle Coverage?
@@ -161,6 +168,7 @@ Nach dem Abschluss der Tests für die Lagerbestandsverwaltung (Aufgabe 2)
 erwartet der Auftraggeber einen formalen Testbericht.
 
 Erstelle `08_testbericht.md` mit:
+
 - Zusammenfassung: Was wurde getestet? Mit welchem Ergebnis?
 - Testumgebung: Python-Version, Betriebssystem, pytest-Version
 - Testergebnisse: Tabelle mit allen Testfällen und Status
@@ -194,13 +202,13 @@ PASSED  test_loeschen_vorhandener_artikel          [100%]
 8 passed, 2 failed, 1 error in 0.43s
 ```
 
-**(a)** Berechnen Sie die Erfolgsquote der Tests in Prozent. *(1 Punkt)*
+**(a)** Berechnen Sie die Erfolgsquote der Tests in Prozent. _(1 Punkt)_
 
-**(b)** Unterscheiden Sie "FAILED" und "ERROR" in pytest. Was bedeutet jeweils dieser Status? *(4 Punkte)*
+**(b)** Unterscheiden Sie "FAILED" und "ERROR" in pytest. Was bedeutet jeweils dieser Status? _(4 Punkte)_
 
-**(c)** Erstellen Sie einen kurzen Testbericht (Tabellenformat), der diese Ergebnisse für den Auftraggeber aufbereitet. Bewerten Sie, ob das System abnahmebereit ist. *(6 Punkte)*
+**(c)** Erstellen Sie einen kurzen Testbericht (Tabellenformat), der diese Ergebnisse für den Auftraggeber aufbereitet. Bewerten Sie, ob das System abnahmebereit ist. _(6 Punkte)_
 
-**(d)** Welche Maßnahmen würden Sie vor einer erneuten Abnahme empfehlen? *(4 Punkte)*
+**(d)** Welche Maßnahmen würden Sie vor einer erneuten Abnahme empfehlen? _(4 Punkte)_
 
 ---
 
@@ -212,6 +220,7 @@ Person A erstellt einen Testplan und Testbericht für ihre Lösung aus Baustein 
 Person B erstellt dasselbe für ihre Lösung aus Baustein 06 (pytest).
 
 Dann tauscht ihr und reviewed gegenseitig:
+
 - Sind alle Pflichtbestandteile vorhanden?
 - Ist der Bericht für jemanden verständlich, der den Code nicht kennt?
 - Würde der Auftraggeber die Abnahme erteilen?
@@ -224,7 +233,7 @@ Haltet Feedback schriftlich fest.
 
 ## Active Recall 🧠
 
-*Unterlagen zu:*
+_Unterlagen zu:_
 
 1. Was ist der Unterschied zwischen Testplan und Testbericht?
 2. Was sind typische Abnahmekriterien für Software?
@@ -236,18 +245,18 @@ Haltet Feedback schriftlich fest.
 
 ## Reflexion 🚦
 
-- [ ] 🟢 Ich kann professionelle Testdokumentation erstellen
+- [ x ] 🟢 Ich kann professionelle Testdokumentation erstellen
 - [ ] 🟡 Ich verstehe das Konzept, die Umsetzung braucht noch Übung
 - [ ] 🔴 Ich brauche weitere Erklärungen oder Beispiele
 
 **Was war in dieser gesamten Lernsequenz das Wichtigste für dich?**
 
-> _______________________________________________
+> ---
 
 **Was nimmst du konkret in deinen Betriebsalltag mit?**
 
-> _______________________________________________
+> ---
 
 ---
 
-*Bei Problemen → [Stuck Protocol](../stuck_protocol.md)*
+_Bei Problemen → [Stuck Protocol](../stuck_protocol.md)_

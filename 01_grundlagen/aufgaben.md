@@ -20,7 +20,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 
 ## Selbsteinschätzung – Vorher
 
-*Bevor du anfängst: Wie sicher fühlst du dich bei diesem Thema?*
+_Bevor du anfängst: Wie sicher fühlst du dich bei diesem Thema?_
 
 - [ ] 🟢 Ich kenne mich schon aus
 - [ ] 🟡 Ich habe eine vage Vorstellung
@@ -58,6 +58,7 @@ In der Datei `code/starter.py` findest du eine Funktion `berechne_rabatt()`.
 Der Code hat bewusst einen Fehler eingebaut.
 
 **a)** Lies den Code und identifiziere:
+
 - Wo liegt der **Fehler (Error)** – also die falsche Handlung des Entwicklers?
 - Was ist der **Defekt (Defect/Bug)** – die Stelle im Code, die das Problem verursacht?
 - Was wäre das **Versagen (Failure)** – was würde der Benutzer bemerken?
@@ -79,25 +80,27 @@ Was erwartest du als Ergebnis?
 Testverfahren werden in zwei Kategorien eingeteilt:
 
 **Statische Testverfahren** – der Code wird NICHT ausgeführt:
+
 - Review, Inspektion, Walkthrough
 - Statische Analyse (z.B. Linter, Code-Checker)
 - Ziel: Fehler im Code oder Dokument durch Lesen/Prüfen finden
 
 **Dynamische Testverfahren** – der Code WIRD ausgeführt:
+
 - Unit-Tests, Integrationstests, Systemtests
 - Manuelle Tests, automatisierte Tests
 - Ziel: Fehler durch tatsächliches Ausführen des Programms finden
 
 **a)** Ordne die folgenden Maßnahmen den Kategorien zu:
 
-| Maßnahme | Statisch | Dynamisch |
-|----------|----------|-----------|
-| Code Review durch einen Kollegen | | |
-| Programm mit Testdaten ausführen | | |
-| Syntaxprüfung durch den Editor | | |
-| Walkthroughs im Team | | |
-| Unit-Tests laufen lassen | | |
-| Checklisten für Codestruktur | | |
+| Maßnahme                         | Statisch | Dynamisch |
+| -------------------------------- | -------- | --------- |
+| Code Review durch einen Kollegen |          |           |
+| Programm mit Testdaten ausführen |          |           |
+| Syntaxprüfung durch den Editor   |          |           |
+| Walkthroughs im Team             |          |           |
+| Unit-Tests laufen lassen         |          |           |
+| Checklisten für Codestruktur     |          |           |
 
 Trage die Tabelle (als Markdown) in einen Kommentarblock in `starter.py` ein oder erstelle eine Datei `01_antworten.md`.
 
@@ -132,11 +135,11 @@ Die ISTQB-Norm beschreibt sieben Grundprinzipien des Testens:
 Eine Softwarefirma entwickelt eine Webanwendung für Lagerverwaltung.
 Der Teamleiter sagt: "Wir haben keine Zeit für Tests – wir liefern direkt ans Produktivsystem."
 
-**(a)** Nennen Sie zwei konkrete Risiken, die durch das Weglassen von Tests entstehen. *(2 Punkte)*
+**(a)** Nennen Sie zwei konkrete Risiken, die durch das Weglassen von Tests entstehen. _(2 Punkte)_
 
-**(b)** Unterscheiden Sie die Begriffe „Defekt" und „Versagen" anhand eines Beispiels aus dem Lagerverwaltungssystem. *(4 Punkte)*
+**(b)** Unterscheiden Sie die Begriffe „Defekt" und „Versagen" anhand eines Beispiels aus dem Lagerverwaltungssystem. _(4 Punkte)_
 
-**(c)** Erläutern Sie, warum frühzeitiges Testen (Grundprinzip 3) wirtschaftlich sinnvoll ist. Nutzen Sie das Schlagwort „Rule of Ten". *(4 Punkte)*
+**(c)** Erläutern Sie, warum frühzeitiges Testen (Grundprinzip 3) wirtschaftlich sinnvoll ist. Nutzen Sie das Schlagwort „Rule of Ten". _(4 Punkte)_
 
 Schreibe deine Antworten in `01_antworten.md`.
 
@@ -147,14 +150,15 @@ Schreibe deine Antworten in `01_antworten.md`.
 **Transferaufgabe:**
 
 Du arbeitest als Fachinformatiker/in in einem Betrieb. Dein Teamleiter sagt:
-*„Wir testen schon seit Jahren nicht – bisher ist immer alles gut gegangen.
-Erkläre mir, warum wir damit anfangen sollen, und was genau wir testen müssen."*
+_„Wir testen schon seit Jahren nicht – bisher ist immer alles gut gegangen.
+Erkläre mir, warum wir damit anfangen sollen, und was genau wir testen müssen."_
 
 **a)** Formuliere eine überzeugende Argumentation (5–8 Sätze) für systematisches Testen.
 Nutze mindestens drei der sieben Grundprinzipien und ein reales Beispiel
 (Ariane-5, Therac-25, Y2K oder ein eigenes Beispiel aus dem Berufsalltag).
 
 **b)** Dein Betrieb entwickelt eine neue Funktion `berechne_urlaubstage(eintrittsdatum, arbeitstage_pro_woche)`.
+
 - Identifiziere einen möglichen Fehler (Error), Defekt (Defect) und ein Versagen (Failure) für diese Funktion.
 - Beschreibe die Konsequenzen eines unentdeckten Defekts in einem Lohnabrechnungssystem.
 
@@ -181,28 +185,39 @@ Haltet das Ergebnis in `01_antworten.md` fest (3–5 Sätze).
 
 ## Active Recall – Brain Dump 🧠
 
-*Schließe alle Unterlagen. Schreibe 5 Minuten lang alles auf, was du zu folgenden Fragen weißt:*
+_Schließe alle Unterlagen. Schreibe 5 Minuten lang alles auf, was du zu folgenden Fragen weißt:_
 
 1. Was ist der Unterschied zwischen Error, Defect und Failure?
+
+Antwort: Error = Die falsche Handlung oder der Denkfehler des Entwicklers.
+Defect= Die konkrete Auswirkung des Errors im statischen Quellcode.
+Failure = Das sichtbare Symptom zur Laufzeit. Wenn der fehlerhafte Code tatsächlich ausgeführt wird und das Programm abstürzt, ein falsches Ergebnis ausgibt oder das System einfriert.
+
 2. Warum können wir nie sicher sein, dass Software fehlerfrei ist?
+
+Antwort: Moderne Software besitzt eine schier unendliche Anzahl an Eingabekombinationen, Pfaden, Betriebssystemen und Laufzeitszenarien.
+Es fehlt schlichtweg die Zeit und das Geld, jeden einzelnen Pfad mathematisch zu prüfen.
+
 3. Nenne 3 reale Beispiele, wo fehlende Softwaretests zu Problemen geführt haben.
 
-*(Öffne erst danach die Unterlagen und vergleiche)*
+Antwort: Ariane-5-Absturz, Therac-25-Strahlenunfall, Y2K-Bug.
+
+_(Öffne erst danach die Unterlagen und vergleiche)_
 
 ---
 
 ## Reflexion 🚦
 
-*Nach dem Bearbeiten: Wie schätzt du dich jetzt ein?*
+_Nach dem Bearbeiten: Wie schätzt du dich jetzt ein?_
 
-- [ ] 🟢 Ich verstehe alle Konzepte und kann sie erklären
+- [x] 🟢 Ich verstehe alle Konzepte und kann sie erklären
 - [ ] 🟡 Ich verstehe die meisten Konzepte, habe aber noch Fragen
 - [ ] 🔴 Ich brauche noch mehr Zeit oder Unterstützung
 
 **Was nehme ich aus diesem Baustein mit?**
 
-> _______________________________________________
+> ---
 
 ---
 
-*Bei Problemen → [Stuck Protocol](../stuck_protocol.md) · Lösungen im Branch `loesungen` (erst nach eigenem Versuch!)*
+_Bei Problemen → [Stuck Protocol](../stuck_protocol.md) · Lösungen im Branch `loesungen` (erst nach eigenem Versuch!)_

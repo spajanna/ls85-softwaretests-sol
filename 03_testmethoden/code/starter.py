@@ -38,18 +38,26 @@ def authentifiziere_benutzer(benutzername: str, passwort: str) -> bool:
 
 
 # Aufgabe 1b) – Führe deine Testfälle hier aus:
+# ============================================================
 if __name__ == "__main__":
     print("=== Aufgabe 1 – Black-Box-Tests: authentifiziere_benutzer ===")
 
-    # TODO: Füge deine Testfälle aus der Tabelle ein
-    # Beispiel (TC01):
-    ergebnis = authentifiziere_benutzer("admin", "geheim123")
-    print(f"TC01: admin/geheim123 → {ergebnis} (erwartet: True)")
+    black_box_tests = [
+        ("TC01", "admin", "geheim123", True, "Gültiger Standard-Login"),
+        ("TC02", "ad", "geheim123", False, "Username zu kurz (Grenzbereich)"),
+        ("TC03", "ein_sehr_langer_benutzername_21", "geheim123", False, "Username zu lang (Grenzbereich)"),
+        ("TC04", "test.user", "geheim123", False, "Ungültiges Sonderzeichen (.)"),
+        ("TC05", "valid_user", "1234567", False, "Passwort zu kurz (7 Zeichen)"),
+        ("TC06", "valid_user", "passwort123", False, "Gültiges Format, aber User existiert nicht"),
+        ("TC07", "testuser", "passwort1", False, "Laut Spezifikation unbekannt (Sicherheitslücke?)")
+    ]
 
-    # TC02: TODO
-    # TC03: TODO
-    # ...
-
+    for tc, user, pw, erwartet, beschreibung in black_box_tests:
+        ergebnis = authentifiziere_benutzer(user, pw)
+        status = "🟢 PASSED" if ergebnis == erwartet else "🔴 FAILED"
+        print(f"{tc} ({beschreibung}):")
+        print(f"  Eingabe: {user} / {pw}")
+        print(f"  Ergebnis: {ergebnis} (Erwartet: {erwartet}) -> {status}\n")
 
 # ============================================================
 # Aufgabe 2 – White-Box-Test: Kontrollflussgraph & Coverage
@@ -80,12 +88,23 @@ def kategorisiere_bestellung(betrag: float, ist_neukunde: bool, gutscheincode: s
 
     return prioritaet
 
-
-# Aufgabe 2b+c) – Testfälle für Statement und Branch Coverage:
+# ============================================================
+# Aufgabe 2b+c) – Testfälle für Statement und Branch Coverage
+# ============================================================
 if __name__ == "__main__":
-    print("\n=== Aufgabe 2 – White-Box Coverage: kategorisiere_bestellung ===")
+    print("=== Aufgabe 2 – White-Box Coverage: kategorisiere_bestellung ===")
 
-    # TODO: Ergänze Testfälle für vollständige Statement Coverage
-    # TODO: Ergänze weitere Testfälle für vollständige Branch Coverage
+    white_box_tests = [
+        ("TF_BC_01", 0.0, False, "", "UNGUELTIG", "Zweig: Betrag <= 0 (True) -> Direktes Return"),
+        ("TF_BC_02", 600.0, True, "", "EXPRESS", "Zweige: Betrag > 0, Neukunde (True), Gutschein (False), Betrag >= 500 (True), Prio HOCH (True)"),
+        ("TF_BC_03", 600.0, False, "", "PRIORITAET", "Zweige: Neukunde (False), Gutschein (False), Prio HOCH (False) -> Return PRIORITAET"),
+        ("TF_BC_04", 100.0, False, "VIP2024", "HOCH", "Zweige: Gutschein VIP2024 (True) überschreibt Prio, Betrag >= 500 (False) -> Fallback-Return unten"),
+        ("TF_BC_05", 100.0, False, "", "NORMAL", "Zweige: Alle IF-Bedingungen sind False -> Komplett glatter Durchlauf bis zum Ende")
+    ]
 
-    # Halte fest, welche Zeilen von welchem Testfall abgedeckt werden.
+    for tf, betrag, neukunde, code, erwartet, ziel in white_box_tests:
+        ergebnis = kategorisiere_bestellung(betrag, neukunde, code)
+        status = "🟢 PASSED" if ergebnis == erwartet else "🔴 FAILED"
+        print(f"{tf}: {betrag}€ | Neukunde: {neukunde} | Code: '{code}'")
+        print(f"  Ergebnis: '{ergebnis}' (Erwartet: '{erwartet}') -> {status}")
+        print(f"  Ziel: {ziel}\n")

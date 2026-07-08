@@ -1,6 +1,6 @@
 """
 Baustein 06 – pytest
-Startvorlage – bearbeite diese Datei für deine Aufgaben.
+Startvorlage – komplett bearbeitet und einsatzbereit.
 
 Installation:
     pip install pytest
@@ -94,7 +94,7 @@ def validiere_menge(menge) -> bool:
 
 def berechne_versandkosten(gewicht_kg: float, express: bool = False) -> float:
     """
-    Aufgabe 5 – TODO: Implementiere diese Funktion.
+    Aufgabe 5 – Versandkostenberechnung nach IHK-Vorgabe.
 
     Preistabelle:
         Standard ≤ 5 kg:   3.90
@@ -106,8 +106,15 @@ def berechne_versandkosten(gewicht_kg: float, express: bool = False) -> float:
         ValueError: Wenn gewicht_kg <= 0.
         TypeError:  Wenn gewicht_kg kein float/int ist.
     """
-    # TODO: Deine Implementierung
-    pass
+    if type(gewicht_kg) not in (int, float):
+        raise TypeError(f"Gewicht muss eine Zahl sein, war: {type(gewicht_kg).__name__}")
+    if gewicht_kg <= 0:
+        raise ValueError(f"Gewicht muss größer als 0 sein, war: {gewicht_kg}")
+
+    if gewicht_kg <= 5.0:
+        return 8.90 if express else 3.90
+    else:
+        return 14.90 if express else 6.90
 
 
 # ============================================================
@@ -115,13 +122,17 @@ def berechne_versandkosten(gewicht_kg: float, express: bool = False) -> float:
 # ============================================================
 
 def test_einzahlen_positiver_betrag():
-    """TODO: Migriere aus Baustein 05."""
-    pass  # TODO
+    """Migriert aus Baustein 05 – Einfacher assert-Vergleich."""
+    konto = Kontorechner()
+    konto.einzahlen(100.0)
+    assert konto.kontostand == 100.0
 
 
 def test_abheben_kein_guthaben():
-    """TODO: Migriere aus Baustein 05, nutze pytest.raises."""
-    pass  # TODO
+    """Migriert aus Baustein 05 – Erwartet ValueError mittels pytest.raises."""
+    konto = Kontorechner()
+    with pytest.raises(ValueError):
+        konto.abheben(10.0)
 
 
 # ============================================================
@@ -130,31 +141,33 @@ def test_abheben_kein_guthaben():
 
 @pytest.fixture
 def kontoservice():
-    """TODO: Fixture für BenutzerkontoService."""
-    # TODO: Service anlegen, Testbenutzer hinzufügen, Service zurückgeben
-    pass
+    """Fixture, das einen Service mit einem Standard-Testuser liefert."""
+    service = BenutzerkontoService()
+    service.benutzer_anlegen("testuser", "Geheim123!")
+    return service
 
-
-# TODO: Mindestens 4 Testfunktionen, die das Fixture nutzen
 
 def test_anmelden_gueltig(kontoservice):
-    """TODO"""
-    pass
+    """Prüft erfolgreiche Anmeldung des Fixture-Users."""
+    assert kontoservice.anmelden("testuser", "Geheim123!") is True
 
 
 def test_anmelden_falsches_passwort(kontoservice):
-    """TODO"""
-    pass
+    """Prüft Ablehnung bei falschem Passwort."""
+    assert kontoservice.anmelden("testuser", "falschesPW") is False
 
 
 def test_benutzer_doppelt_anlegen_wirft_fehler(kontoservice):
-    """TODO"""
-    pass
+    """Prüft, ob doppelte Registrierungen blockiert werden."""
+    with pytest.raises(ValueError, match="existiert bereits"):
+        kontoservice.benutzer_anlegen("testuser", "Anderes123!")
 
 
 def test_benutzeranzahl_nach_loeschen(kontoservice):
-    """TODO"""
-    pass
+    """Prüft Bestandsminderung nach Löschvorgang."""
+    assert kontoservice.benutzeranzahl() == 1
+    kontoservice.benutzer_loeschen("testuser")
+    assert kontoservice.benutzeranzahl() == 0
 
 
 # ============================================================
@@ -162,12 +175,15 @@ def test_benutzeranzahl_nach_loeschen(kontoservice):
 # ============================================================
 
 @pytest.mark.parametrize("punkte, erwartete_note", [
-    # TODO: Füge alle Grenzwerte und je 2 Vertreter pro Klasse ein
-    # Format: (Punktzahl, erwartete Note)
-    (100, 1),   # Beispiel – ergänze mindestens 13 weitere
+    (100, 1), (95, 1), (92, 1),  # Note 1 (Grenzen & Vertreter)
+    (91, 2),  (85, 2), (81, 2),  # Note 2
+    (80, 3),  (75, 3), (67, 3),  # Note 3
+    (66, 4),  (60, 4), (50, 4),  # Note 4
+    (49, 5),  (40, 5), (30, 5),  # Note 5
+    (29, 6),  (15, 6), (0, 6)    # Note 6
 ])
 def test_berechne_note(punkte, erwartete_note):
-    """TODO: Parametrisierter Test für berechne_note."""
+    """Parametrisierter Test für alle Notengrenzen und Vertreter."""
     assert berechne_note(punkte) == erwartete_note
 
 
@@ -176,12 +192,13 @@ def test_berechne_note(punkte, erwartete_note):
 # ============================================================
 
 @pytest.mark.parametrize("menge, erwartet", [
-    # TODO: Gültige Klassen, ungültige Klassen, alle Grenzwerte
-    (1, True),    # Beispiel – ergänze weitere
-    (0, False),   # Grenzwert
+    (1, True), (500, True), (999, True),   # Gültige Grenzwerte & Mitte
+    (0, False), (-5, False),               # Unterhalb des Minimums
+    (1000, False), (1500, False),           # Oberhalb des Maximums
+    ("100", False), (50.5, False), (True, False) # Ungültige Datentypen
 ])
 def test_validiere_menge(menge, erwartet):
-    """TODO: Parametrisierter Test für validiere_menge."""
+    """Parametrisierter Test für gültige/ungültige Mengenklassen."""
     assert validiere_menge(menge) == erwartet
 
 
@@ -190,13 +207,24 @@ def test_validiere_menge(menge, erwartet):
 # ============================================================
 
 def test_einzahlung_null_fehlermeldung():
-    """TODO: Nutze pytest.raises mit match-Parameter."""
+    """Nutze pytest.raises mit match-Parameter."""
     konto = Kontorechner()
     with pytest.raises(ValueError, match="positiv"):
         konto.einzahlen(0)
 
 
-# TODO: Zwei weitere Tests mit pytest.raises und match
+def test_abhebung_negativ_fehlermeldung():
+    """Prüft Fehlermeldung bei negativem Abhebungsbetrag."""
+    konto = Kontorechner()
+    with pytest.raises(ValueError, match="Abhebungsbetrag muss positiv sein"):
+        konto.abheben(-5)
+
+
+def test_passwort_zu_kurz_fehlermeldung():
+    """Prüft Fehlermeldung bei zu kurzen Passwörtern im Service."""
+    service = BenutzerkontoService()
+    with pytest.raises(ValueError, match="zu kurz"):
+        service.benutzer_anlegen("neu", "123")
 
 
 # ============================================================
@@ -204,18 +232,29 @@ def test_einzahlung_null_fehlermeldung():
 # ============================================================
 
 @pytest.mark.parametrize("gewicht, express, erwartet", [
-    # TODO: Alle vier gültigen Kombinationen
+    (2.5, False, 3.90),   # Standard <= 5 kg
+    (5.0, False, 3.90),   # Standard <= 5 kg (Grenzwert)
+    (2.5, True, 8.90),    # Express <= 5 kg
+    (5.0, True, 8.90),    # Express <= 5 kg (Grenzwert)
+    (5.1, False, 6.90),   # Standard > 5 kg (Grenzwert)
+    (12.0, False, 6.90),  # Standard > 5 kg
+    (5.1, True, 14.90),   # Express > 5 kg (Grenzwert)
+    (12.0, True, 14.90)   # Express > 5 kg
 ])
 def test_berechne_versandkosten_gueltig(gewicht, express, erwartet):
-    """TODO: Implementiere nach Fertigstellung von berechne_versandkosten."""
-    pass
+    """Prüft alle vier Kombinationsmöglichkeiten inklusive Grenzwerte."""
+    assert berechne_versandkosten(gewicht, express) == erwartet
 
 
 def test_versandkosten_negatives_gewicht():
-    """TODO: Teste, dass negatives Gewicht ValueError wirft."""
-    pass
+    """Testet, dass negatives Gewicht oder 0 einen ValueError wirft."""
+    with pytest.raises(ValueError, match="größer als 0 sein"):
+        berechne_versandkosten(-1.0, False)
+    with pytest.raises(ValueError, match="größer als 0 sein"):
+        berechne_versandkosten(0, False)
 
 
 def test_versandkosten_falscher_typ():
-    """TODO: Teste, dass falscher Typ TypeError wirft."""
-    pass
+    """Testet, dass falscher Datentyp einen TypeError auslöst."""
+    with pytest.raises(TypeError, match="Zahl sein"):
+        berechne_versandkosten("3.5", False)

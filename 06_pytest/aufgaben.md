@@ -62,6 +62,7 @@ pytest 06_pytest/code/ --cov=06_pytest/code/ --cov-report=term-missing
 
 pytest ist der de-facto Standard für Python-Tests im Berufsalltag.
 Im Vergleich zu unittest hat pytest:
+
 - Kein Boilerplate – Testfunktionen statt Testklassen
 - Bessere Fehlerausgaben (zeigt Variablenwerte bei Fehlern)
 - Mächtiges Fixture-System für Testvorbereitung
@@ -154,6 +155,7 @@ Beachte: Das Fixture wird für jeden Test neu erzeugt – warum ist das wichtig?
 ## Aufgabe 3 – Parametrisierung 🟡
 
 Ohne Parametrisierung:
+
 ```python
 def test_note_bei_100():
     assert berechne_note(100) == 1
@@ -164,6 +166,7 @@ def test_note_bei_90():
 ```
 
 Mit Parametrisierung:
+
 ```python
 @pytest.mark.parametrize("punkte, erwartete_note", [
     (100, 1),
@@ -219,13 +222,13 @@ Ein Entwicklungsteam hat folgende Testanforderung dokumentiert:
 > korrekte Preise zurückgeben. Zusätzlich sollen ungültige Eingaben
 > (negatives Gewicht, falscher Typ) korrekt abgelehnt werden."
 
-**(a)** Implementieren Sie `berechne_versandkosten()` in `starter.py`. *(4 Punkte)*
+**(a)** Implementieren Sie `berechne_versandkosten()` in `starter.py`. _(4 Punkte)_
 
-**(b)** Schreiben Sie einen vollständigen parametrisierten pytest-Test für alle gültigen Fälle. *(6 Punkte)*
+**(b)** Schreiben Sie einen vollständigen parametrisierten pytest-Test für alle gültigen Fälle. _(6 Punkte)_
 
-**(c)** Schreiben Sie je einen Test für die beiden ungültigen Eingaben. *(4 Punkte)*
+**(c)** Schreiben Sie je einen Test für die beiden ungültigen Eingaben. _(4 Punkte)_
 
-**(d)** Erläutern Sie den Vorteil der Parametrisierung gegenüber einzelnen Testfunktionen. *(2 Punkte)*
+**(d)** Erläutern Sie den Vorteil der Parametrisierung gegenüber einzelnen Testfunktionen. _(2 Punkte)_
 
 ---
 
@@ -234,11 +237,13 @@ Ein Entwicklungsteam hat folgende Testanforderung dokumentiert:
 **Code Review der Tests:**
 
 Jede Person schreibt für eine selbst gewählte Funktion:
+
 - Mindestens 2 normale Testfunktionen
 - Mindestens 1 Fixture
 - Mindestens 1 parametrisierten Test
 
 Dann Code-Review im Tandem:
+
 - Sind die Testnamen aussagekräftig?
 - Werden alle Äquivalenzklassen aus Baustein 04 abgedeckt?
 - Wird `pytest.raises` für alle Fehlerfälle genutzt?
@@ -250,7 +255,7 @@ Dann Code-Review im Tandem:
 
 ## Active Recall 🧠
 
-*Unterlagen zu:*
+_Unterlagen zu:_
 
 1. Wie unterscheidet sich eine pytest-Testfunktion von einer unittest-Testmethode?
 2. Wozu dient ein Fixture?
@@ -262,14 +267,14 @@ Dann Code-Review im Tandem:
 
 ## Reflexion 🚦
 
-- [ ] 🟢 Ich kann pytest eigenständig einsetzen und Fixtures + Parametrisierung nutzen
+- [ x ] 🟢 Ich kann pytest eigenständig einsetzen und Fixtures + Parametrisierung nutzen
 - [ ] 🟡 Ich verstehe die Konzepte, habe aber noch Probleme bei Fixtures
 - [ ] 🔴 Ich brauche mehr Erklärungen oder Übung
 
 **Was nimmst du mit?**
 
-> _______________________________________________
+> ---
 
 ---
 
-*Bei Problemen → [Stuck Protocol](../stuck_protocol.md)*
+_Bei Problemen → [Stuck Protocol](../stuck_protocol.md)_

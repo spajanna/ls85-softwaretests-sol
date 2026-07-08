@@ -22,7 +22,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 
 - [ ] 🟢 Ich weiß, was Äquivalenzklassen sind
 - [ ] 🟡 Ich habe den Begriff schon gehört
-- [ ] 🔴 Das ist mir komplett neu
+- [ x ] 🔴 Das ist mir komplett neu
 
 ---
 
@@ -58,14 +58,21 @@ es reicht, einen repräsentativen Wert je Klasse zu testen.
 
 **a)** Eine Ampel-Steuerung akzeptiert nur Ganzzahlen von 1 bis 5 als Prioritätsstufe.
 Benenne ohne viel Nachdenken: Was sind gültige, was ungültige Eingaben?
+Ganze Zahlen von 1 bis 5 (also 1, 2, 3, 4, 5).
+Ganze Zahlen kleiner als 1 (z. B. 0, -1), ganze Zahlen größer als 5 (z. B. 6, 100), Dezimalzahlen (2.5) sowie keine Zahlen/Texte ("A").
 
 **b)** Erkläre in einem Satz, was eine Äquivalenzklasse ist –
 so als würdest du es einem Mitschüler ohne IT-Kenntnis erklären.
+Eine Äquivalenzklasse ist einfach eine Gruppe von Eingaben, die vom Programm alle komplett gleich behandelt werden – so wie bei einer Sortiermaschine für Postleitzahlen alle Briefe für dieselbe Stadt in dieselbe Kiste fliegen. Wenn einer ankommt, kommen die anderen aus der Kiste auch an.
 
 **c)** Nenne je ein Beispiel aus dem Berufsalltag für:
+
 - Eine gültige Äquivalenzklasse
+  Rabattcode-Feld akzeptiert genau 8-stellige Textcodes.
 - Eine ungültige Äquivalenzklasse
+  Eingabe eines Geburtsdatums, das in der Zukunft liegt.
 - Einen Grenzwert, der besonders kritisch sein könnte
+  Das maximale Upload-Limit für eine Datei (z. B. exakt 20,00 MB).
 
 **d)** Warum reicht es aus, nur **einen** repräsentativen Wert pro Klasse zu testen?
 Erkläre die Grundannahme dahinter.
@@ -77,6 +84,7 @@ Trage deine Antworten in `04_antworten.md` ein.
 ## Aufgabe 1 – Äquivalenzklassen für ein Bestellformular 🟡
 
 Eine E-Commerce-Anwendung hat folgende Validierungsregeln für das Bestellfeld "Menge":
+
 - Typ: ganzzahlig
 - Minimum: 1
 - Maximum: 999
@@ -84,22 +92,21 @@ Eine E-Commerce-Anwendung hat folgende Validierungsregeln für das Bestellfeld "
 
 **a)** Ermittle alle Äquivalenzklassen und trage sie in die Tabelle ein:
 
-| AK-Nr | Klasse | Repräsentativer Wert | Gültig / Ungültig |
-|-------|--------|---------------------|-------------------|
-| AK1 | | | |
-| AK2 | | | |
-| AK3 | | | |
-| AK4 | | | |
+AK-Nr,Klasse,Repräsentativer Wert,Gültig / Ungültig
+AK1,Ganzzahlen von 1 bis 999,42,Gültig
+AK2,Ganzzahlen kleiner als 1 (inkl. 0),-5 (oder 0),Ungültig
+AK3,Ganzzahlen größer als 999,1005,Ungültig
+AK4,"Keine Ganzzahlen (Strings, Floats)","4.5 (oder ""zehn"")",Ungültig
 
 **b)** Ergänze die Tabelle um Grenzwerttestfälle:
 
-| GW-Nr | Grenzwert | Erwartetes Ergebnis |
-|-------|-----------|---------------------|
-| GW1 | 0 | Ungültig |
-| GW2 | 1 | Gültig |
-| GW3 | | |
-| GW4 | | |
-| GW5 | | |
+GW-Nr,Grenzwert,Erwartetes Ergebnis
+GW1,0,Ungültig
+GW2,1,Gültig
+GW3,2,Gültig (Grenznähe)
+GW4,998,Gültig (Grenznähe)
+GW5,999,Gültig
+GW6,1000,Ungültig
 
 **c)** Implementiere in `code/starter.py` die Funktion `validiere_menge()` und schreibe manuelle Tests für alle Äquivalenzklassen und Grenzwerte.
 
@@ -108,6 +115,7 @@ Eine E-Commerce-Anwendung hat folgende Validierungsregeln für das Bestellfeld "
 ## Aufgabe 2 – Äquivalenzklassen für Passwortstärke 🟡
 
 Eine Anwendung prüft Passwörter nach folgenden Regeln:
+
 - Länge: 8–64 Zeichen
 - Muss mindestens einen Großbuchstaben enthalten
 - Muss mindestens eine Ziffer enthalten
@@ -125,11 +133,13 @@ Hinweis: Jede Regel erzeugt eigene gültige/ungültige Klassen!
 ## Aufgabe 3 – Grenzwertanalyse: Altersverifikation 🟡
 
 Eine Plattform hat drei Kategorien:
+
 - Unter 12: Kinder-Modus (eingeschränkt)
 - 12–17: Jugend-Modus (teils eingeschränkt)
 - Ab 18: Vollzugang
 
 **a)** Bestimme alle Grenzwerte und erstelle eine Grenzwerttabelle mit:
+
 - Unterer Grenzwert der Klasse
 - Wert genau an der Grenze
 - Oberer Grenzwert der Klasse
@@ -148,17 +158,17 @@ Eine Prüfungssoftware berechnet das Prüfungsergebnis:
 - Eingabe: Punktzahl (ganzzahlig, 0–100)
 - Ausgabe: Note (1–6) nach folgendem Schema:
   - 92–100: Note 1
-  - 81–91:  Note 2
-  - 67–80:  Note 3
-  - 50–66:  Note 4
-  - 30–49:  Note 5
-  - 0–29:   Note 6
+  - 81–91: Note 2
+  - 67–80: Note 3
+  - 50–66: Note 4
+  - 30–49: Note 5
+  - 0–29: Note 6
 
-**(a)** Ermitteln Sie alle Äquivalenzklassen (gültige und ungültige). *(4 Punkte)*
+**(a)** Ermitteln Sie alle Äquivalenzklassen (gültige und ungültige). _(4 Punkte)_
 
-**(b)** Erstellen Sie eine vollständige Grenzwerttabelle für alle Notengrenzen. *(6 Punkte)*
+**(b)** Erstellen Sie eine vollständige Grenzwerttabelle für alle Notengrenzen. _(6 Punkte)_
 
-**(c)** Welche Eingabewerte würden Sie als Tester wählen, um mit möglichst wenigen Testfällen alle Klassen und Grenzwerte abzudecken? Begründen Sie Ihre Wahl. *(4 Punkte)*
+**(c)** Welche Eingabewerte würden Sie als Tester wählen, um mit möglichst wenigen Testfällen alle Klassen und Grenzwerte abzudecken? Begründen Sie Ihre Wahl. _(4 Punkte)_
 
 Implementiere die Funktion `berechne_note()` und teste alle Fälle aus (a)–(c) in `starter.py`.
 
@@ -181,7 +191,7 @@ Diskutiert: Würden eure Testfälle denselben Fehler finden?
 
 ## Active Recall 🧠
 
-*Unterlagen zu:*
+_Unterlagen zu:_
 
 1. Was ist der Kerngedanke hinter Äquivalenzklassen?
 2. Warum testet man immer auch ungültige Klassen?
@@ -198,8 +208,8 @@ Diskutiert: Würden eure Testfälle denselben Fehler finden?
 
 **Was nimmst du mit?**
 
-> _______________________________________________
+> ---
 
 ---
 
-*Bei Problemen → [Stuck Protocol](../stuck_protocol.md)*
+_Bei Problemen → [Stuck Protocol](../stuck_protocol.md)_

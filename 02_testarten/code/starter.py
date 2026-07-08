@@ -3,6 +3,15 @@ Baustein 02 – Testarten
 Startvorlage – bearbeite diese Datei für deine Aufgaben.
 """
 
+#Aufgabe 1
+
+#| Beschreibung | Teststufe |
+#|-------------|-----------|
+#| Testet einzelne Funktionen oder Methoden isoliert | Unit Test |
+#| Prüft das Zusammenspiel mehrerer Module | Integrationstest |
+#| Testet das gesamte System gegen die Anforderungen | Systemtest |
+#| Der Auftraggeber prüft, ob seine Anforderungen erfüllt sind | Abnahmetest |
+
 from typing import List, Dict
 
 
@@ -61,16 +70,22 @@ if __name__ == "__main__":
     # Erwartetes Ergebnis: 69.97
     print("Test 1 – Kein Rabatt:")
     # Dein Code hier
+    ergebnis_1 = berechne_gesamtpreis(warenkorb_normal, rabatt_prozent=0.0)
+    print(f"Ergebnis: {ergebnis_1} (Erwartet: 69.97)")
 
     # TODO: Test 2 – Einkauf mit 10 % Rabatt
     # Erwartetes Ergebnis: 62.97
     print("\nTest 2 – 10 % Rabatt:")
     # Dein Code hier
+    ergebnis_2 = berechne_gesamtpreis(warenkorb_normal, rabatt_prozent=10.0)
+    print(f"Ergebnis: {ergebnis_2} (Erwartet: 62.97)")
 
     # TODO: Test 3 – Leerer Warenkorb (Sonderfall)
     # Erwartetes Ergebnis: 0.0 (keine Exception!)
     print("\nTest 3 – Leerer Warenkorb:")
     # Dein Code hier
+    ergebnis_3 = berechne_gesamtpreis(warenkorb_leer, rabatt_prozent=10.0)
+    print(f"Ergebnis: {ergebnis_3} (Erwartet: 0.0)")
 
 
 # ============================================================
