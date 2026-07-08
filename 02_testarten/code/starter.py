@@ -60,17 +60,33 @@ if __name__ == "__main__":
     # TODO: Test 1 – Normaler Einkauf ohne Rabatt
     # Erwartetes Ergebnis: 69.97
     print("Test 1 – Kein Rabatt:")
-    # Dein Code hier
+    def test_normalerEinkauf():
+        """Prueft Einkauf ohne Rabatt."""
+        erwartet = 69.97
+        ergebnis = berechne_gesamtpreis(warenkorb_normal, 0)
+        assert ergebnis == erwartet, f"Erwartet: {erwartet}, Erhalten: {ergebnis}"
+
+    print(test_normalerEinkauf())
 
     # TODO: Test 2 – Einkauf mit 10 % Rabatt
     # Erwartetes Ergebnis: 62.97
     print("\nTest 2 – 10 % Rabatt:")
-    # Dein Code hier
+    def test_rabattierterEinkauf():
+        """Prueft Einkauf ohne Rabatt."""
+        erwartet = 62.97
+        ergebnis = berechne_gesamtpreis(warenkorb_normal,10)
+        assert ergebnis == erwartet, f"Erwartet: {erwartet}, Erhalten: {ergebnis}"
+    print(test_rabattierterEinkauf())
 
     # TODO: Test 3 – Leerer Warenkorb (Sonderfall)
     # Erwartetes Ergebnis: 0.0 (keine Exception!)
     print("\nTest 3 – Leerer Warenkorb:")
-    # Dein Code hier
+    def test_leererWarenkorb():
+        """Prueft Einkauf ohne Rabatt."""
+        erwartet = 0.0
+        ergebnis = berechne_gesamtpreis(warenkorb_leer)
+        assert ergebnis == erwartet, f"Erwartet: {erwartet}, Erhalten: {ergebnis}"
+    print(test_leererWarenkorb())
 
 
 # ============================================================
@@ -79,7 +95,7 @@ if __name__ == "__main__":
 
 # | Beschreibung                                           | Teststufe |
 # |--------------------------------------------------------|-----------|
-# | Testet einzelne Funktionen oder Methoden isoliert      | TODO      |
-# | Prüft das Zusammenspiel mehrerer Module                | TODO      |
-# | Testet das gesamte System gegen die Anforderungen      | TODO      |
-# | Auftraggeber prüft, ob seine Anforderungen erfüllt sind| TODO      |
+# | Testet einzelne Funktionen oder Methoden isoliert      |Unit       |
+# | Prüft das Zusammenspiel mehrerer Module                |Integration|
+# | Testet das gesamte System gegen die Anforderungen      |System     |
+# | Auftraggeber prüft, ob seine Anforderungen erfüllt sind|Abnahme    |

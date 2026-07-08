@@ -23,35 +23,35 @@ def berechne_rabatt(preis: float, prozent: float) -> float:
 # Aufgabe 1a): Beantworte folgende Fragen als Kommentar:
 
 # Error (falsche Handlung des Entwicklers):
-# TODO: Deine Antwort hier
+# Ein Logikfehler ist dem Entwickler unterlaufen
 
 # Defect (fehlerhafte Stelle im Code):
-# TODO: Deine Antwort hier
+# Rabatt wird falsch berechnet
 
 # Failure (was der Benutzer bemerken würde):
-# TODO: Deine Antwort hier
+# Der Wert, der zurückgegeben wird, ist viel zu groß.
 
 
 # Aufgabe 1b): Korrigiere die Funktion unten und füge print()-Tests hinzu.
 
 def berechne_rabatt_korrigiert(preis: float, prozent: float) -> float:
-    """
-    Korrigierte Version von berechne_rabatt().
-    TODO: Implementiere die korrekte Logik.
-    """
-    pass  # TODO: Ersetze 'pass' durch deine Implementierung
-
+    if prozent<0.0:
+        return "Prozent darf nicht negativ sein."
+    elif preis<0.0:
+        return "preis darf nicht negativ sein."
+    elif prozent >100:
+        return "Prozent muss unter 100 sein."
+    rabatt = preis * prozent/100  # <-- Zeile mit Defekt
+    return preis - rabatt
 
 # Manuelle Tests (werden in Baustein 05 durch echte Unit-Tests ersetzt)
 if __name__ == "__main__":
     # TODO: Ergänze mindestens 3 eigene print()-Tests für berechne_rabatt_korrigiert().
     # Überlege selbst: Was sind sinnvolle Eingaben? Was erwartest du als Ergebnis?
+    print(berechne_rabatt_korrigiert(100.0, -10.0)) #Case negatives Prozent behandelt
+    print(berechne_rabatt_korrigiert(100.0, 'a')) #ungültiges Zeichen in Prozent behandelt
+    print(berechne_rabatt(100.0, 120))  # Zu hohe Prozentangabe behandelt
 
-    print("=== Test: berechne_rabatt (fehlerhaft) ===")
-    print(berechne_rabatt(100.0, 20))  # Falsche Ausgabe erwartet
-
-    print("\n=== Test: berechne_rabatt_korrigiert ===")
-    # TODO: Deine Tests hier
 
 
 # ============================================================
@@ -62,15 +62,17 @@ if __name__ == "__main__":
 #
 # | Maßnahme                            | Statisch | Dynamisch |
 # |-------------------------------------|----------|-----------|
-# | Code Review durch einen Kollegen    | TODO     | TODO      |
-# | Programm mit Testdaten ausführen    | TODO     | TODO      |
-# | Syntaxprüfung durch den Editor      | TODO     | TODO      |
-# | Walkthroughs im Team                | TODO     | TODO      |
-# | Unit-Tests laufen lassen            | TODO     | TODO      |
-# | Checklisten für Codestruktur        | TODO     | TODO      |
+# | Code Review durch einen Kollegen    |    x     |           |
+# | Programm mit Testdaten ausführen    |          |     x     |
+# | Syntaxprüfung durch den Editor      |    x     |           |
+# | Walkthroughs im Team                |          |     x     |
+# | Unit-Tests laufen lassen            |          |     x     |
+# | Checklisten für Codestruktur        |    x     |           |
 #
 # Warum reicht statisches Testen allein nicht aus?
 # TODO: Deine Erklärung hier (2 Sätze)
+# Statisches Testen allein reicht nicht aus, da der Code nicht ausgeführt wird. Eher oberflächliche, strukturelle und semantische Fehler werden hier behandelt.
+# Dynamisches Testen hingegen beschäftigt sich mit der Ausführung des Codes, welches die konkrete Funktionalität auf einer oder mehreren Ebenen testet.
 
 
 # ============================================================
@@ -79,11 +81,12 @@ if __name__ == "__main__":
 
 # Prinzip 2 – Vollständiges Testen ist unmöglich:
 # Beispiel aus dem Berufsalltag:
-# TODO: Deine Antwort hier
+# Die Qualitätssicherung kann intern zu 100% abgeschlossen sein und dennoch fallen bei der Auslieferung Fehler auf.
+# Gründe: Unterschiedliche oder komplexe Infrastruktur, kundenspezifische Anpassungen sind auf älteren Stand und machen Probleme, etc.
 
 # Prinzip 4 – Defect Clustering:
 # Beispiel aus dem Berufsalltag:
-# TODO: Deine Antwort hier
+# 80% der Fehler verstecken sich in 20% des Codes. Beim Defect Clustering werden Fehler identifiziert und klassifiziert um diese anschließend entsprechend zu behandeln.
 
 # Welches Prinzip überrascht dich? Warum?
-# TODO: Deine Antwort hier
+# Keine Fehler != gute Software, da erfahrene Entwickler von Grund auf auch richtig coden können.
