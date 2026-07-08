@@ -60,17 +60,17 @@ if __name__ == "__main__":
     # TODO: Test 1 – Normaler Einkauf ohne Rabatt
     # Erwartetes Ergebnis: 69.97
     print("Test 1 – Kein Rabatt:")
-    # Dein Code hier
+    # Preis = 2*19.99 + 29.99 = 69.97
 
     # TODO: Test 2 – Einkauf mit 10 % Rabatt
     # Erwartetes Ergebnis: 62.97
     print("\nTest 2 – 10 % Rabatt:")
-    # Dein Code hier
+    # Preis = (2*19.99 + 29.9) * 0.9 = 62.97
 
     # TODO: Test 3 – Leerer Warenkorb (Sonderfall)
     # Erwartetes Ergebnis: 0.0 (keine Exception!)
     print("\nTest 3 – Leerer Warenkorb:")
-    # Dein Code hier
+    # return 0.0 
 
 
 # ============================================================
@@ -79,7 +79,7 @@ if __name__ == "__main__":
 
 # | Beschreibung                                           | Teststufe |
 # |--------------------------------------------------------|-----------|
-# | Testet einzelne Funktionen oder Methoden isoliert      | TODO      |
-# | Prüft das Zusammenspiel mehrerer Module                | TODO      |
-# | Testet das gesamte System gegen die Anforderungen      | TODO      |
-# | Auftraggeber prüft, ob seine Anforderungen erfüllt sind| TODO      |
+# | Testet einzelne Funktionen oder Methoden isoliert      | Unit-Test      |
+# | Prüft das Zusammenspiel mehrerer Module                | Integrationstest      |
+# | Testet das gesamte System gegen die Anforderungen      | Systemtest      |
+# | Auftraggeber prüft, ob seine Anforderungen erfüllt sind| Abnahm      |

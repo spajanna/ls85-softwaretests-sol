@@ -23,7 +23,7 @@ Teste dein Vorwissen mit dem Forms-Quiz:
 *Bevor du anfängst: Wie sicher fühlst du dich bei diesem Thema?*
 
 - [ ] 🟢 Ich kenne mich schon aus
-- [ ] 🟡 Ich habe eine vage Vorstellung
+- [X] 🟡 Ich habe eine vage Vorstellung
 - [ ] 🔴 Das Thema ist mir komplett neu
 
 ---
@@ -195,7 +195,7 @@ Haltet das Ergebnis in `01_antworten.md` fest (3–5 Sätze).
 
 *Nach dem Bearbeiten: Wie schätzt du dich jetzt ein?*
 
-- [ ] 🟢 Ich verstehe alle Konzepte und kann sie erklären
+- [X] 🟢 Ich verstehe alle Konzepte und kann sie erklären
 - [ ] 🟡 Ich verstehe die meisten Konzepte, habe aber noch Fragen
 - [ ] 🔴 Ich brauche noch mehr Zeit oder Unterstützung
 
